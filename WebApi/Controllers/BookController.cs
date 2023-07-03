@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
@@ -8,14 +9,18 @@ namespace WebApi.Controllers;
 public class BookController : ControllerBase
 {
     public static List<BookViewModel> Data = new List<BookViewModel>();
+
+    public BookController()
+    {
+    }
     
+    [Authorize] // Can be use role or policy(politicas o roles)
     [Route("{id}")]
     [HttpGet]
     public IActionResult Get(Guid id)
     {
         return Ok(Data.FirstOrDefault(a => a.Id == id));
     }
-    
     
     [HttpGet]
     public IActionResult GetList()
@@ -48,16 +53,23 @@ public class BookController : ControllerBase
     [HttpPut]
     public IActionResult Update(Guid id,CreateUpdateBookInputModel model)
     {
-        var a = Data.First(a => a.Id == id);
-        Data.Remove(a);
-        Data.Add(new BookViewModel()
+        var a = Data.FirstOrDefault(a => a.Id == id);
+        if (a != null)
         {
-            Description = model.Description,
-            ISBN = model.ISBN,
-            Title = model.Title,
-            Id = id
-        });
-        return Ok();
+            Data.Remove(a);
+            Data.Add(new BookViewModel()
+            {
+                Description = model.Description,
+                ISBN = model.ISBN,
+                Title = model.Title,
+                Id = id
+            });
+            return Ok();
+        }
+        else
+        {
+            return NotFound();
+        }
     }
 }
 
