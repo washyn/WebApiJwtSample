@@ -20,10 +20,12 @@ namespace WebApi.Controllers;
 [ApiController]
 public class AccountController : ControllerBase
 {
+    private readonly ILogger<AccountController> _logger;
     private readonly JwtBearer _options;
 
-    public AccountController(IOptions<JwtBearer> options)
+    public AccountController(IOptions<JwtBearer> options, ILogger<AccountController> logger)
     {
+        _logger = logger;
         _options = options.Value;
     }
     

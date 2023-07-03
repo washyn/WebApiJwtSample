@@ -16,9 +16,7 @@ namespace WebApi
             
             // Add services to the container.
             builder.Services.Configure<JwtBearer>(builder.Configuration.GetSection(nameof(JwtBearer)));
-            
-            // var bearerOptions = builder.Configuration.GetValue<JwtBearer>(nameof(JwtBearer));
-            // "JwtBearer:SecurityKey"
+
             builder.Services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
