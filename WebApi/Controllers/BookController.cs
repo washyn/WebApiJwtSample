@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Data.SqlClient;
+using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 
 namespace WebApi.Controllers;
 
@@ -25,6 +28,13 @@ public class BookController : ControllerBase
     [HttpGet]
     public IActionResult GetList()
     {
+        var conexionString =
+            "Server=(localdb)\\mssqllocaldb;Database=AbpComercial723;Trusted_Connection=True;MultipleActiveResultSets=true";
+        using (var conexion = new SqlConnection(conexionString))
+        {
+            var rowsAfected = conexion.Execute("select * from users");
+        }
+        
         return Ok(Data);
     }
     

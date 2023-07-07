@@ -59,7 +59,10 @@ public class AccountController : ControllerBase
         {
             ModelState.AddModelError(nameof(LoginInputViewModel.User), "Valor no valido.");
             ModelState.AddModelError(nameof(LoginInputViewModel.Password), "Valor no valido.");
-            return ValidationProblem();
+            // TODO:
+            // Revisar la diferencia de estas respuestas...
+            return ValidationProblem(); // retorma problem details
+            // return BadRequest(ModelState); // solo retorna un obj con los campos invalidos
         }
     }
     

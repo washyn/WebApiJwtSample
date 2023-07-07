@@ -28,7 +28,7 @@ namespace WebApi
                     {
                         // The signing key must match!
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["JwtBearer:SecurityKey"])),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtBearer:SecurityKey"])),
 
                         // Validate the JWT Issuer (iss) claim
                         ValidateIssuer = false,
@@ -40,6 +40,8 @@ namespace WebApi
 
                         // Validate the token expiry
                         ValidateLifetime = true,
+                        
+                        ClockSkew = TimeSpan.FromMinutes(0), // para que pasados 0 min expire el token...
                     };
                 });
             
