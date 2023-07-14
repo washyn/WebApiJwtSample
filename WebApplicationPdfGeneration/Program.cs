@@ -1,7 +1,13 @@
+using APIASWAN.Utilidad;
+using WkHtmlToPdfDotNet;
+using WkHtmlToPdfDotNet.Contracts;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<IViewRenderService, ViewRenderService>();
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
 var app = builder.Build();
 
