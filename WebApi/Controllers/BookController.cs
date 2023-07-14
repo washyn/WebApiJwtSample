@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
+using System.Diagnostics.CodeAnalysis;
+using System.DirectoryServices;
 using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,7 +39,31 @@ public class BookController : ControllerBase
         
         return Ok(Data);
     }
-    
+
+    [SuppressMessage("Interoperability", "CA1416:Validate platform compatibility")]
+    static bool Autenticate(string user, string password)
+    {
+        string userTEmp;
+        string path = "LDAP://cmachyo";
+        try
+        {
+            // TODO: copy example
+            using (var directoryEntry = new DirectoryEntry(path, user, password, AuthenticationTypes.Secure))
+            {
+                using (var directorySearcher = new DirectorySearcher(directoryEntry))
+                {
+                    var result = directorySearcher.FindOne();
+                    // var sr = new SearchResult()
+                    return true;
+                }
+            }
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
     [HttpPost]
     public IActionResult Create(CreateUpdateBookInputModel model)
     {
