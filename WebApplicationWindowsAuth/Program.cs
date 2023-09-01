@@ -1,6 +1,16 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
+using Serilog;
+
+var loggerConf = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .Enrich.FromLogContext()
+    .WriteTo.Async(c => c.Console());
+Log.Logger = loggerConf.CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog();
+
+builder.Services.AddHttpContextAccessor();
 
 // Add services to the container.
 
