@@ -38,172 +38,170 @@ namespace QuestPDF.Invoice
                     });
                 });
         }
-        
+
         void ComposeContent(IContainer container)
         {
+            // CultureInfo.CurrentCulture.Name
+            var cultureInfo = new CultureInfo("es-pe");
             // .PaddingVertical(40)
-            container.Column(column =>
-            {
-                // column.Spacing(20);
-
-                // column.Item().PaddingVertical(5).LineHorizontal(1).LineColor(Colors.Grey.Lighten1);
-
-                // TODO: para la info del cliente crear 3 columnas...
-
-                column.Item().Row(row =>
+            container
+                .Background(Colors.Green.Lighten5)
+                .Column(column =>
                 {
-                    row.Spacing(10);
-                    // TODO: add only if exists image
-                    row.RelativeItem(1)
+                    // column.Spacing(20);
+
+                    // column.Item().PaddingVertical(5).LineHorizontal(1).LineColor(Colors.Grey.Lighten1);
+
+                    // TODO: para la info del cliente crear 3 columnas...
+
+                    column.Item().Row(row =>
+                    {
+                        row.Spacing(10);
+                        // TODO: add only if exists image
+                        // row.RelativeItem(1)
+                        //     // .Border(1)
+                        //     // .Background(Colors.Grey.Lighten1)
+                        //     .Image("opera.png");
+                        // row.RelativeItem(1)
                         // .Border(1)
                         // .Background(Colors.Grey.Lighten1)
-                        .Image("opera.png");
-                    // row.RelativeItem(1)
-                    // .Border(1)
-                    // .Background(Colors.Grey.Lighten1)
-                    // .Text("hii");
-                    row.RelativeItem(4)
-                        // .Border(1)
-                        // .Background(Colors.Grey.Lighten2)
-                        .Row(row =>
-                        {
-                            row.RelativeItem()
-                                .AlignCenter()
-                                .Column(col =>
-                                {
-                                    col.Spacing(-3);
-                                    col.Item()
-                                        .AlignCenter()
-                                        .Text("Empresa S.A.")
-                                        .FontSize(12);
-
-                                    col.Item()
-                                        // .Background(Colors.Yellow.Lighten3)
-                                        .AlignCenter()
-                                        .Text("Empresa S.A. efhjfsdjkef");
-                                    col.Item()
-                                        // .Background(Colors.Yellow.Lighten2)
-                                        .AlignCenter()
-                                        .Text("Empresa S.A. 98734589745389");
-                                    col.Item()
-                                        // .Background(Colors.Yellow.Lighten1)
-                                        .AlignCenter()
-                                        .Text("Empresa S.A. 8448");
-                                });
-                        });
-                    row.RelativeItem(2)
-                        // .Border(1)
-                        // .Background(Colors.Grey.Lighten2)
-                        .Text(String.Empty);
-                    row.RelativeItem(3)
-                        // .Border(1)
-                        .Background(Colors.Blue.Lighten4)
-                        .Row(row =>
-                        {
-                            row.RelativeItem()
-                                // .Padding(0)
-                                .Border(1)
-                                .BorderColor(Colors.Red.Darken2)
-                                // .AlignCenter()
-                                // .DefaultTextStyle(a=>a.FontSize(11))
-                                // .BorderColor(Colors.Grey.Medium)
-                                .Column(col =>
-                                {
-                                    // col.Spacing(10);
-                                    col.Item()
-                                        .AlignCenter()
-                                        //.Padding(5)
-                                        .Text("RUC - 4354");
-                                    col.Item()
-                                        // .AlignCenter()
-                                        .LineHorizontal(1)
-                                        .LineColor(Colors.Grey.Lighten4);
-                                    col.Item()
-                                        .AlignCenter()
-                                        //.Padding(5)
-                                        // .Text("Comprobante electronico");
-                                        .Text("COMPROBANTE   ELECTRONICO");
-                                    col.Item()
-                                        // .AlignCenter()
-                                        .LineHorizontal(1)
-                                        .LineColor(Colors.Grey.Lighten4);
-                                    col.Item()
-                                        .AlignCenter()
-                                        //.Padding(5)
-                                        .Text("B00-345788475");
-                                });
-                        });
-                });
-
-                column.Item().PaddingVertical(5).LineHorizontal(1).LineColor(Colors.Grey.Lighten1);
-
-                column.Item().Row(row =>
-                {
-                    row.Spacing(10);
-                    row.RelativeItem(3)
-                        // .Background(Colors.Blue.Lighten4)
-                        .Column(col =>
-                        {
-                            col.Item().Text(text =>
+                        // .Text("hii");
+                        row.RelativeItem(4)
+                            // .Border(1)
+                            // .Background(Colors.Grey.Lighten2)
+                            .Row(row =>
                             {
-                                text.Span("Cliente: ").SemiBold();
-                                text.Span("Chester Chester Chester");
+                                row.RelativeItem()
+                                    .AlignCenter()
+                                    .Column(col =>
+                                    {
+                                        col.Spacing(-3);
+                                        col.Item()
+                                            .AlignCenter()
+                                            .Text("Empresa S.A.")
+                                            .Medium()
+                                            .FontSize(12);
+
+                                        col.Item()
+                                            // .Background(Colors.Yellow.Lighten3)
+                                            .AlignCenter()
+                                            .Text("Empresa S.A. efhjfsdjkef");
+                                        col.Item()
+                                            // .Background(Colors.Yellow.Lighten2)
+                                            .AlignCenter()
+                                            .Text("Empresa S.A. 98734589745389");
+                                        col.Item()
+                                            // .Background(Colors.Yellow.Lighten1)
+                                            .AlignCenter()
+                                            .Text("Empresa S.A. 8448");
+                                    });
                             });
-                            col.Item().Text(text =>
+                        row.RelativeItem(2)
+                            // .Border(1)
+                            // .Background(Colors.Grey.Lighten2)
+                            .Text(String.Empty);
+                        row.RelativeItem(3)
+                            // .Border(1)
+                            .Background(Colors.Blue.Lighten4)
+                            .Row(row =>
                             {
-                                text.Span("Documento: ").SemiBold();
-                                text.Span("71449257");
+                                row.RelativeItem()
+                                    // .Padding(0)
+                                    .Border(1)
+                                    .BorderColor(Colors.Grey.Lighten1)
+                                    // .AlignCenter()
+                                    // .DefaultTextStyle(a=>a.FontSize(11))
+                                    // .BorderColor(Colors.Grey.Medium)
+                                    .Column(col =>
+                                    {
+                                        // col.Spacing(10);
+                                        col.Item()
+                                            .AlignCenter()
+                                            //.Padding(5)
+                                            .Text("RUC - 00000000");
+                                        col.Item()
+                                            // .AlignCenter()
+                                            .LineHorizontal(1)
+                                            .LineColor(Colors.Grey.Lighten4);
+                                        col.Item()
+                                            .AlignCenter()
+                                            //.Padding(5)
+                                            // .Text("Comprobante electronico");
+                                            .Text("COMPROBANTE   ELECTRONICO");
+                                        col.Item()
+                                            // .AlignCenter()
+                                            .LineHorizontal(1)
+                                            .LineColor(Colors.Grey.Lighten4);
+                                        col.Item()
+                                            .AlignCenter()
+                                            //.Padding(5)
+                                            .Text("B00-345788475");
+                                    });
                             });
-                        });
-                    row.RelativeItem(2)
-                        // .Background(Colors.Blue.Lighten1)
-                        .Column(col =>
-                        {
-                            col.Item().Text(text =>
-                            {
-                                text.Span("Fecha emisión: ").SemiBold();
-                                text.Span(DateTime.Now.ToString("d", new CultureInfo("es-pe")));
-                            });
-                        });
-                });
-
-                // column.Item().Row(row =>
-                // {
-                //     row.RelativeItem().Component(new AddressComponent("From", Model.SellerAddress));
-                //     row.ConstantItem(50);
-                //     row.RelativeItem().Component(new AddressComponent("For", Model.CustomerAddress));
-                // });
-                //
-                // column.Item().PaddingVertical(5).LineHorizontal(1).LineColor(Colors.Red.Medium);
-
-                column.Item().PaddingVertical(5).LineHorizontal(1).LineColor(Colors.Grey.Lighten1);
-
-                column.Item().Element(ComposeTable);
-
-                var totalPrice = 546;
-                column.Item().PaddingRight(5).AlignRight().Text($"Grand total: {totalPrice:C}").SemiBold();
-                column.Item().PaddingRight(5).AlignRight().Text($"Grand total: {totalPrice:C}").SemiBold();
-
-
-                column.Item().PaddingVertical(5).LineHorizontal(1).LineColor(Colors.Grey.Lighten1);
-
-                column.Item().Column(col =>
-                {
-                    col.Item().Width(50).Image("opera.png");
-                    col.Item().Text(a =>
-                    {
-                        a.Span("Codigo hash:").SemiBold();
-                        a.Span("hjksdfhjkfdjhksdfjh5");
                     });
-                    col.Item().Text(a =>
-                    {
-                        a.Span("Condicion pago:").SemiBold();
-                        a.Span("Contado");
-                    });
-                });
 
-                // column.Item().PaddingVertical(5).LineHorizontal(1).LineColor(Colors.Grey.Lighten1);
-            });
+                    column.Item().PaddingVertical(2).LineHorizontal(1).LineColor(Colors.Grey.Lighten1);
+
+                    column.Item().Row(row =>
+                    {
+                        row.Spacing(10);
+                        row.RelativeItem(3)
+                            // .Background(Colors.Blue.Lighten4)
+                            .Column(col =>
+                            {
+                                col.Item().Text(text =>
+                                {
+                                    text.Span("Cliente: ").SemiBold();
+                                    text.Span("Chester Chester Chester");
+                                });
+                                col.Item().Text(text =>
+                                {
+                                    text.Span("Documento: ").SemiBold();
+                                    text.Span("71449257");
+                                });
+                            });
+                        row.RelativeItem(2)
+                            // .Background(Colors.Blue.Lighten1)
+                            .Column(col =>
+                            {
+                                col.Item().Text(text =>
+                                {
+                                    text.Span("Fecha emisión: ").SemiBold();
+                                    text.Span(DateTime.Now.ToString("d", cultureInfo));
+                                });
+                            });
+                    });
+
+                    // column.Item().PaddingVertical(5).LineHorizontal(1).LineColor(Colors.Red.Medium);
+
+                    column.Item().PaddingVertical(2).LineHorizontal(1).LineColor(Colors.Grey.Lighten1);
+
+                    column.Item().Element(ComposeTable);
+
+                    var totalPrice = 546;
+                    column.Item().PaddingRight(5).AlignRight().Text($"Grand total: {totalPrice:C}").SemiBold();
+                    column.Item().PaddingRight(5).AlignRight().Text($"Grand total: {totalPrice:C}").SemiBold();
+
+
+                    column.Item().PaddingVertical(2).LineHorizontal(1).LineColor(Colors.Grey.Lighten1);
+
+                    column.Item().Column(col =>
+                    {
+                        col.Item().Width(50).Image("opera.png");
+                        col.Item().Text(a =>
+                        {
+                            a.Span("Codigo hash:").SemiBold();
+                            a.Span("hjksdfhjkfdjhksdfjh5");
+                        });
+                        col.Item().Text(a =>
+                        {
+                            a.Span("Condicion pago:").SemiBold();
+                            a.Span("Contado");
+                        });
+                    });
+
+                    // column.Item().PaddingVertical(5).LineHorizontal(1).LineColor(Colors.Grey.Lighten1);
+                });
         }
 
         void ComposeTable(IContainer container)
@@ -233,7 +231,7 @@ namespace QuestPDF.Invoice
                     header.Cell().ColumnSpan(5).PaddingTop(2).BorderBottom(0.5F).BorderColor(Colors.Grey.Darken1);
                 });
 
-                for (var i = 1; i <= 10 ; i++)
+                for (var i = 1; i <= 10; i++)
                 {
                     table.Cell().Element(CellStyle).Text($"{i}");
                     table.Cell().Element(CellStyle).Text(i);
@@ -260,7 +258,7 @@ namespace QuestPDF.Invoice
 
             // For documentation and implementation details, please visit:
             // https://www.questpdf.com/documentation/getting-started.html
-            var model = new {};
+            var model = new { };
             var document = new InvoiceDocument(model);
 
             // Generate PDF file and show it in the default viewer
