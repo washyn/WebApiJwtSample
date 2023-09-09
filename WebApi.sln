@@ -1,16 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{61BFECD7-3631-427B-983B-B59AE2752BF1}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{61BFECD7-3631-427B-983B-B59AE2752BF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationPdfGeneration", "WebApplicationPdfGeneration\WebApplicationPdfGeneration.csproj", "{4C75ED64-ABE4-40E0-A860-567F073D7FC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplicationPdfGeneration", "WebApplicationPdfGeneration\WebApplicationPdfGeneration.csproj", "{4C75ED64-ABE4-40E0-A860-567F073D7FC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationEmbebedResource", "WebApplicationEmbebedResource\WebApplicationEmbebedResource.csproj", "{AA328432-ACDF-41A8-B8EA-CF062CD69D4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplicationEmbebedResource", "WebApplicationEmbebedResource\WebApplicationEmbebedResource.csproj", "{AA328432-ACDF-41A8-B8EA-CF062CD69D4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppPdfGenerationQuestPdf", "ConsoleAppPdfGenerationQuestPdf\ConsoleAppPdfGenerationQuestPdf.csproj", "{246C498B-13A7-4329-A6CB-FBEB472BDFD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppPdfGenerationQuestPdf", "ConsoleAppPdfGenerationQuestPdf\ConsoleAppPdfGenerationQuestPdf.csproj", "{246C498B-13A7-4329-A6CB-FBEB472BDFD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationWindowsAuth", "WebApplicationWindowsAuth\WebApplicationWindowsAuth.csproj", "{0EF957AB-DF70-4CFD-B31A-5AEA4ED5698E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplicationWindowsAuth", "WebApplicationWindowsAuth\WebApplicationWindowsAuth.csproj", "{0EF957AB-DF70-4CFD-B31A-5AEA4ED5698E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillQuestPdf", "BillQuestPdf\BillQuestPdf.csproj", "{09CB25C5-41BA-4B06-B908-09544DE7E2FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BillQuestPdf", "BillQuestPdf\BillQuestPdf.csproj", "{09CB25C5-41BA-4B06-B908-09544DE7E2FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppSampleOdbc", "ConsoleAppSampleOdbc\ConsoleAppSampleOdbc.csproj", "{B2992AD8-81CE-4E92-8194-0333C1AF00FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationMetronic53", "WebApplicationMetronic53\WebApplicationMetronic53.csproj", "{55808100-89FC-43C2-A3DD-E29785AF383C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,5 +49,19 @@ Global
 		{09CB25C5-41BA-4B06-B908-09544DE7E2FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09CB25C5-41BA-4B06-B908-09544DE7E2FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09CB25C5-41BA-4B06-B908-09544DE7E2FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2992AD8-81CE-4E92-8194-0333C1AF00FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2992AD8-81CE-4E92-8194-0333C1AF00FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2992AD8-81CE-4E92-8194-0333C1AF00FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2992AD8-81CE-4E92-8194-0333C1AF00FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55808100-89FC-43C2-A3DD-E29785AF383C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55808100-89FC-43C2-A3DD-E29785AF383C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55808100-89FC-43C2-A3DD-E29785AF383C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55808100-89FC-43C2-A3DD-E29785AF383C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {09E0B428-5512-48E0-AA80-F16088CBDF55}
 	EndGlobalSection
 EndGlobal
