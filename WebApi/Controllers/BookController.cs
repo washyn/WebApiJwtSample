@@ -9,6 +9,7 @@ using Microsoft.Data.SqlClient;
 
 namespace WebApi.Controllers;
 
+[Authorize(Role = "")]
 [Route("book")]
 [ApiController]
 public class BookController : ControllerBase
