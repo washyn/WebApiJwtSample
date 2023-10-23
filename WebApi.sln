@@ -17,7 +17,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BillQuestPdf", "BillQuestPd
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppSampleOdbc", "ConsoleAppSampleOdbc\ConsoleAppSampleOdbc.csproj", "{B2992AD8-81CE-4E92-8194-0333C1AF00FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationMetronic53", "WebApplicationMetronic53\WebApplicationMetronic53.csproj", "{55808100-89FC-43C2-A3DD-E29785AF383C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplicationMetronic53", "WebApplicationMetronic53\WebApplicationMetronic53.csproj", "{55808100-89FC-43C2-A3DD-E29785AF383C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CajaHuancayoQuestPdfReport", "CajaHuancayoQuestPdfReport\CajaHuancayoQuestPdfReport.csproj", "{E47D155C-F726-45BD-8495-22D911E97D35}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmlManagmentConsoleApp", "XmlManagmentConsoleApp\XmlManagmentConsoleApp.csproj", "{EEE9E5E9-5007-4B2A-ACF5-8A695A0774F4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PruebaManejoCalendario", "PruebaManejoCalendario\PruebaManejoCalendario.csproj", "{41F6F064-3289-4126-9779-A3F025BD5DD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationIdentity", "WebApplicationIdentity\WebApplicationIdentity.csproj", "{4F2A3854-FEA0-48E8-BE30-F19695538B35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +65,22 @@ Global
 		{55808100-89FC-43C2-A3DD-E29785AF383C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55808100-89FC-43C2-A3DD-E29785AF383C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55808100-89FC-43C2-A3DD-E29785AF383C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E47D155C-F726-45BD-8495-22D911E97D35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E47D155C-F726-45BD-8495-22D911E97D35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E47D155C-F726-45BD-8495-22D911E97D35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E47D155C-F726-45BD-8495-22D911E97D35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEE9E5E9-5007-4B2A-ACF5-8A695A0774F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEE9E5E9-5007-4B2A-ACF5-8A695A0774F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEE9E5E9-5007-4B2A-ACF5-8A695A0774F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEE9E5E9-5007-4B2A-ACF5-8A695A0774F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41F6F064-3289-4126-9779-A3F025BD5DD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41F6F064-3289-4126-9779-A3F025BD5DD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41F6F064-3289-4126-9779-A3F025BD5DD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41F6F064-3289-4126-9779-A3F025BD5DD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F2A3854-FEA0-48E8-BE30-F19695538B35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F2A3854-FEA0-48E8-BE30-F19695538B35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F2A3854-FEA0-48E8-BE30-F19695538B35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F2A3854-FEA0-48E8-BE30-F19695538B35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
