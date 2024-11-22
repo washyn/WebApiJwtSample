@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using Volo.Abp;
 
 var culture = new CultureInfo("es-pe");
@@ -55,7 +56,7 @@ string ShowMonth(int month)
 void SprintMensual(int year)
 {
     var fistDay = new DateTime(year, 1, 1);
-    var endDay = new DateTime(year, 1, 1).AddYears(1).AddDays(-1);
+    var endDay = new DateTime(year, 1, 1).AddYears(1).AddMonths(-1);
     var counter = 1;
     while (fistDay <= endDay)
     {
@@ -63,7 +64,8 @@ void SprintMensual(int year)
         var inicio = new DateTime(year, fistDay.Month, 1);
         var fin = inicio.AddMonths(1).AddDays(-1);
         var counterDisplay = (counter++).ToString().PadLeft(2, '0');
-        System.Console.WriteLine($"Sprint {counterDisplay} - {year} {ShowMonth(inicio.Month)} {inicio.ToString("d", culture)} - {fin.ToString("d", culture)}");
+        var monthNameTreeLetters = new CultureInfo("es-pe").DateTimeFormat.GetMonthName(inicio.Month).ToUpper().Truncate(3);
+        System.Console.WriteLine($"Sprint {counterDisplay} - {year} {monthNameTreeLetters} {inicio} - {fin}");
         fistDay = fistDay.AddMonths(1);
     }
 }
@@ -71,7 +73,7 @@ void SprintMensual(int year)
 void SprintBiMensual(int year)
 {
     var fistDay = new DateTime(year, 1, 1);
-    var endDay = new DateTime(year, 1, 1).AddYears(1).AddDays(-1);
+    var endDay = new DateTime(year, 1, 1).AddYears(1).AddMonths(-1);
     var counter = 1;
     while (fistDay <= endDay)
     {
@@ -79,7 +81,10 @@ void SprintBiMensual(int year)
         var inicio = new DateTime(year, fistDay.Month, 1);
         var fin = inicio.AddMonths(2).AddDays(-1);
         var counterDisplay = (counter++).ToString().PadLeft(2, '0');
-        System.Console.WriteLine($"{counterDisplay} {ShowMonth(inicio.Month)} {ShowMonth(fin.Month)} {inicio.ToString("d", culture)} - {fin.ToString("d", culture)}");
+        var displayMonthTreeLettersInicio = new CultureInfo("es-pe").DateTimeFormat.GetMonthName(inicio.Month).ToUpper().Truncate(3);
+        var displayMonthTreeLettersFin = new CultureInfo("es-pe").DateTimeFormat.GetMonthName(fin.Month).ToUpper().Truncate(3);
+
+        System.Console.WriteLine($"{counterDisplay} {displayMonthTreeLettersInicio} {displayMonthTreeLettersFin} {inicio} - {fin}");
         fistDay = fistDay.AddMonths(2);
     }
 }
@@ -87,7 +92,8 @@ void SprintBiMensual(int year)
 void SprintQuincenal(int year)
 {
     var fistDay = new DateTime(year, 1, 1);
-    var endDay = new DateTime(year, 1, 1).AddYears(1).AddDays(-1);
+    var endDay = new DateTime(year, 1, 1).AddYears(1).AddMonths(-1);
+    var counter = 1;
     while (fistDay <= endDay)
     {
         // inicio fin
@@ -97,9 +103,15 @@ void SprintQuincenal(int year)
         var inicioSegundaQuincena = finPrimeraQuincena.AddDays(1);
         var finSegundaQuincena = fistDay.AddMonths(1).AddDays(-1);
 
-        System.Console.WriteLine($"{ShowMonth(fistDay.Month)} I {inicioPrimeraQuincena.ToString("d", culture)} - {finPrimeraQuincena.ToString("d", culture)}");
-        System.Console.WriteLine($"{ShowMonth(fistDay.Month)} II {inicioSegundaQuincena.ToString("d", culture)} - {finSegundaQuincena.ToString("d", culture)}");
+        var counterDisplay1 = (counter).ToString().PadLeft(2, '0');
+        var counterDisplay2 = (counter + 1).ToString().PadLeft(2, '0');
+        var displayMonthTreeLetters = new CultureInfo("es-pe").DateTimeFormat.GetMonthName(fistDay.Month).ToUpper().Truncate(3);
+
+        System.Console.WriteLine($"{counterDisplay1} {displayMonthTreeLetters} I {inicioPrimeraQuincena} - {finPrimeraQuincena}");
+        System.Console.WriteLine($"{counterDisplay2} {displayMonthTreeLetters} II {inicioSegundaQuincena} - {finSegundaQuincena}");
+
         fistDay = fistDay.AddMonths(1);
+        counter = counter + 2;
     }
 }
 
@@ -116,15 +128,14 @@ void SprintSemanal(int year)
         var fin = inicio.AddDays(6);
         var counterDisplay = (counter++).ToString().PadLeft(2, '0');
 
-        // si el fin es el proximo anio, usar el ultimo dia de este ano
+        var finCondicional = fin;
+
+        // si el fin es el proximo anio, usar el ultimo dia de este año
         if (fin.Year != year)
         {
-            System.Console.WriteLine($"semana {counterDisplay} {inicio.ToString("d", culture)} - {endDay.ToString("d", culture)}");
+            finCondicional = endDay;
         }
-        else
-        {
-            System.Console.WriteLine($"semana {counterDisplay} {inicio.ToString("d", culture)} - {fin.ToString("d", culture)}");
-        }
+        System.Console.WriteLine($"semana {counterDisplay} {inicio} - {finCondicional}");
 
         fistDay = fistDay.AddDays(7);
     }
@@ -154,10 +165,53 @@ void InsertarSprint(int year, SprintType typeSprint)
     }
 }
 
-InsertarSprint(2023, SprintType.Mensual);
+InsertarSprint(2023, SprintType.Senamal);
 
 //SprintQuincenal(2023);
 //ShowForInsertDaily(DateTime.Now, DateTime.Now.AddMonths(1));
+
+
+static (int Anios, int Meses, int Dias) CalcularEdad(DateTime fechaNacimiento)
+{
+    DateTime fechaActual = DateTime.Now;
+    int anios = fechaActual.Year - fechaNacimiento.Year;
+    int meses = fechaActual.Month - fechaNacimiento.Month;
+    int dias = fechaActual.Day - fechaNacimiento.Day;
+
+    if (meses < 0 || (meses == 0 && dias < 0))
+    {
+        anios--;
+        meses += 12;
+    }
+
+    return (anios, meses, dias);
+}
+
+void CalcularEdad2(DateTime fechaNacimiento)
+{
+    // Obtiene la fecha actual.
+    DateTime fechaActual = DateTime.Now;
+
+    // Calcula la diferencia entre la fecha actual y la fecha de nacimiento.
+    TimeSpan diferencia = fechaActual - fechaNacimiento;
+
+    // Convierte la diferencia en años, meses y días.
+    
+    int años = diferencia.Days / 365;
+    int meses = (diferencia.Days % 365) / 30;
+    int dias = (diferencia.Days % 365) % 30;
+
+    // Imprime la edad calculada.
+    Console.WriteLine($"Tu edad: {años} años + {meses} meses + {dias} días");
+}
+
+
+
+
+DateTime fechaNacimiento = new DateTime(1988, 12,8);
+
+// Llama a la función para calcular la edad.
+CalcularEdad2(fechaNacimiento);
 
 
 // insert por lote, 
