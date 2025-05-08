@@ -14,6 +14,18 @@ namespace WebApplication_WebConfig.Controllers
             var conexion = ConfigurationManager.ConnectionStrings["MyConnectionString"];
             ViewData["con"] = conexion.ConnectionString;
             ViewData["Example"] = ConfigurationManager.AppSettings["Example"];
+
+            string environment = ConfigurationManager.AppSettings["Environment"];
+            if (environment == "Debug")
+            {
+                // Configuración para debug
+            }
+            else if (environment == "Release")
+            {
+                // Configuración para release
+            }
+
+            ViewData["environment"] = environment;
             return View();
         }
 
