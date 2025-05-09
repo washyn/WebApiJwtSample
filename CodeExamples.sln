@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketClient", "WebSocke
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketServer", "WebSocketServer\WebSocketServer.csproj", "{83C5D910-4EB7-450F-8031-ADCFCBD1AD5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReverseShell", "ReverseShell\ReverseShell.csproj", "{9C69B6E3-7F80-458E-A1FF-89D7871357C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,10 @@ Global
 		{83C5D910-4EB7-450F-8031-ADCFCBD1AD5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83C5D910-4EB7-450F-8031-ADCFCBD1AD5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83C5D910-4EB7-450F-8031-ADCFCBD1AD5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C69B6E3-7F80-458E-A1FF-89D7871357C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C69B6E3-7F80-458E-A1FF-89D7871357C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C69B6E3-7F80-458E-A1FF-89D7871357C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C69B6E3-7F80-458E-A1FF-89D7871357C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
