@@ -10,18 +10,16 @@ public interface ITenantDbConnectionFactory
 
 public class TenantDbConnectionFactory : ITenantDbConnectionFactory
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ITenantDatabaseInitializer _initializer;
     private readonly ITenantStore _tenantStore;
 
-    public TenantDbConnectionFactory(IHttpContextAccessor httpContextAccessor, ITenantDatabaseInitializer initializer,
-        ITenantStore tenantStore)
+    public TenantDbConnectionFactory(ITenantDatabaseInitializer initializer, ITenantStore tenantStore)
     {
-        _httpContextAccessor = httpContextAccessor;
         _initializer = initializer;
         _tenantStore = tenantStore;
     }
-
+    // TODO: conexion should be disposable... check proyect master or products
+    // where has conexion factory
     public IDbConnection Create()
     {
         var tenantInfo = _tenantStore.GetTenant() ??

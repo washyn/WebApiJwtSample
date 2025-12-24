@@ -22,6 +22,11 @@ public class HeaderTenantResolver : ITenantResolver
         {
             return string.Empty;
         }
+        // Validación estricta para entorno productivo
+        if (!System.Text.RegularExpressions.Regex.IsMatch(tenantName, "^[a-zA-Z0-9_-]{1,50}$"))
+        {
+            return string.Empty;
+        }
 
         return tenantName;
     }

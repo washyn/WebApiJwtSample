@@ -27,8 +27,8 @@ public class Program
         builder.Services.AddTransient<ICurrentTenant, CurrentTenant>();
 
         // SQLite + Dapper per tenant
-        builder.Services.AddSingleton<ITenantDatabaseInitializer, TenantDatabaseInitializer>();
         builder.Services.AddTransient<ITenantDbConnectionFactory, TenantDbConnectionFactory>();
+        builder.Services.AddSingleton<ITenantDatabaseInitializer, TenantDatabaseInitializer>();
 
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
@@ -50,3 +50,7 @@ public class Program
         app.Run();
     }
 }
+
+// hay un servicio que obtiene el tenant name
+// otro que valida que ese name exista en algun store(app settings o base de datos),
+// el current tenant usa el store

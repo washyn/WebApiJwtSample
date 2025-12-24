@@ -17,7 +17,7 @@ public interface ICurrentTenant
 public class CurrentTenant : ICurrentTenant
 {
     private readonly ITenantStore _tenantStore;
-    public bool IsAvailable => string.IsNullOrEmpty(Name) == false;
+    public bool IsAvailable => !string.IsNullOrEmpty(Name);
     public string? Name => GetCurrentTenant();
 
     public CurrentTenant(ITenantStore tenantStore)
