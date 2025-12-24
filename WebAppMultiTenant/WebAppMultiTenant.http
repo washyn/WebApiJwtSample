@@ -8,3 +8,7 @@ x-tenant: tenantA
 GET {{WebAppMultiTenant_HostAddress}}/api/users
 Accept: application/json
 x-tenant: tenantB
+
+###
+GET {{WebAppMultiTenant_HostAddress}}/api/users
+Accept: application/json

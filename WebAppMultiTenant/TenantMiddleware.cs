@@ -28,6 +28,7 @@ public class TenantMiddleware
         var tenantName = _tenantResolver.ResolveTenantName();
         if (string.IsNullOrWhiteSpace(tenantName))
         {
+            _logger.LogWarning("Header x-tenant requerido");
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
             await context.Response.WriteAsync("Header x-tenant requerido");
             return;

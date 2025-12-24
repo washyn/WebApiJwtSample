@@ -1,4 +1,5 @@
 
+using Microsoft.Extensions.Logging.Console;
 using WebAppMultiTenant.Controller;
 
 namespace WebAppMultiTenant;
@@ -8,6 +9,14 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        builder.Logging.ClearProviders();
+        builder.Logging.AddSimpleConsole(options =>
+        {
+            options.TimestampFormat = "HH:mm:ss ";
+            options.SingleLine = true;
+            options.IncludeScopes = false;
+        });
+
 
         // Add services to the container.
         builder.Services.AddAuthorization();
