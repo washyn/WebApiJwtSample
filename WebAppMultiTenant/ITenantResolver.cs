@@ -29,7 +29,7 @@ public class HeaderTenantResolver : ITenantResolver
 
 public interface ITenantStore
 {
-    TenantInfo GetTenant(string name);
+    TenantInfo? GetTenant(string name);
 }
 
 public class TenantStoreInMemory : ITenantStore
@@ -50,8 +50,8 @@ public class TenantStoreInMemory : ITenantStore
         });
     }
 
-    public TenantInfo GetTenant(string name)
+    public TenantInfo? GetTenant(string name)
     {
-        return _tenants[name];
+        return _tenants.TryGetValue(name, out var info) ? info : null;
     }
 }

@@ -32,6 +32,7 @@ public class Program
 
         app.UseHttpsRedirection();
         app.UseRouting();
+        app.UseMiddleware<TenantMiddleware>();
         app.UseAuthorization();
         app.MapControllers();
 

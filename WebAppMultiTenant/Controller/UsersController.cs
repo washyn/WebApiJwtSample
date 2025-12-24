@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace WebAppMultiTenant.Controller;
 
@@ -29,27 +31,26 @@ public class UserDto
 public class UsersRepository
 {
     private readonly ITenantStore _tenantStore;
-    private readonly ITenantResolver _tenantResolver;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly ILogger<UsersRepository> _logger;
 
-    public UsersRepository(ITenantStore tenantStore, ITenantResolver tenantResolver)
+    public UsersRepository(ITenantStore tenantStore, IHttpContextAccessor httpContextAccessor,
+        ILogger<UsersRepository> logger)
     {
         _tenantStore = tenantStore;
-        _tenantResolver = tenantResolver;
+        _httpContextAccessor = httpContextAccessor;
+        _logger = logger;
     }
 
     public List<UserDto> GetUsers()
     {
-        var tenant = _tenantResolver.ResolveTenantName();
-        if (tenant == null)
+        var tenantInfo = _httpContextAccessor.HttpContext?.Items[TenantMiddleware.TenantItemsKey] as TenantInfo;
+        if (tenantInfo is null)
         {
-            throw new Exception("Tenant not found");
+            throw new Exception("Tenant no disponible en el contexto");
         }
 
-        var tenantData = _tenantStore.GetTenant(tenant);
-        if (tenantData == null)
-        {
-            throw new Exception("Tenant data not found");
-        }
+        _logger.LogInformation("Obteniendo usuarios para {Tenant}", tenantInfo.Name);
 
         var dataTenantA = new List<UserDto>()
         {
@@ -91,6 +92,6 @@ public class UsersRepository
             { "tenantB", dataTenantB }
         };
 
-        return tenantsData[tenantData.Name];
+        return tenantsData[tenantInfo.Name];
     }
 }
