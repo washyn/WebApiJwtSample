@@ -1,5 +1,3 @@
-
-using Microsoft.Extensions.Logging.Console;
 using WebAppMultiTenant.Controller;
 
 namespace WebAppMultiTenant;

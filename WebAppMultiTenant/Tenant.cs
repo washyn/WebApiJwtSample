@@ -16,25 +16,17 @@ public interface ICurrentTenant
 
 public class CurrentTenant : ICurrentTenant
 {
-    private readonly ITenantResolver _tenantResolver;
     private readonly ITenantStore _tenantStore;
     public bool IsAvailable => string.IsNullOrEmpty(Name) == false;
     public string? Name => GetCurrentTenant();
 
-    public CurrentTenant(ITenantResolver tenantResolver, ITenantStore tenantStore)
+    public CurrentTenant(ITenantStore tenantStore)
     {
-        _tenantResolver = tenantResolver;
         _tenantStore = tenantStore;
     }
 
     string GetCurrentTenant()
     {
-        var tenant = _tenantResolver.ResolveTenantName();
-        if (string.IsNullOrEmpty(tenant))
-        {
-            return string.Empty;
-        }
-
         var tenantInfo = _tenantStore.GetTenant();
         if (tenantInfo == null)
         {
@@ -43,11 +35,4 @@ public class CurrentTenant : ICurrentTenant
 
         return tenantInfo.Name;
     }
-}
-
-// TenantConnectionStringResolver
-
-public class TenantResolveResult
-{
-    public TenantInfo Tenant { get; set; }
 }
