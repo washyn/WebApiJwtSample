@@ -1,0 +1,7 @@
+@WebAppMultiTenant_HostAddress = http://localhost:5251
+
+GET {{WebAppMultiTenant_HostAddress}}/api/users
+Accept: application/json
+x-tenant: tenantB
+
+###
