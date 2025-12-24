@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
+using Dapper;
+using System.Data;
 
 namespace WebAppMultiTenant.Controller;
 
@@ -24,74 +24,23 @@ public class UsersController : ControllerBase
 
 public class UserDto
 {
-    public Guid Id { get; set; }
+    public string Id { get; set; }
     public string Name { get; set; }
 }
 
 public class UsersRepository
 {
-    private readonly ITenantStore _tenantStore;
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly ILogger<UsersRepository> _logger;
+    private readonly ITenantDbConnectionFactory _connectionFactory;
 
-    public UsersRepository(ITenantStore tenantStore, IHttpContextAccessor httpContextAccessor,
-        ILogger<UsersRepository> logger)
+    public UsersRepository(ITenantDbConnectionFactory connectionFactory)
     {
-        _tenantStore = tenantStore;
-        _httpContextAccessor = httpContextAccessor;
-        _logger = logger;
+        _connectionFactory = connectionFactory;
     }
 
     public List<UserDto> GetUsers()
     {
-        var tenantInfo = _httpContextAccessor.HttpContext?.Items[TenantMiddleware.TenantItemsKey] as TenantInfo;
-        if (tenantInfo is null)
-        {
-            throw new Exception("Tenant no disponible en el contexto");
-        }
-
-        _logger.LogInformation("Obteniendo usuarios para {Tenant}", tenantInfo.Name);
-
-        var dataTenantA = new List<UserDto>()
-        {
-            new UserDto()
-            {
-                Id = Guid.NewGuid(), Name = "User 1"
-            },
-            new UserDto()
-            {
-                Id = Guid.NewGuid(), Name = "User 2"
-            },
-            new UserDto()
-            {
-                Id = Guid.NewGuid(),
-                Name = "User 3"
-            }
-        };
-
-        var dataTenantB = new List<UserDto>()
-        {
-            new UserDto()
-            {
-                Id = Guid.NewGuid(), Name = "User 4"
-            },
-            new UserDto()
-            {
-                Id = Guid.NewGuid(), Name = "User 5"
-            },
-            new UserDto()
-            {
-                Id = Guid.NewGuid(),
-                Name = "User 6"
-            }
-        };
-
-        var tenantsData = new Dictionary<string, List<UserDto>>()
-        {
-            { "tenantA", dataTenantA },
-            { "tenantB", dataTenantB }
-        };
-
-        return tenantsData[tenantInfo.Name];
+        using var conn = _connectionFactory.Create();
+        var users = conn.Query<UserDto>("SELECT Id as Id, Name as Name FROM Users");
+        return users.ToList();
     }
 }

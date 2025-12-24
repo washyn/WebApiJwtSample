@@ -19,6 +19,10 @@ public class Program
         builder.Services.AddTransient<ITenantStore, TenantStoreInMemory>();
         builder.Services.AddTransient<ICurrentTenant, CurrentTenant>();
 
+        // SQLite + Dapper per tenant
+        builder.Services.AddSingleton<ITenantDatabaseInitializer, TenantDatabaseInitializer>();
+        builder.Services.AddTransient<ITenantDbConnectionFactory, TenantDbConnectionFactory>();
+
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
 

@@ -29,29 +29,32 @@ public class HeaderTenantResolver : ITenantResolver
 
 public interface ITenantStore
 {
-    TenantInfo? GetTenant(string name);
+    TenantInfo? GetTenant();
 }
 
 public class TenantStoreInMemory : ITenantStore
 {
+    private readonly ITenantResolver _tenantResolver;
     private readonly Dictionary<string, TenantInfo> _tenants = new();
 
-    public TenantStoreInMemory()
+    public TenantStoreInMemory(ITenantResolver tenantResolver)
     {
+        _tenantResolver = tenantResolver;
         _tenants.Add("tenantA", new TenantInfo()
         {
             Name = "tenantA",
-            ConnectionString = "Server=localhost;Database=tenantA;User Id=sa;Password=12345678;"
+            ConnectionString = "Data Source=Data/tenantA.db"
         });
         _tenants.Add("tenantB", new TenantInfo()
         {
             Name = "tenantB",
-            ConnectionString = "Server=localhost;Database=tenantB;User Id=sa;Password=12345678;"
+            ConnectionString = "Data Source=Data/tenantB.db"
         });
     }
 
-    public TenantInfo? GetTenant(string name)
+    public TenantInfo? GetTenant()
     {
+        var name = _tenantResolver.ResolveTenantName();
         return _tenants.TryGetValue(name, out var info) ? info : null;
     }
 }

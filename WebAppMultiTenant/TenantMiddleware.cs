@@ -12,8 +12,6 @@ public class TenantMiddleware
     private readonly ITenantStore _tenantStore;
     private readonly ILogger<TenantMiddleware> _logger;
 
-    public const string TenantItemsKey = "TenantInfo";
-
     public TenantMiddleware(RequestDelegate next,
         ITenantResolver tenantResolver,
         ITenantStore tenantStore,
@@ -35,7 +33,7 @@ public class TenantMiddleware
             return;
         }
 
-        var tenantInfo = _tenantStore.GetTenant(tenantName);
+        var tenantInfo = _tenantStore.GetTenant();
         if (tenantInfo is null)
         {
             context.Response.StatusCode = StatusCodes.Status404NotFound;
@@ -43,10 +41,8 @@ public class TenantMiddleware
             return;
         }
 
-        context.Items[TenantItemsKey] = tenantInfo;
-
         using (_logger.BeginScope(new Dictionary<string, object>
-                   { { "Tenant", tenantInfo.Name } }))
+                   { { "Tenant", tenantName } }))
         {
             await _next(context);
         }

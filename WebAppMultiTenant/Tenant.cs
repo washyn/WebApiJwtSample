@@ -35,7 +35,7 @@ public class CurrentTenant : ICurrentTenant
             return string.Empty;
         }
 
-        var tenantInfo = _tenantStore.GetTenant(tenant);
+        var tenantInfo = _tenantStore.GetTenant();
         if (tenantInfo == null)
         {
             return string.Empty;
