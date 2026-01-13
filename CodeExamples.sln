@@ -59,6 +59,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppPagination", "WebAppP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppMultiTenant", "WebAppMultiTenant\WebAppMultiTenant.csproj", "{20887BAB-D944-4971-B971-CFC7BB32519A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppTenantArquitecture", "ConsoleAppTenantArquitecture\ConsoleAppTenantArquitecture.csproj", "{8E17B178-850D-4A71-853F-BD17D7729646}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -405,6 +407,18 @@ Global
 		{20887BAB-D944-4971-B971-CFC7BB32519A}.Release|x64.Build.0 = Release|Any CPU
 		{20887BAB-D944-4971-B971-CFC7BB32519A}.Release|x86.ActiveCfg = Release|Any CPU
 		{20887BAB-D944-4971-B971-CFC7BB32519A}.Release|x86.Build.0 = Release|Any CPU
+		{8E17B178-850D-4A71-853F-BD17D7729646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E17B178-850D-4A71-853F-BD17D7729646}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E17B178-850D-4A71-853F-BD17D7729646}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8E17B178-850D-4A71-853F-BD17D7729646}.Debug|x64.Build.0 = Debug|Any CPU
+		{8E17B178-850D-4A71-853F-BD17D7729646}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8E17B178-850D-4A71-853F-BD17D7729646}.Debug|x86.Build.0 = Debug|Any CPU
+		{8E17B178-850D-4A71-853F-BD17D7729646}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E17B178-850D-4A71-853F-BD17D7729646}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E17B178-850D-4A71-853F-BD17D7729646}.Release|x64.ActiveCfg = Release|Any CPU
+		{8E17B178-850D-4A71-853F-BD17D7729646}.Release|x64.Build.0 = Release|Any CPU
+		{8E17B178-850D-4A71-853F-BD17D7729646}.Release|x86.ActiveCfg = Release|Any CPU
+		{8E17B178-850D-4A71-853F-BD17D7729646}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -32,7 +32,7 @@ namespace ConsoleAbpSetting
     // [DependsOn(typeof(AbpSpecificationsModule))]
     // [DependsOn(typeof(AbpSerializationModule))]
     // [DependsOn(typeof(AbpVirtualFileSystemModule))]
-    
+
     [DependsOn(typeof(AbpSettingsModule))]
     public class ExtraModule : AbpModule
     {
@@ -58,15 +58,20 @@ namespace ConsoleAbpSetting
         private readonly ILogger<MainService> _logger;
         private readonly IOptions<AbpSettingOptions> _options;
         private readonly ICollection<ISettingValueProvider> _providers;
+        private readonly ISettingDefinitionManager _settingDefinitionManager;
 
-        public MainService(ISettingProvider settingProvider, ILogger<MainService> logger, IOptions<AbpSettingOptions> options,
-            ICollection<ISettingValueProvider> providers)
+        public MainService(ISettingProvider settingProvider, ILogger<MainService> logger,
+            IOptions<AbpSettingOptions> options,
+            ICollection<ISettingValueProvider> providers,
+            ISettingDefinitionManager settingDefinitionManager)
         {
             _settingProvider = settingProvider;
             _logger = logger;
             _options = options;
             _providers = providers;
+            _settingDefinitionManager = settingDefinitionManager;
         }
+
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             var conf = await _settingProvider.GetOrNullAsync(AppLogoSettings.AppLogoPicture);
@@ -76,18 +81,20 @@ namespace ConsoleAbpSetting
             {
                 _logger.LogInformation($"- Value provider: {valueProvider.FullName}");
             }
+
             _logger.LogInformation($"Definition providers count: {_options.Value.DefinitionProviders.Count}");
             foreach (var definitionProvider in _options.Value.DefinitionProviders)
             {
                 _logger.LogInformation($"- Definition provider: {definitionProvider.FullName}");
             }
+
             // delted providers
             _logger.LogInformation($"Deleted providers count: {_options.Value.DeletedSettings.Count}");
             foreach (var provider in _options.Value.DeletedSettings)
             {
                 _logger.LogInformation($"Deleted provider: {provider}");
             }
-            
+
             // providers
             _logger.LogInformation($"Providers count: {_providers.Count}");
             foreach (var provider in _providers)
@@ -101,6 +108,7 @@ namespace ConsoleAbpSetting
             return Task.CompletedTask;
         }
     }
+
     public class AppLogoSettingDefinitionProvider : SettingDefinitionProvider
     {
         public override void Define(ISettingDefinitionContext context)
