@@ -9,7 +9,7 @@ using Volo.Abp.DependencyInjection;
 using Volo.Abp.Modularity;
 
 namespace ConsoleAppTenantArquitecture;
-// TODO: move to WebAppMultiTenant for validate
+
 class Program
 {
     static async Task Main(string[] args)
