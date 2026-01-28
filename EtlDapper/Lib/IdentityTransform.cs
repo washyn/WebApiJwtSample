@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace EtlDapper;
+namespace EtlDapper.Lib;
 
 public class IdentityTransform<T> : ITransform<T, T>
 {

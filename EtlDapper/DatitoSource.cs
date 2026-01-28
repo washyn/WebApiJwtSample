@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper;
+using EtlDapper.Lib;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Npgsql;
@@ -16,10 +17,13 @@ public class DatitoSource : IDataSource<PeopleRecord>
         _configuration = configuration;
     }
 
-    public async Task<Batch<PeopleRecord>> FetchBatchAsync(long lastId, int batchSize)
+    public async Task<DataPage<PeopleRecord>> FetchPageAsync(int pageIndex, int pageSize)
     {
         await using var pg = new NpgsqlConnection(_configuration.GetConnectionString("Postgres"));
         await pg.OpenAsync();
+
+        var offset = (pageIndex - 1) * pageSize;
+
         var selectSql = @"select
     nro_dni as Dni,
     pat_per as ApellidoPaterno,
@@ -51,13 +55,11 @@ public class DatitoSource : IDataSource<PeopleRecord>
     case when flg_ren then 1 else 0 end as Renovacion,
     ide_per as SourceId
 from public.datito
-where ide_per > @last
 order by ide_per
-limit @limit;";
+limit @limit offset @offset;";
 
-        var rows = await pg.QueryAsync<PeopleRecord>(selectSql, new { last = lastId, limit = batchSize });
+        var rows = await pg.QueryAsync<PeopleRecord>(selectSql, new { limit = pageSize, offset = offset });
         var list = rows.AsList();
-        var nextLast = list.Count == 0 ? lastId : list[^1].SourceId;
-        return new Batch<PeopleRecord>(list, nextLast);
+        return new DataPage<PeopleRecord>(list, pageIndex);
     }
 }

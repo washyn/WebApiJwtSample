@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using EtlDapper.Lib;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -23,7 +24,9 @@ public class PeoplesDestination : IDataDestination<PeopleRecord>
         await sqlite.OpenAsync();
         await sqlite.ExecuteAsync("PRAGMA journal_mode=WAL;");
         await sqlite.ExecuteAsync("PRAGMA synchronous=OFF;");
-        var exists = await sqlite.ExecuteScalarAsync<long>("select count(*) from sqlite_schema where type='table' and name='Peoples'");
+        var exists =
+            await sqlite.ExecuteScalarAsync<long>(
+                "select count(*) from sqlite_schema where type='table' and name='Peoples'");
         if (exists > 0) return;
         var ddl = @"create table main.Peoples
 (
@@ -81,6 +84,7 @@ NombreCompleto, Caducidad, Cuil, FechaEmision, EstadoAtencion, Inscripcion, Inst
         {
             await sqlite.ExecuteAsync(insertSql, item, tx);
         }
+
         tx.Commit();
     }
 }
