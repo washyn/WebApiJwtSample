@@ -20,7 +20,7 @@ public class PeoplesDestination : IDataDestination<PeopleRecord>
 
     public async Task InitializeAsync()
     {
-        await using var sqlite = new SqliteConnection(_configuration.GetConnectionString("Sqlite"));
+        await using var sqlite = new SqliteConnection(_configuration.GetConnectionString("Destination"));
         await sqlite.OpenAsync();
         await sqlite.ExecuteAsync("PRAGMA journal_mode=WAL;");
         await sqlite.ExecuteAsync("PRAGMA synchronous=OFF;");
@@ -68,7 +68,7 @@ public class PeoplesDestination : IDataDestination<PeopleRecord>
     public async Task WriteBatchAsync(List<PeopleRecord> items)
     {
         if (items.Count == 0) return;
-        await using var sqlite = new SqliteConnection(_configuration.GetConnectionString("Sqlite"));
+        await using var sqlite = new SqliteConnection(_configuration.GetConnectionString("Destination"));
         await sqlite.OpenAsync();
         using var tx = sqlite.BeginTransaction();
         var insertSql = @"insert into Peoples (

@@ -19,7 +19,7 @@ public class DatitoSource : IDataSource<PeopleRecord>
 
     public async Task<DataPage<PeopleRecord>> FetchPageAsync(int pageIndex, int pageSize)
     {
-        await using var pg = new NpgsqlConnection(_configuration.GetConnectionString("Postgres"));
+        await using var pg = new NpgsqlConnection(_configuration.GetConnectionString("Source"));
         await pg.OpenAsync();
 
         var offset = (pageIndex - 1) * pageSize;
@@ -58,7 +58,8 @@ from public.datito
 order by ide_per
 limit @limit offset @offset;";
 
-        var rows = await pg.QueryAsync<PeopleRecord>(selectSql, new { limit = pageSize, offset = offset });
+        var rows = await pg.QueryAsync<PeopleRecord>(selectSql, new { limit = pageSize, offset = offset },
+            commandTimeout: 300);
         var list = rows.AsList();
         return new DataPage<PeopleRecord>(list, pageIndex);
     }

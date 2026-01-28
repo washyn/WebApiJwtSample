@@ -1,5 +1,6 @@
 ﻿using EtlDapper.Lib;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -21,22 +22,29 @@ public class EtlDapperModule : AbpModule
         context.Services.AddTransient<DatitoSource>();
         context.Services.AddTransient<IdentityTransform<PeopleRecord>>();
         context.Services.AddTransient<PeoplesDestination>();
+        context.Services.AddTransient<HealthCheckSqlite>();
         context.Services.AddLogging();
         context.Services.AddHostedService<AppHostedService>();
+        context.Services.AddHealthChecks()
+            .AddCheck<HealthCheckSqlite>("sqlite")
+            .AddCheck<HealthCheckPostgres>("postgres");
     }
 }
 
 public class AppHostedService : IHostedService
 {
     private readonly ILogger<AppHostedService> _logger;
+    private readonly HealthCheckService _healthReport;
     private readonly DatitoSource _source;
     private readonly IdentityTransform<PeopleRecord> _transform;
     private readonly PeoplesDestination _destination;
 
     public AppHostedService(ILogger<AppHostedService> logger,
+        HealthCheckService healthReport,
         DatitoSource source, IdentityTransform<PeopleRecord> transform, PeoplesDestination destination)
     {
         _logger = logger;
+        _healthReport = healthReport;
         _source = source;
         _transform = transform;
         _destination = destination;
@@ -44,7 +52,17 @@ public class AppHostedService : IHostedService
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        var pipeline = new EtlPipeline<PeopleRecord, PeopleRecord>(_source, _transform, _destination, 10_000);
+        var healthReport = await _healthReport.CheckHealthAsync(cancellationToken);
+        foreach (var entry in healthReport.Entries)
+        {
+            if (entry.Value.Status != HealthStatus.Healthy)
+            {
+                _logger.LogCritical("Health checks failed. Suspending ETL process.");
+                return;
+            }
+        }
+
+        var pipeline = new EtlPipeline<PeopleRecord, PeopleRecord>(_source, _transform, _destination, 10_000, _logger);
         await pipeline.RunAsync();
     }
 
@@ -65,8 +83,7 @@ public class Program
             .WriteTo.Async(r => r.Console())
             .CreateLogger();
 
-        using var host = CreateHostBuilder(args).Build();
-        await host.RunAsync();
+        await CreateHostBuilder(args).RunConsoleAsync();
     }
 
     static IHostBuilder CreateHostBuilder(string[] args) =>
