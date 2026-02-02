@@ -1,0 +1,10 @@
+# TODO: add editorconfig rules for this project for indentation with 4 spaces
+
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
