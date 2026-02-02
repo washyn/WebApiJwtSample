@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore.Sqlite;
 using Volo.Abp.Modularity;
@@ -11,6 +12,11 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddApplication<AppModule>();
+
+// For only apis
+builder.Services.AddControllers()
+    .AddJsonOptions(o => { o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
+
 
 var app = builder.Build();
 

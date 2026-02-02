@@ -13,29 +13,29 @@
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger form-text"></div>
             <input type="hidden" asp-for="Ebook.Id" />
-            <div class="form-group">
-                <label asp-for="Ebook.Name" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Ebook.Name" class="form-label"></label>
                 <input asp-for="Ebook.Name" class="form-control" />
-                <span asp-validation-for="Ebook.Name" class="text-danger"></span>
+                <span asp-validation-for="Ebook.Name" class="text-danger form-text"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Ebook.Type" class="control-label"></label>
-                <select asp-for="Ebook.Type" class="form-control" asp-items="Html.GetEnumSelectList<BookType>()"></select>
-                <span asp-validation-for="Ebook.Type" class="text-danger"></span>
+            <div class="mb-3">
+                <label asp-for="Ebook.Type" class="form-label"></label>
+                <select asp-for="Ebook.Type" class="form-control" asp-items="Html.GetEnumSelectListAsString<BookType>()"></select>
+                <span asp-validation-for="Ebook.Type" class="text-danger form-text"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Ebook.PublishDate" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Ebook.PublishDate" class="form-label"></label>
                 <input asp-for="Ebook.PublishDate" class="form-control" />
-                <span asp-validation-for="Ebook.PublishDate" class="text-danger"></span>
+                <span asp-validation-for="Ebook.PublishDate" class="text-danger form-text"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Ebook.Price" class="control-label"></label>
-                <input asp-for="Ebook.Price" class="form-control" />
-                <span asp-validation-for="Ebook.Price" class="text-danger"></span>
+            <div class="mb-3">
+                <label asp-for="Ebook.Price" class="form-label"></label>
+                <input asp-for="Ebook.Price" type="number" class="form-control" />
+                <span asp-validation-for="Ebook.Price" class="text-danger form-text"></span>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
