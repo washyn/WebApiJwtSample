@@ -1,11 +1,15 @@
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore.Sqlite;
 using Volo.Abp.Modularity;
+using Microsoft.EntityFrameworkCore;
+using WebAppEnum.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddApplication<AppModule>();
 
 var app = builder.Build();
