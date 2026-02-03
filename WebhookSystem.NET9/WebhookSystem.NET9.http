@@ -1,0 +1,6 @@
+@WebhookSystem.NET9_HostAddress = http://localhost:5262
+
+GET {{WebhookSystem.NET9_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
