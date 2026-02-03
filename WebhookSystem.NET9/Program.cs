@@ -1,7 +1,10 @@
 // Program.cs
+
 using Hangfire;
+using Hangfire.SQLite;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using WebhookSystem.NET9;
 using WebhookSystem.NET9.Data;
 using WebhookSystem.NET9.Endpoints;
 using WebhookSystem.NET9.Middleware;
@@ -13,20 +16,17 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 // Add services to the container
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new() { Title = "Webhook System API", Version = "v1" });
-});
+builder.Services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new() { Title = "Webhook System API", Version = "v1" }); });
 // Entity Framework
 builder.Services.AddDbContext<WebhookDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetSqlite()));
 // HttpClient with policies
 builder.Services.AddHttpClient<IWebhookSender, WebhookSender>(client =>
-{
-    client.Timeout = TimeSpan.FromSeconds(30);
-    client.DefaultRequestHeaders.Add("User-Agent", "WebhookSystem.NET9/1.0");
-})
-.AddStandardResilienceHandler(); // .NET 9 resilience patterns
+    {
+        client.Timeout = TimeSpan.FromSeconds(30);
+        client.DefaultRequestHeaders.Add("User-Agent", "WebhookSystem.NET9/1.0");
+    })
+    .AddStandardResilienceHandler(); // .NET 9 resilience patterns
 // Webhook services
 builder.Services.AddScoped<IWebhookService, WebhookService>();
 builder.Services.AddScoped<IWebhookSender, WebhookSender>();
@@ -36,15 +36,12 @@ builder.Services.AddHangfire(configuration => configuration
     .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
     .UseSimpleAssemblyNameTypeSerializer()
     .UseRecommendedSerializerSettings()
-    .UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddHangfireServer(options =>
-{
-    options.WorkerCount = Environment.ProcessorCount * 2;
-});
+    .UseSQLiteStorage(builder.Configuration.GetSqlite()));
+builder.Services.AddHangfireServer(options => { options.WorkerCount = Environment.ProcessorCount * 2; });
 // Health checks
 builder.Services.AddHealthChecks()
-    .AddSqlServer(
-        connectionString: builder.Configuration.GetConnectionString("DefaultConnection"),
+    .AddSqlite(
+        connectionString: builder.Configuration.GetSqlite(),
         name: "database"
     )
     .AddHangfire(options => options.MinimumAvailableServers = 1);
@@ -56,11 +53,12 @@ if (builder.Environment.IsDevelopment())
         options.AddDefaultPolicy(policy =>
         {
             policy.AllowAnyOrigin()
-                  .AllowAnyMethod()
-                  .AllowAnyHeader();
+                .AllowAnyMethod()
+                .AllowAnyHeader();
         });
     });
 }
+
 var app = builder.Build();
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
@@ -69,6 +67,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.UseCors();
 }
+
 // Add custom middleware
 app.UseSerilogRequestLogging();
 app.UseMiddleware<WebhookAuthenticationMiddleware>();
@@ -111,4 +110,5 @@ if (app.Environment.IsDevelopment())
     var context = scope.ServiceProvider.GetRequiredService<WebhookDbContext>();
     await context.Database.EnsureCreatedAsync();
 }
+
 app.Run();
