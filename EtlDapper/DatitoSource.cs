@@ -59,7 +59,7 @@ order by ide_per
 limit @limit offset @offset;";
 
         var rows = await pg.QueryAsync<PeopleRecord>(selectSql, new { limit = pageSize, offset = offset },
-            commandTimeout: 300);
+            commandTimeout: 1800 * 1000);
         var list = rows.AsList();
         return new DataPage<PeopleRecord>(list, pageIndex);
     }

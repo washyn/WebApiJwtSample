@@ -62,7 +62,7 @@ public class AppHostedService : IHostedService
             }
         }
 
-        var pipeline = new EtlPipeline<PeopleRecord, PeopleRecord>(_source, _transform, _destination, 10_000, _logger);
+        var pipeline = new EtlPipeline<PeopleRecord, PeopleRecord>(_source, _transform, _destination, 500_000, _logger);
         await pipeline.RunAsync();
     }
 
