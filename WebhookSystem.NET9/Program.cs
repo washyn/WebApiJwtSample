@@ -11,7 +11,10 @@ using WebhookSystem.NET9.Middleware;
 using WebhookSystem.NET9.Services;
 
 
-
+// TODO: can be change for use as library 
+// can be use as event driven system same as abp framework
+// can be add in appsetttings
+// Validate delivery saves in database
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Serilog
@@ -84,7 +87,7 @@ if (app.Environment.IsDevelopment())
 // Add custom middleware
 app.UseSerilogRequestLogging();
 app.UseMiddleware<WebhookAuthenticationMiddleware>();
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 // Hangfire dashboard
 app.UseHangfireDashboard("/hangfire", new DashboardOptions

@@ -20,6 +20,7 @@ namespace WebhookSystem.NET9.Services
     // TODO: can be improve key share process
     // el secret no se deberi compartir via header
     // add another proyect for test
+    // implement send with retry standalone with hangfire and then use ai sugestion 
     public class WebhookSender : IWebhookSender
     {
         private readonly HttpClient _httpClient;
@@ -100,6 +101,14 @@ namespace WebhookSystem.NET9.Services
             }
         }
 
+        // Can be add fix for send only one webhook without retry
+        private async Task SendAsync(
+            WebhookSubscription subscription,
+            WebhookDelivery delivery,
+            CancellationToken cancellationToken)
+        {
+        }
+
         private async Task SendWithRetryAsync(
             WebhookSubscription subscription,
             WebhookDelivery delivery,
@@ -128,6 +137,7 @@ namespace WebhookSystem.NET9.Services
                         attempt, maxAttempts, subscription.Url);
                 }
 
+                _logger.LogInformation("Delivery {@Delivery}", delivery);
                 // Save attempt result
                 if (delivery.Id == Guid.Empty)
                 {
@@ -166,7 +176,8 @@ namespace WebhookSystem.NET9.Services
             // Add authentication headers
             var timestamp = _hmacService.GenerateTimestamp();
             var signature = _hmacService.GenerateSignature(delivery.Payload, subscription.Secret);
-
+            // TODO: this secret aded only for test
+            request.Headers.Add("X-API-Key", subscription.Secret);
             request.Headers.Add("X-Webhook-Signature", $"sha256={signature}");
             request.Headers.Add("X-Webhook-Timestamp", timestamp);
             request.Headers.Add("X-Webhook-Id", delivery.Id.ToString());

@@ -3,7 +3,6 @@ using System.Text;
 
 namespace WebhookSystem.NET9.Services
 {
-    
     public interface IHmacAuthenticationService
     {
         string GenerateSignature(string payload, string secret, string algorithm = "sha256");
@@ -25,7 +24,7 @@ namespace WebhookSystem.NET9.Services
         {
             try
             {
-                var keyBytes = Encoding.UTF8.GetBytes(secret);
+                var keyBytes = Convert.FromBase64String(secret);
                 var payloadBytes = Encoding.UTF8.GetBytes(payload);
                 using var hmac = algorithm.ToLowerInvariant() switch
                 {

@@ -1,4 +1,6 @@
-﻿using WebhookSystem.NET9.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebhookSystem.NET9.Data;
+using WebhookSystem.NET9.Models;
 using WebhookSystem.NET9.Services;
 
 namespace WebhookSystem.NET9.Endpoints
@@ -64,7 +66,15 @@ namespace WebhookSystem.NET9.Endpoints
                 .Produces(202)
                 .Produces(404)
                 .ProducesProblem(500);
+            group.MapGet("/subscriptions/{id:guid}/trigger", TrigerSpecificSubscription)
+                .WithName("TriggerWebhookEventSpecificSubscription")
+                .WithSummary("Trigger a webhook event")
+                .WithOpenApi()
+                .Produces(202)
+                .Produces(404)
+                .ProducesProblem(500);
         }
+
         private static async Task<IResult> CreateSubscription(
             CreateSubscriptionRequest request,
             IWebhookService webhookService,
@@ -83,6 +93,7 @@ namespace WebhookSystem.NET9.Endpoints
                     statusCode: 500);
             }
         }
+
         private static async Task<IResult> GetSubscriptions(
             IWebhookService webhookService,
             CancellationToken cancellationToken)
@@ -100,6 +111,7 @@ namespace WebhookSystem.NET9.Endpoints
                     statusCode: 500);
             }
         }
+
         private static async Task<IResult> GetSubscription(
             Guid id,
             IWebhookService webhookService,
@@ -118,6 +130,7 @@ namespace WebhookSystem.NET9.Endpoints
                     statusCode: 500);
             }
         }
+
         private static async Task<IResult> UpdateSubscription(
             Guid id,
             UpdateSubscriptionRequest request,
@@ -137,6 +150,7 @@ namespace WebhookSystem.NET9.Endpoints
                     statusCode: 500);
             }
         }
+
         private static async Task<IResult> DeleteSubscription(
             Guid id,
             IWebhookService webhookService,
@@ -155,6 +169,52 @@ namespace WebhookSystem.NET9.Endpoints
                     statusCode: 500);
             }
         }
+
+        // TODO: add another call for test an specific subscription with id
+        private static async Task<IResult> TrigerSpecificSubscription(
+            [FromRoute] Guid id,
+            [FromServices] IWebhookService webhookService,
+            [FromServices] WebhookDbContext context,
+            [FromServices] IWebhookSender webhookSender,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                var subscription = await webhookService.GetSubscriptionAsync(id, cancellationToken);
+                if (subscription == null)
+                {
+                    return Results.NotFound();
+                }
+
+                // send webhook, puede que el otro este tronando porque no tiene eventos hijos
+                await webhookSender.SendWebhookAsync(subscription, new WebhookEvent()
+                {
+                    Data = new { message = "Hello webhook!" },
+                    EventType = "order.created",
+                    Source = "OrderService",
+                    Timestamp = DateTime.UtcNow,
+                    Version = "1.0",
+                    Id = Guid.NewGuid(),
+                    Metadata = new Dictionary<string, object>()
+                    {
+                        { "orderId", "12345" },
+                        { "customerId", "67890" },
+                        { "amount", 99.99 },
+                        { "currency", "USD" }
+                    },
+                }, cancellationToken);
+                return Results.Ok();
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(
+                    title: "Error retrieving webhook event",
+                    detail: ex.Message,
+                    statusCode: 500);
+            }
+        }
+
+
         private static async Task<IResult> TriggerEvent(
             WebhookEvent webhookEvent,
             IWebhookService webhookService,
@@ -173,6 +233,7 @@ namespace WebhookSystem.NET9.Endpoints
                     statusCode: 500);
             }
         }
+
         private static async Task<IResult> GetDeliveryHistory(
             Guid id,
             IWebhookService webhookService,
@@ -191,6 +252,7 @@ namespace WebhookSystem.NET9.Endpoints
                     statusCode: 500);
             }
         }
+
         private static async Task<IResult> RetryDelivery(
             Guid id,
             IWebhookSender webhookSender,
