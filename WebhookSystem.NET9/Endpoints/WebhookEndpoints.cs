@@ -170,7 +170,6 @@ namespace WebhookSystem.NET9.Endpoints
             }
         }
 
-        // TODO: add another call for test an specific subscription with id
         private static async Task<IResult> TrigerSpecificSubscription(
             [FromRoute] Guid id,
             [FromServices] IWebhookService webhookService,

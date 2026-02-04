@@ -11,10 +11,10 @@ using WebhookSystem.NET9.Middleware;
 using WebhookSystem.NET9.Services;
 
 
-// TODO: can be change for use as library 
-// can be use as event driven system same as abp framework
-// can be add in appsetttings
-// Validate delivery saves in database
+// IMPROVEMENT: can be change for use as library 
+// IMPROVEMENT:can be use as event driven system same as abp framework
+// TODO: can be add in appsetttings tolerance for timestamp
+// TODO: Validate delivery saves in database, how to works
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Serilog
