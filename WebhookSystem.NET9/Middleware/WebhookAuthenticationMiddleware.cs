@@ -3,11 +3,13 @@ using WebhookSystem.NET9.Services;
 
 namespace WebhookSystem.NET9.Middleware
 {
+    
     public class WebhookAuthenticationMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly IHmacAuthenticationService _hmacService;
         private readonly ILogger<WebhookAuthenticationMiddleware> _logger;
+
         public WebhookAuthenticationMiddleware(
             RequestDelegate next,
             IHmacAuthenticationService hmacService,
@@ -17,6 +19,7 @@ namespace WebhookSystem.NET9.Middleware
             _hmacService = hmacService;
             _logger = logger;
         }
+
         public async Task InvokeAsync(HttpContext context)
         {
             // Only apply to webhook endpoints
@@ -25,12 +28,14 @@ namespace WebhookSystem.NET9.Middleware
                 await _next(context);
                 return;
             }
+
             // Skip authentication for GET requests (health checks, etc.)
             if (context.Request.Method == HttpMethods.Get)
             {
                 await _next(context);
                 return;
             }
+
             try
             {
                 // Enable request body buffering for multiple reads
@@ -47,6 +52,7 @@ namespace WebhookSystem.NET9.Middleware
                     await WriteUnauthorizedResponse(context);
                     return;
                 }
+
                 // Validate timestamp if provided
                 if (!string.IsNullOrEmpty(timestamp))
                 {
@@ -57,6 +63,7 @@ namespace WebhookSystem.NET9.Middleware
                         return;
                     }
                 }
+
                 // Validate HMAC signature
                 var isValid = _hmacService.ValidateSignature(body, signature, secret);
                 if (!isValid)
@@ -65,6 +72,7 @@ namespace WebhookSystem.NET9.Middleware
                     await WriteUnauthorizedResponse(context);
                     return;
                 }
+
                 // Reset body position for downstream middleware
                 context.Request.Body.Position = 0;
                 // Authentication successful, continue pipeline
@@ -76,6 +84,7 @@ namespace WebhookSystem.NET9.Middleware
                 await WriteErrorResponse(context);
             }
         }
+
         private static async Task<string> ReadRequestBodyAsync(HttpRequest request)
         {
             using var reader = new StreamReader(request.Body, Encoding.UTF8, leaveOpen: true);
@@ -83,24 +92,28 @@ namespace WebhookSystem.NET9.Middleware
             request.Body.Position = 0;
             return body;
         }
+
         private static string? ExtractSignature(IHeaderDictionary headers)
         {
             // Support multiple signature header formats
             return headers.TryGetValue("X-Webhook-Signature", out var signature) ? signature.ToString() :
-                   headers.TryGetValue("X-Hub-Signature-256", out var githubSig) ? githubSig.ToString() :
-                   headers.TryGetValue("Authorization", out var auth) ? auth.ToString() :
-                   null;
+                headers.TryGetValue("X-Hub-Signature-256", out var githubSig) ? githubSig.ToString() :
+                headers.TryGetValue("Authorization", out var auth) ? auth.ToString() :
+                null;
         }
+
         private static string? ExtractTimestamp(IHeaderDictionary headers)
         {
             return headers.TryGetValue("X-Webhook-Timestamp", out var timestamp) ? timestamp.ToString() : null;
         }
+
         private static string? ExtractSecret(IHeaderDictionary headers)
         {
             return headers.TryGetValue("X-API-Key", out var apiKey) ? apiKey.ToString() :
-                   headers.TryGetValue("X-Webhook-Secret", out var secret) ? secret.ToString() :
-                   null;
+                headers.TryGetValue("X-Webhook-Secret", out var secret) ? secret.ToString() :
+                null;
         }
+
         private static async Task WriteUnauthorizedResponse(HttpContext context)
         {
             context.Response.StatusCode = 401;
@@ -109,6 +122,7 @@ namespace WebhookSystem.NET9.Middleware
             var response = new { error = "Unauthorized", message = "Invalid webhook authentication" };
             await context.Response.WriteAsJsonAsync(response);
         }
+
         private static async Task WriteErrorResponse(HttpContext context)
         {
             context.Response.StatusCode = 500;

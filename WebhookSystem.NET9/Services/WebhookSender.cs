@@ -6,17 +6,33 @@ using WebhookSystem.NET9.Models;
 
 namespace WebhookSystem.NET9.Services
 {
+    /// <summary>
+    /// Interface for sending webhooks, http client.
+    /// </summary>
+    public interface IWebhookSender
+    {
+        Task SendWebhookAsync(WebhookSubscription subscription, WebhookEvent webhookEvent,
+            CancellationToken cancellationToken = default);
+
+        Task RetryFailedWebhookAsync(Guid deliveryId, CancellationToken cancellationToken = default);
+    }
+
+    // TODO: can be improve key share process
+    // el secret no se deberi compartir via header
+    // add another proyect for test
     public class WebhookSender : IWebhookSender
     {
         private readonly HttpClient _httpClient;
         private readonly WebhookDbContext _context;
         private readonly IHmacAuthenticationService _hmacService;
         private readonly ILogger<WebhookSender> _logger;
+
         private static readonly JsonSerializerOptions SerializerOptions = new()
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             WriteIndented = false
         };
+
         public WebhookSender(
             HttpClient httpClient,
             WebhookDbContext context,
@@ -28,6 +44,7 @@ namespace WebhookSystem.NET9.Services
             _hmacService = hmacService;
             _logger = logger;
         }
+
         public async Task SendWebhookAsync(
             WebhookSubscription subscription,
             WebhookEvent webhookEvent,
@@ -53,6 +70,7 @@ namespace WebhookSystem.NET9.Services
                     subscription.Url, subscription.Id);
             }
         }
+
         public async Task RetryFailedWebhookAsync(Guid deliveryId, CancellationToken cancellationToken = default)
         {
             var delivery = await _context.Deliveries
@@ -63,11 +81,13 @@ namespace WebhookSystem.NET9.Services
                 _logger.LogWarning("Delivery {DeliveryId} not found or already successful", deliveryId);
                 return;
             }
+
             if (delivery.AttemptNumber >= delivery.Subscription.MaxRetries)
             {
                 _logger.LogWarning("Max retries exceeded for delivery {DeliveryId}", deliveryId);
                 return;
             }
+
             delivery.AttemptNumber++;
             delivery.AttemptedAt = DateTime.UtcNow;
             try
@@ -79,6 +99,7 @@ namespace WebhookSystem.NET9.Services
                 _logger.LogError(ex, "Failed to retry webhook delivery {DeliveryId}", deliveryId);
             }
         }
+
         private async Task SendWithRetryAsync(
             WebhookSubscription subscription,
             WebhookDelivery delivery,
@@ -106,6 +127,7 @@ namespace WebhookSystem.NET9.Services
                     _logger.LogWarning(ex, "Webhook delivery attempt {Attempt}/{MaxAttempts} failed for {Url}",
                         attempt, maxAttempts, subscription.Url);
                 }
+
                 // Save attempt result
                 if (delivery.Id == Guid.Empty)
                 {
@@ -115,6 +137,7 @@ namespace WebhookSystem.NET9.Services
                 {
                     _context.Deliveries.Update(delivery);
                 }
+
                 await _context.SaveChangesAsync(cancellationToken);
                 // Wait before retry (except for last attempt)
                 if (attempt < maxAttempts && !delivery.IsSuccessful)
@@ -124,6 +147,7 @@ namespace WebhookSystem.NET9.Services
                 }
             }
         }
+
         private async Task SendWebhookRequestAsync(
             WebhookSubscription subscription,
             WebhookDelivery delivery,
@@ -138,6 +162,7 @@ namespace WebhookSystem.NET9.Services
             {
                 request.Headers.TryAddWithoutValidation(header.Key, header.Value);
             }
+
             // Add authentication headers
             var timestamp = _hmacService.GenerateTimestamp();
             var signature = _hmacService.GenerateSignature(delivery.Payload, subscription.Secret);
@@ -162,6 +187,7 @@ namespace WebhookSystem.NET9.Services
                         ? responseContent[..10000] + "..." // Truncate large responses
                         : responseContent;
                 }
+
                 if (!response.IsSuccessStatusCode)
                 {
                     delivery.ErrorMessage = $"HTTP {delivery.HttpStatusCode}: {response.ReasonPhrase}";
@@ -184,6 +210,7 @@ namespace WebhookSystem.NET9.Services
                 throw;
             }
         }
+
         private static WebhookPayload CreatePayload(WebhookEvent webhookEvent)
         {
             return new WebhookPayload(
@@ -197,5 +224,4 @@ namespace WebhookSystem.NET9.Services
             );
         }
     }
-
 }

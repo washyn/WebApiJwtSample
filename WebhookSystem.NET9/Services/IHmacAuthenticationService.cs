@@ -3,6 +3,7 @@ using System.Text;
 
 namespace WebhookSystem.NET9.Services
 {
+    
     public interface IHmacAuthenticationService
     {
         string GenerateSignature(string payload, string secret, string algorithm = "sha256");
@@ -10,13 +11,16 @@ namespace WebhookSystem.NET9.Services
         string GenerateTimestamp();
         bool ValidateTimestamp(string timestamp, TimeSpan tolerance = default);
     }
+
     public class HmacAuthenticationService : IHmacAuthenticationService
     {
         private readonly ILogger<HmacAuthenticationService> _logger;
+
         public HmacAuthenticationService(ILogger<HmacAuthenticationService> logger)
         {
             _logger = logger;
         }
+
         public string GenerateSignature(string payload, string secret, string algorithm = "sha256")
         {
             try
@@ -41,6 +45,7 @@ namespace WebhookSystem.NET9.Services
                 throw;
             }
         }
+
         public bool ValidateSignature(string payload, string signature, string secret, string algorithm = "sha256")
         {
             try
@@ -62,10 +67,12 @@ namespace WebhookSystem.NET9.Services
                 return false;
             }
         }
+
         public string GenerateTimestamp()
         {
             return DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
         }
+
         public bool ValidateTimestamp(string timestamp, TimeSpan tolerance = default)
         {
             if (tolerance == default)
