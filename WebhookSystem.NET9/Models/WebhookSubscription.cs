@@ -9,8 +9,13 @@
         public bool IsActive { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
+
         public string? Description { get; set; }
+
+        // can be remove for hangfire
         public int MaxRetries { get; set; } = 3;
+
+        // can be remove for hangfire
         public TimeSpan RetryDelay { get; set; } = TimeSpan.FromMinutes(1);
         public Dictionary<string, string> Headers { get; set; } = new();
 

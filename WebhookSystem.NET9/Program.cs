@@ -13,7 +13,7 @@ using WebhookSystem.NET9.Services;
 
 // IMPROVEMENT: can be change for use as library 
 // IMPROVEMENT:can be use as event driven system same as abp framework
-// TODO: can be add in appsetttings tolerance for timestamp
+// IMPROVEMENT: can be add in appsetttings tolerance for timestamp
 // TODO: Validate delivery saves in database, how to works
 var builder = WebApplication.CreateBuilder(args);
 

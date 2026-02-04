@@ -19,7 +19,7 @@ namespace WebhookSystem.NET9.Services
 
     // IMRPOVEMENT: can be improve key share process, el secret no se deberi compartir via header
     // IMRPOVEMENT: add another proyect for test
-    // TODO: implement send with retry standalone with hangfire and then use ai sugestion 
+    // TODO: implement send with retry standalone with hangfire and then use ai sugestion
     public class WebhookSender : IWebhookSender
     {
         private readonly HttpClient _httpClient;
@@ -100,12 +100,46 @@ namespace WebhookSystem.NET9.Services
             }
         }
 
+        // TODO: implement, and when not success trow error for retry by hangfire
         // Can be add fix for send only one webhook without retry
+        // TODO: use with retry hangfire decorator
         private async Task SendAsync(
             WebhookSubscription subscription,
             WebhookDelivery delivery,
             CancellationToken cancellationToken)
         {
+            var maxAttempts = subscription.MaxRetries;
+            var retryDelay = subscription.RetryDelay;
+            delivery.AttemptNumber = 1;
+            delivery.AttemptedAt = DateTime.UtcNow;
+            try
+            {
+                await SendWebhookRequestAsync(subscription, delivery, cancellationToken);
+                if (delivery.IsSuccessful)
+                {
+                    _logger.LogInformation("Webhook delivered successfully to {Url} on attempt {Attempt}",
+                        subscription.Url, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                delivery.ErrorMessage = ex.Message;
+                _logger.LogWarning(ex, "Webhook delivery attempt {Attempt}/{MaxAttempts} failed for {Url}",
+                    1, maxAttempts, subscription.Url);
+            }
+
+            _logger.LogInformation("Delivery {@Delivery}", delivery);
+            // Save attempt result
+            if (delivery.Id == Guid.Empty)
+            {
+                _context.Deliveries.Add(delivery);
+            }
+            else
+            {
+                _context.Deliveries.Update(delivery);
+            }
+
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         private async Task SendWithRetryAsync(
