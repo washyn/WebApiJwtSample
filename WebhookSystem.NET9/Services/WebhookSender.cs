@@ -19,7 +19,6 @@ namespace WebhookSystem.NET9.Services
 
     // IMRPOVEMENT: can be improve key share process, el secret no se deberi compartir via header
     // IMRPOVEMENT: add another proyect for test
-    // TODO: implement send with retry standalone with hangfire and then use ai sugestion
     public class WebhookSender : IWebhookSender
     {
         private readonly HttpClient _httpClient;
@@ -100,9 +99,10 @@ namespace WebhookSystem.NET9.Services
             }
         }
 
-        // TODO: implement, and when not success trow error for retry by hangfire
+        // TODO: implement, and when not success trow error for retry by hangfire, can be use with retry hangfire decorator
+        // implement send with retry standalone with hangfire and then use ai sugestion
         // Can be add fix for send only one webhook without retry
-        // TODO: use with retry hangfire decorator
+        // TODO: test this method
         private async Task SendAsync(
             WebhookSubscription subscription,
             WebhookDelivery delivery,
