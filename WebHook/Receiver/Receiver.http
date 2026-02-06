@@ -1,6 +1,37 @@
-@Receiver_HostAddress = http://localhost:5253
+### For register suscription
+POST http://localhost:5246/api/suscriptions
+Content-Type: application/json
 
-GET {{Receiver_HostAddress}}/weatherforecast/
-Accept: application/json
+{
+    "url": "http://localhost:5253/api/message/receive",
+    "events": ["order.created", "order.updated"],
+    "description": "Order processing webhook"
+}
 
-###
+### For register suscription
+POST http://localhost:5246/api/suscriptions/37338d92-bc4f-4ce9-8df1-805b0bfd1c9a/dispatch
+Content-Type: application/json
+
+
+# HTTP/1.1 200 OK
+# Connection: close
+# Content-Type: application/json; charset=utf-8
+# Date: Fri, 06 Feb 2026 20:26:46 GMT
+# Server: Kestrel
+# Transfer-Encoding: chunked
+
+# {
+#   "id": "37338d92-bc4f-4ce9-8df1-805b0bfd1c9a",
+#   "url": "http://localhost:5253/api/message/receive",
+#   "secret": "tUNy/yT/OhhV/omjq7MYeftAxUhFolx1Kb4dHQBi0VI=",
+#   "events": [
+#     "order.created",
+#     "order.updated"
+#   ],
+#   "isActive": true,
+#   "createdAt": "2026-02-06T20:26:46.2437943Z",
+#   "updatedAt": null,
+#   "description": "Order processing webhook",
+#   "headers": {},
+#   "deliveries": []
+# }

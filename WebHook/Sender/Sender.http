@@ -1,6 +1,19 @@
-@Sender_HostAddress = http://localhost:5246
 
-GET {{Sender_HostAddress}}/weatherforecast/
-Accept: application/json
 
-###
+### for single subcription
+GET http://localhost:5262/api/webhooks/subscriptions/5af0a84f-2d7f-49d3-9476-93cf0e80ee4b/trigger
+Content-Type: application/json
+### for test all events subsriptions
+POST http://localhost:5262/api/webhooks/events
+Content-Type: application/json
+
+{
+    "eventType": "order.created",
+    "source": "OrderService",
+    "data": {
+        "orderId": "12345",
+        "customerId": "67890",
+        "amount": 99.99,
+        "currency": "USD"
+    }
+}

@@ -10,6 +10,9 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
         <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
     <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.2" />
   </ItemGroup>
-
+<ItemGroup>
+    <ProjectReference Include="..\Lib\Lib.csproj" />
+  </ItemGroup>
 </Project>
