@@ -4,8 +4,20 @@
 
 # NOTES:
 - This is web hook sender service.
+- Crear una libreria para el webhook sender en cada proyecto.
+- Nosotros vamos a notificar a los clientes(receiver) que lo requieran o que se suscriban a un evento nuestro.
+- Para todos
+- En el ibk tienen tambien un repo de librerias para el webhook sender.
+## DONE:
+- revisar el codigo, arquitectura
+- run project
+- changes for run with db sqlite
+- test, not works
+- add fixes
+- Revisar viabilidad de usar oracle, si, pero con ef core por el uso de hangfire
 
-
+## TODO:
+- use hangfire
 
 abp way
 
