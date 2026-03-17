@@ -25,7 +25,7 @@ namespace Agent
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             var app = builder.Build();
-            app.UseRouting();
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -34,10 +34,10 @@ namespace Agent
 
             app.UseHttpsRedirection();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+
+            app.MapGet("/", () => Results.Redirect("/swagger"));
+            app.MapControllers();
+
             app.Run();
         }
     }

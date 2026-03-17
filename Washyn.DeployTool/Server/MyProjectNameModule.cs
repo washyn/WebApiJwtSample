@@ -43,12 +43,9 @@ namespace Server
     public class MyProjectNameHostedService : IHostedService
     {
         private readonly IAbpApplicationWithExternalServiceProvider _application;
-
         private readonly ILogger<MyProjectNameHostedService> _logger;
-        private readonly IOptions<App> _appOptions;
+        private readonly App _appOptions;
         private readonly IHttpClientFactory _httpClientFactory;
-
-        // private readonly SampleService _sampleService;
         private readonly IServiceProvider _serviceProvider;
 
         public MyProjectNameHostedService(
@@ -56,57 +53,58 @@ namespace Server
             ILogger<MyProjectNameHostedService> logger,
             IOptions<App> appOptions,
             IHttpClientFactory httpClientFactory,
-            // SampleService sampleService,
             IServiceProvider serviceProvider)
         {
             _application = application;
             _logger = logger;
-            _appOptions = appOptions;
+            _appOptions = appOptions.Value;
             _httpClientFactory = httpClientFactory;
-            // _sampleService = sampleService;
             _serviceProvider = serviceProvider;
         }
 
+        // TODO: improve for test
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _application.Initialize(_serviceProvider);
-            _logger.LogInformation("MyProjectName module is initialized.");
-            _logger.LogInformation($"App Value: {_appOptions.Value.Value}");
-            // await _sampleService.ShowExampleData();
-            // TODO: compress some directory and send to agent
-            var directory = @"F:\maestria";
-            var zipFilePath = @"F:\maestria.zip";
-            using (var zipToOpen = new FileStream(zipFilePath, FileMode.Create))
-            using (var archive = new ZipArchive(zipToOpen, ZipArchiveMode.Create))
+            if (File.Exists(@"E:\tesis_maestria.zip"))
             {
-                archive.CreateEntry(directory, CompressionLevel.SmallestSize);
+                File.Delete(@"E:\tesis_maestria.zip");
             }
 
-            _logger.LogInformation($"Directory {directory} compressed to {zipFilePath}");
+            _application.Initialize(_serviceProvider);
+            _logger.LogInformation("MyProjectName module is initialized.");
 
-            // TODO: send zip file to agent
+            // Comprimir directorio
+            ZipFile.CreateFromDirectory(@"E:\tesis_maestria", @"E:\tesis_maestria.zip");
+
+
+            // Enviar zip al agente
             using var form = new MultipartFormDataContent();
-
-            // archivo
-            var fileStream = File.OpenRead(zipFilePath);
-            var fileContent = new StreamContent(fileStream);
+            using var fileStream = File.OpenRead(@"E:\tesis_maestria.zip");
+            using var fileContent = new StreamContent(fileStream);
             fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
-            form.Add(fileContent, "File", Path.GetFileName(zipFilePath));
-
-            // campos normales
+            form.Add(fileContent, "File", Path.GetFileName(@"E:\tesis_maestria.zip"));
             form.Add(new StringContent("MiAplicacion"), "NameApp");
             form.Add(new StringContent("DefaultAppPool"), "PoolName");
 
             var httpClient = _httpClientFactory.CreateClient();
+            _logger.LogInformation($"Enviando paquete a {_appOptions.AgentUrl}...");
+            var response = await httpClient.PostAsync(_appOptions.AgentUrl, form, cancellationToken);
 
-            var response = await httpClient.PostAsync(
-                "http://localhost:5151/app/deploy",
-                form
-            );
-            response.EnsureSuccessStatusCode();
-            var responseContent = await response.Content.ReadAsStringAsync();
-            _logger.LogInformation($"Response: {responseContent}");
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
+                _logger.LogInformation($"Despliegue exitoso: {responseContent}");
+            }
+            else
+            {
+                _logger.LogError($"Error en el despliegue. Status: {response.StatusCode}");
+            }
+
+            if (File.Exists(@"E:\tesis_maestria.zip"))
+            {
+                // File.Delete(@"E:\tesis_maestria.zip");
+            }
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
@@ -118,6 +116,8 @@ namespace Server
 
     public class App
     {
-        public string Value { get; set; }
+        public string AgentUrl { get; set; }
+        public string SourceDirectory { get; set; }
+        public string ZipFileName { get; set; }
     }
 }
