@@ -20,13 +20,12 @@ namespace Agent
                 .CreateLogger();
 
             var builder = WebApplication.CreateBuilder(args);
-            builder.Host.UseSerilog()
-                .UseAutofac();
+            builder.Host.UseSerilog();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             var app = builder.Build();
-
+            app.UseRouting();
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -35,7 +34,10 @@ namespace Agent
 
             app.UseHttpsRedirection();
             app.UseAuthorization();
-            app.MapDefaultControllerRoute();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
             app.Run();
         }
     }

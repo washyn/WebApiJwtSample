@@ -9,19 +9,29 @@ namespace Deploy.Agent.Controllers;
 [Route("app")]
 public class AppController : ControllerBase
 {
+    private readonly ILogger<AppController> _logger;
+
+    public AppController(ILogger<AppController> logger)
+    {
+        _logger = logger;
+    }
+
     [HttpPost]
     [Route("deploy")]
     public async Task Deploy([FromForm] AppDeployRequest request)
     {
         var tempPath = Path.GetTempPath();
-        var filePath = Path.Combine(tempPath, request.File.FileName);
-        var storedFileCompresed = Path.Combine(filePath, request.File.FileName);
-        var randomPath = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
-        var saveDataPath = Path.Combine(tempPath, randomPath);
 
+        var randomPathSource = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+        var sourcePath = Path.Combine(tempPath, randomPathSource);
+        var storedFileCompresed = Path.Combine(sourcePath, request.File.FileName);
+        var randomPathDest = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+        var saveDataPath = Path.Combine(tempPath, randomPathDest);
+
+        Directory.CreateDirectory(sourcePath);
         Directory.CreateDirectory(saveDataPath);
-        Directory.CreateDirectory(filePath);
 
+        // save
         using (var stream = new FileStream(storedFileCompresed, FileMode.Create))
         {
             await request.File.CopyToAsync(stream);
@@ -35,8 +45,11 @@ public class AppController : ControllerBase
             }
         }
 
-        Directory.Delete(storedFileCompresed, true);
-        Directory.Delete(saveDataPath, true);
+        _logger.LogInformation($"Deploying {request.NameApp} to {request.PoolName}");
+        _logger.LogInformation($"storedFileCompresed: {sourcePath}");
+        _logger.LogInformation($"saveDataPath: {saveDataPath}");
+        // Directory.Delete(randomPathSource, true);
+        // Directory.Delete(saveDataPath, true);
     }
 }
 
