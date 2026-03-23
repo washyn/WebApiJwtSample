@@ -45,6 +45,7 @@ public class AppInfo
     public string Version { get; set; }
     public string BuildTime { get; set; }
     public string Environment { get; set; }
+    public string ImplementationTitle { get; set; }
 }
 
 public class AppInfoProvider : ITransientDependency
@@ -63,7 +64,10 @@ public class AppInfoProvider : ITransientDependency
         var buildTime = GetBuildDate(Assembly.GetEntryAssembly());
         return new AppInfo
         {
-            Version = version, BuildTime = buildTime.ToString(culture), Environment = _environment.EnvironmentName
+            Version = version,
+            BuildTime = buildTime.ToString(culture),
+            Environment = _environment.EnvironmentName,
+            ImplementationTitle = "AppHealth check"
         };
     }
 
