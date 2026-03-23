@@ -16,6 +16,7 @@ public class IndexModel : PageModel
 
     public IActionResult OnGet()
     {
+        _logger.LogInformation("Visited index page...");
         var vars = Environment.GetEnvironmentVariables();
         _logger.LogInformation("All values: {@IDictionary}", vars);
         foreach (DictionaryEntry env in Environment.GetEnvironmentVariables())
@@ -24,6 +25,7 @@ public class IndexModel : PageModel
         }
 
         MetricsDefinitions.RequestCounter.Add(1);
-        return Redirect("/health-ui");
+        // return Redirect("/health-ui");
+        return Page();
     }
 }
