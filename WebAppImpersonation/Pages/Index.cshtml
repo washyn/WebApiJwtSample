@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -32,7 +32,14 @@
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {
                             <td>
-                                <a href="@Url.Page("/Impersonate", new { userId = user.Id })" class="btn btn-primary btn-sm">Impersonate</a>
+                                @if (User.FindFirstValue(ClaimTypes.NameIdentifier) != user.Id && !User.HasClaim(c => c.Type == CustomClaimTypes.ImpersonatorUserId))
+                                {
+                                    <a asp-page="/Impersonate" asp-route-userId="@user.Id" class="btn btn-outline-primary btn-sm">Impersonate</a>
+                                }
+                                else if (User.FindFirstValue(ClaimTypes.NameIdentifier) == user.Id)
+                                {
+                                    <span class="badge bg-secondary text-dark">Current User</span>
+                                }
                             </td>
                         }
                     </tr>
