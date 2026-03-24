@@ -1,12 +1,18 @@
 using System.Security.Claims;
 
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+// using Volo.Abp.Security.Claims;
+// using Volo.Abp.Users;
+
+
 namespace WebAppImpersonation.Pages;
 
+// auth scheme IdentityConstants.ApplicationScheme
 [Authorize]
 public class ImpersonateModel : PageModel
 {
@@ -22,76 +28,79 @@ public class ImpersonateModel : PageModel
 
     public async Task<IActionResult> OnGetAsync(string userId)
     {
-        if (string.IsNullOrEmpty(userId))
+        if (!_currentUser.CanImpersonateAs(Guid.Parse(userId)))
         {
-            return BadRequest("User ID is required.");
+            throw new Exception("User can not be impersonate.");
         }
 
-        // Prevent nested impersonation
-        if (User.HasClaim(c => c.Type == CustomClaimTypes.ImpersonatorUserId))
-        {
-            return BadRequest("Nested impersonation is not allowed. Please stop current impersonation first.");
-        }
-
-        // 1. Get current admin user
-        var adminUser = await _userManager.GetUserAsync(User);
-        if (adminUser == null)
-        {
-            return Challenge();
-        }
-
-        // 2. Get target user
         var targetUser = await _userManager.FindByIdAsync(userId);
-        if (targetUser == null)
-        {
-            return NotFound($"User with ID {userId} not found.");
-        }
+        // var claimsPrincipal = await _signInManager.CreateUserPrincipalAsync(targetUser);
+        // add claim for recognize original user id
 
-        // 3. Create claims for the impersonation session
-        // We include a claim to track who the real impersonator is
-        var claims = new List<Claim>
+        var extraClaims = new List<Claim>()
         {
-            new(CustomClaimTypes.ImpersonatorUserId, adminUser.Id),
-            new(CustomClaimTypes.ImpersonatorUserName, adminUser.UserName ?? adminUser.Email ?? "Admin")
+            new Claim(CustomClaimTypes.ImpersonatorUserId, _currentUser.Id.ToString()),
+            new Claim(CustomClaimTypes.ImpersonatorUserName, _currentUser.Name),
         };
 
-        // 4. Sign out current session and sign in as target user with extra claims
-        await _signInManager.Context.SignOutAsync(IdentityConstants.ApplicationScheme);
-
-        // Use SignInWithClaimsAsync to include the impersonator claims in the new cookie
-        await _signInManager.SignInWithClaimsAsync(targetUser, isPersistent: false, claims);
-
+        await _signInManager.SignOutAsync();
+        await _signInManager.SignInWithClaimsAsync(targetUser, false, extraClaims);
         return RedirectToPage("/Index");
+        // end
+
+        // // 3. Create claims for the impersonation session
+        // // We include a claim to track who the real impersonator is
+        // var claims = new List<Claim>
+        // {
+        //     new(CustomClaimTypes.ImpersonatorUserId, adminUser.Id),
+        //     new(CustomClaimTypes.ImpersonatorUserName, adminUser.UserName ?? adminUser.Email ?? "Admin")
+        // };
+        // // 4. Sign out current session and sign in as target user with extra claims
+        // await _signInManager.Context.SignOutAsync(IdentityConstants.ApplicationScheme);
+        // // Use SignInWithClaimsAsync to include the impersonator claims in the new cookie
+        // await _signInManager.SignInWithClaimsAsync(targetUser, isPersistent: false, claims);
+        // return RedirectToPage("/Index");
+
+
+        // var user = await _userManager.FindByIdAsync(userId);
+        // var impersonatorUserId = _currentUser.Id;
+        // await _signInManager.SignOutAsync();
+        // var claims = new List<Claim> { new(CustomClaimTypes.ImpersonatorUserId, impersonatorUserId!.ToString()!), };
+        // await _signInManager.UserManager.AddClaimsAsync(user!, claims);
+        // await _signInManager.SignInAsync(user!, isPersistent: true);
     }
 
     public async Task<IActionResult> OnPostStopImpersonationAsync()
     {
-        // 1. Check if we are actually impersonating
-        var impersonatorId = User.FindFirstValue(CustomClaimTypes.ImpersonatorUserId);
-        if (string.IsNullOrEmpty(impersonatorId))
+        // // 1. Check if we are actually impersonating
+        // var impersonatorId = User.FindFirstValue(CustomClaimTypes.ImpersonatorUserId);
+        // if (string.IsNullOrEmpty(impersonatorId))
+        // {
+        //     return BadRequest("Not currently impersonating.");
+        // }
+        // // 2. Get the original admin user
+        // var adminUser = await _userManager.FindByIdAsync(impersonatorId);
+        // if (adminUser == null)
+        // {
+        //     // If admin user no longer exists, just sign out
+        //     await _signInManager.SignOutAsync();
+        //     return RedirectToPage("/Index");
+        // }
+        // // 3. Sign back in as the original admin user
+        // await _signInManager.Context.SignOutAsync(IdentityConstants.ApplicationScheme);
+        // await _signInManager.SignInAsync(adminUser, isPersistent: false);
+        // return RedirectToPage("/Index");
+
+        var isImpersonated = _currentUser.IsImpersonated();
+        if (!isImpersonated)
         {
             return BadRequest("Not currently impersonating.");
         }
 
-        // 2. Get the original admin user
-        var adminUser = await _userManager.FindByIdAsync(impersonatorId);
-        if (adminUser == null)
-        {
-            // If admin user no longer exists, just sign out
-            await _signInManager.SignOutAsync();
-            return RedirectToPage("/Index");
-        }
-
-        // 3. Sign back in as the original admin user
-        await _signInManager.Context.SignOutAsync(IdentityConstants.ApplicationScheme);
-        await _signInManager.SignInAsync(adminUser, isPersistent: false);
-
+        var impersonatorId = _currentUser.FindImpersonatorUserId();
+        var originalUser = await _userManager.FindByIdAsync(impersonatorId.ToString());
+        await _signInManager.SignOutAsync();
+        await _signInManager.SignInAsync(originalUser, false);
         return RedirectToPage("/Index");
     }
-}
-
-public static class CustomClaimTypes
-{
-    public const string ImpersonatorUserId = "impersonator_userid";
-    public const string ImpersonatorUserName = "impersonator_username";
 }

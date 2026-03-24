@@ -15,35 +15,31 @@
     <div class="card-body">
         <table class="table table-sm table-bordered">
             <thead>
-                <tr>
-                    <th>#</th>
-                    <th>User Name</th>
-                    <th>Email</th>
-                    <th>Options</th>
-                </tr>
+            <tr>
+                <th>#</th>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Options</th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var user in users)
-                {
-                    <tr>
-                        <td>@user.Id</td>
-                        <td>@user.UserName</td>
-                        <td>@user.Email</td>
-                        @if (User.Identity != null && User.Identity.IsAuthenticated)
-                        {
-                            <td>
-                                @if (User.FindFirstValue(ClaimTypes.NameIdentifier) != user.Id && !User.HasClaim(c => c.Type == CustomClaimTypes.ImpersonatorUserId))
-                                {
-                                    <a asp-page="/Impersonate" asp-route-userId="@user.Id" class="btn btn-outline-primary btn-sm">Impersonate</a>
-                                }
-                                else if (User.FindFirstValue(ClaimTypes.NameIdentifier) == user.Id)
-                                {
-                                    <span class="badge bg-secondary text-dark">Current User</span>
-                                }
-                            </td>
-                        }
-                    </tr>
-                }
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <td>
+                            @if (this.Model.CurrentUser.CanImpersonateAs(Guid.Parse(user.Id)))
+                            {
+                                <a href="@Url.Page("/Impersonate", new { userId = user.Id })" class="btn btn-primary btn-sm">Impersonate</a>
+                            }
+                        </td>
+                    }
+                </tr>
+            }
             </tbody>
         </table>
     </div>
