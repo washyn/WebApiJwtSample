@@ -45,7 +45,7 @@ public class CurrentUser : ICurrentUser
 
     public virtual Guid? Id => _claimsPrincipal?.FindUserId();
 
-    public virtual string? UserName => this.FindClaimValue("ClaimTypes.UserName"); // fix 
+    public virtual string? UserName => this.FindClaimValue(ClaimTypes.Name); // fix 
 
     public virtual string? Name => this.FindClaimValue(ClaimTypes.Name);
 

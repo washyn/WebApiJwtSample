@@ -1,11 +1,11 @@
 @page
 @model ImpersonateModel
-
+@inject ICurrentUser CurrentUser
 
 @{
     ViewData["Title"] = "Impersonation Status";
 }
-@* todo: improve this page *@
+@* TODO: improve this page *@
 <div class="container mt-5">
     @if (User.HasClaim(c => c.Type == CustomClaimTypes.ImpersonatorUserId))
     {

@@ -34,11 +34,12 @@ public class IndexModel : PageModel
     public void OnGet()
     {
         Users = _dbContext.Users.ToList();
-        // TODO: display claims in logger
-        _logger.LogInformation("Claims");
+        _logger.LogInformation("Start display Claims");
         foreach (var claim in _contextAccessor.HttpContext?.User.Claims)
         {
             _logger.LogInformation($"{claim.Type}: {claim.Value}");
         }
+
+        _logger.LogInformation("End display Claims");
     }
 }
