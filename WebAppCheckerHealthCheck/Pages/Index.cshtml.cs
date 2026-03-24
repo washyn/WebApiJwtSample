@@ -48,6 +48,8 @@ public class AppInfo
     public string ImplementationTitle { get; set; }
 }
 
+// manifest endpoint, can be move to another proyect for POC
+// expose as /manifest endpoint
 public class AppInfoProvider : ITransientDependency
 {
     private readonly IWebHostEnvironment _environment;
