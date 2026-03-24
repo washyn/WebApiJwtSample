@@ -4,33 +4,33 @@ using Volo.Abp.Users;
 
 namespace WebAppImpersonation;
 
-public interface ICurrentUser
-{
-    bool IsAuthenticated { get; }
+// public interface ICurrentUser
+// {
+//     bool IsAuthenticated { get; }
 
-    Guid? Id { get; }
+//     Guid? Id { get; }
 
-    string? UserName { get; }
+//     string? UserName { get; }
 
-    string? Name { get; }
+//     string? Name { get; }
 
-    string? SurName { get; }
+//     string? SurName { get; }
 
-    string? PhoneNumber { get; }
+//     string? PhoneNumber { get; }
 
-    bool PhoneNumberVerified { get; }
+//     bool PhoneNumberVerified { get; }
 
-    string? Email { get; }
+//     string? Email { get; }
 
-    bool EmailVerified { get; }
+//     bool EmailVerified { get; }
 
-    // Guid? TenantId { get; }
+//     // Guid? TenantId { get; }
 
-    string[] Roles { get; }
+//     string[] Roles { get; }
 
-    // Claim? FindClaim(string claimType);
-    // Claim[] FindClaims(string claimType);
-    // Claim[] GetAllClaims();
+//     // Claim? FindClaim(string claimType);
+//     // Claim[] FindClaims(string claimType);
+//     // Claim[] GetAllClaims();
 
-    bool IsInRole(string roleName);
-}
+//     bool IsInRole(string roleName);
+// }

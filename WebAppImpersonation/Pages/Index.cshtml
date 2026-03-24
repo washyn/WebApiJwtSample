@@ -2,9 +2,42 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    var users = Model.Users;
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>User Name</th>
+                    <th>Email</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in users)
+                {
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <td>
+                                <a href="@Url.Page("/Impersonate", new { userId = user.Id })" class="btn btn-primary btn-sm">Impersonate</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
