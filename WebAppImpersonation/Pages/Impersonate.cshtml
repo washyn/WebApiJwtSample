@@ -1,0 +1,28 @@
+@page
+@model ImpersonateModel
+@{
+    ViewData["Title"] = "Impersonation Status";
+}
+
+<div class="container mt-5">
+    @if (User.HasClaim(c => c.Type == CustomClaimTypes.ImpersonatorUserId))
+    {
+        <div class="alert alert-info shadow">
+            <h4 class="alert-heading">Currently Impersonating!</h4>
+            <p>You are logged in as <strong>@User.Identity?.Name</strong>.</p>
+            <p>Your original account is <strong>@User.FindFirst(CustomClaimTypes.ImpersonatorUserName)?.Value</strong>.</p>
+            <hr>
+            <form asp-page-handler="StopImpersonation" method="post">
+                <button type="submit" class="btn btn-danger">Stop Impersonating and Return to Original Account</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-secondary shadow">
+            <h4 class="alert-heading">Not Impersonating</h4>
+            <p>You are logged in as your original account: <strong>@User.Identity?.Name</strong>.</p>
+            <a asp-page="/Index" class="btn btn-primary">Go to User List</a>
+        </div>
+    }
+</div>
