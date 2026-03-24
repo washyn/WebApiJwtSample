@@ -2,6 +2,8 @@ using System.Security.Claims;
 
 using JetBrains.Annotations;
 
+using Serilog;
+
 using Volo.Abp;
 
 namespace WebAppImpersonation;
@@ -27,6 +29,23 @@ public static class CurrentUserExtensions
     public static string? FindImpersonatorUserName(this ICurrentUser currentUser)
     {
         return currentUser.FindClaimValue(CustomClaimTypes.ImpersonatorUserName);
+    }
+
+    public static bool IsImpersonated(this ICurrentUser currentUser)
+    {
+        return currentUser.FindImpersonatorUserId() != null;
+    }
+
+    /// <summary>
+    /// No debe ser el mismo usuario y no debo estar previamente impersonado.
+    /// TODO: add extra check only for superadmin user.
+    /// </summary>
+    /// <param name="currentUser"></param>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    public static bool CanImpersonateAs(this ICurrentUser currentUser, Guid? userId)
+    {
+        return currentUser.Id != userId && !currentUser.IsImpersonated();
     }
 
     public static string? FindClaimValue(this ICurrentUser currentUser, string claimType)

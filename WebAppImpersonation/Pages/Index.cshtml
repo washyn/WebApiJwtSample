@@ -15,28 +15,31 @@
     <div class="card-body">
         <table class="table table-sm table-bordered">
             <thead>
-                <tr>
-                    <th>#</th>
-                    <th>User Name</th>
-                    <th>Email</th>
-                    <th>Options</th>
-                </tr>
+            <tr>
+                <th>#</th>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Options</th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var user in users)
-                {
-                    <tr>
-                        <td>@user.Id</td>
-                        <td>@user.UserName</td>
-                        <td>@user.Email</td>
-                        @if (User.Identity != null && User.Identity.IsAuthenticated)
-                        {
-                            <td>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <td>
+                            @if (this.Model.CurrentUser.CanImpersonateAs(Guid.Parse(user.Id)))
+                            {
                                 <a href="@Url.Page("/Impersonate", new { userId = user.Id })" class="btn btn-primary btn-sm">Impersonate</a>
-                            </td>
-                        }
-                    </tr>
-                }
+                            }
+                        </td>
+                    }
+                </tr>
+            }
             </tbody>
         </table>
     </div>
