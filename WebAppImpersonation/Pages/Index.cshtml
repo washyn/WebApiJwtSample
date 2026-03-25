@@ -1,5 +1,6 @@
 ﻿@page
 @model IndexModel
+@inject ICurrentUser CurrentUser
 @{
     ViewData["Title"] = "Home page";
     var users = Model.Users;
@@ -9,7 +10,6 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-
 
 <div class="card">
     <div class="card-body">
@@ -43,4 +43,27 @@
             </tbody>
         </table>
     </div>
+</div>
+
+<div class="container mt-5">
+    @if (CurrentUser.IsImpersonated())
+    {
+        <div class="alert alert-info shadow">
+            <h4 class="alert-heading">Currently Impersonating!</h4>
+            <p>You are logged in as <strong>@CurrentUser.Name</strong>.</p>
+            <p>Your original account is <strong>@CurrentUser.FindImpersonatorUserName()</strong>.</p>
+            <hr>
+            <form asp-page="Impersonate" asp-page-handler="StopImpersonation" method="post">
+                <button type="submit" class="btn btn-danger">Stop Impersonating and Return to Original Account</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-secondary shadow">
+            <h4 class="alert-heading">Not Impersonating</h4>
+            <p>You are logged in as your original account: <strong>@CurrentUser.Name</strong>.</p>
+            <a asp-page="/Index" class="btn btn-primary">Go to User List</a>
+        </div>
+    }
 </div>
