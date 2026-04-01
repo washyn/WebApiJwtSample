@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>abp.js Test Page</title>
+    <style>
+        .abp-block-area {
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2em;
+        }
+        .abp-block-area-busy::after {
+            content: "Busy...";
+        }
+        .abp-block-area-disappearing {
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+    </style>
+</head>
+<body>
+    <h1>abp.js Test Page</h1>
+    <p>Check the browser console (F12) to see the test results.</p>
+    <button onclick="location.reload()">Run Tests Again</button>
+
+    <!-- Include the scripts -->
+    <script src="abp.js"></script>
+    <script src="abp-test.js"></script>
+</body>
+</html>
