@@ -114,6 +114,7 @@ public class InstitutionColors
     public const string ColorGrisClaro = "#F5F5F5";
 }
 
+// TODO: translate to english variables
 public class CertificadoTutoriaModel
 {
     public string Universidad { get; set; } = "UNIVERSIDAD NACIONAL DE JULIACA";
