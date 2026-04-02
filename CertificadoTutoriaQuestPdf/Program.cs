@@ -20,7 +20,8 @@ public class Program
                     page.Size(PageSizes.A4.Landscape());
                     page.Margin(1, Unit.Centimetre);
                     page.PageColor(Colors.White);
-                    page.DefaultTextStyle(x => x.FontSize(10).FontColor(InstitutionColors.ColorGrisOscuro));
+                    page.DefaultTextStyle(x =>
+                        x.FontSize(11).FontColor(InstitutionColors.ColorGrisOscuro).FontFamily("Calibri"));
 
                     page.Content().Border(3).BorderColor(InstitutionColors.ColorDorado)
                         .Padding(1, Unit.Centimetre).Column(col =>
@@ -115,14 +116,14 @@ public class InstitutionColors
 
 public class CertificadoTutoriaModel
 {
-    public string Universidad { get; set; } = "Universidad Nacional de Juliaca";
+    public string Universidad { get; set; } = "UNIVERSIDAD NACIONAL DE JULIACA";
     public string EscuelaProfesional { get; set; } = "ESCUELA PROFESIONAL DE INGENIERIA TEXTIL Y DE CONFECCIONES";
     public string TipoTutoria { get; set; } = "TUTORIA UNIVERSITARIA";
     public string AnnoNombre { get; set; } = "\"Año de la lucha contra la corrupción e impunidad\"";
     public string CodigoConstancia { get; set; } = "CONSTANCIA DE TUTORIA 8601-2026-1-UNAJ";
     public string NombreEstudiante { get; set; } = "IDME MAMANI MARIENNY";
     public string SemestreAcademico { get; set; } = "2026-1";
-    public string Resolucion { get; set; } = "N° 1415-2015-R-UNA";
+    public string Resolucion { get; set; } = "N° 1415-2015-R-UNAJ";
     public string Fecha { get; set; } = "Juliaca C.U. Abril del 2026";
     public string NombreFirmante { get; set; } = "HUANATICO SUAREZ ELIZABETH";
 }
