@@ -3,23 +3,19 @@ using Amazon.EventBridge.Model;
 using Amazon.Runtime;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Volo.Abp.DependencyInjection;
-using Volo.Abp.Json;
 
 namespace AwsSqs;
 
-public class AwsEventBridgeService : ITransientDependency
+public class AwsEventBridgeService
 {
     private readonly AwsEventBridgeConfig _options;
     private readonly ILogger<AwsEventBridgeService> _logger;
-    private readonly IJsonSerializer _jsonSerializer;
 
-    public AwsEventBridgeService(IOptions<AwsEventBridgeConfig> options, ILogger<AwsEventBridgeService> logger,
-        IJsonSerializer jsonSerializer)
+    public AwsEventBridgeService(IOptions<AwsEventBridgeConfig> options,
+        ILogger<AwsEventBridgeService> logger)
     {
         _options = options.Value;
         _logger = logger;
-        _jsonSerializer = jsonSerializer;
     }
 
     public async Task PublishEventAsync()
@@ -51,7 +47,7 @@ public class AwsEventBridgeService : ITransientDependency
                     EventBusName = _options.EventBusName, // arn of event bus
                     Source = _options.Source,
                     DetailType = "product.created",
-                    Detail = _jsonSerializer.Serialize(_options),
+                    Detail = "hiiiiiiiiiiiiiiii"
                 }
             }
         };
