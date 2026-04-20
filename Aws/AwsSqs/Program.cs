@@ -117,6 +117,7 @@ namespace AwsSqs
 
             try
             {
+                _logger.LogInformation("Request : {@request}", request);
                 var response = await client.SendMessageAsync(request);
 
                 _logger.LogInformation($"Mensaje enviado. MessageId: {response.MessageId}");

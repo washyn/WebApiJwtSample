@@ -107,6 +107,7 @@ public class AppHostedService : BackgroundService
             foreach (var message in response.Messages)
             {
                 _logger.LogInformation($"Received message: {message.Body} (MessageId: {message.MessageId})");
+                _logger.LogInformation("Message : {@message}", message);
                 await client.DeleteMessageAsync(new DeleteMessageRequest()
                 {
                     QueueUrl = _options.QueueUrl,
