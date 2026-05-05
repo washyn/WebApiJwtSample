@@ -39,7 +39,7 @@ namespace Acme.BookStore.Web;
     typeof(AbpAutoMapperModule),
     typeof(AbpEntityFrameworkCoreSqliteModule),
     typeof(AbpSwashbuckleModule),
-    // typeof(AbpAspNetCoreSerilogModule),
+    typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpAspNetCoreMvcUiBasicThemeModule)
 )]
 public class WebModule : AbpModule
@@ -121,7 +121,6 @@ public class WebModule : AbpModule
         
 
         context.Services.AddOpenTelemetry()
-            .ConfigureResource(resource => resource.AddService(serviceName: "CUTOM_WEBAPP_OTEL"))
             .WithMetrics(metrics =>
             {
                 metrics.AddAspNetCoreInstrumentation()
@@ -136,16 +135,19 @@ public class WebModule : AbpModule
                             "Microsoft-AspNetCore-Server-Kestrel",
                             "System.Net.Http",
                             "System.Net.Sockets");
-                    });
+                    })
+                    ;
+                metrics.AddOtlpExporter();
             })
             .WithTracing(tracing =>
             {
                 tracing
                     .AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation();
+                tracing.AddOtlpExporter();
             });
         
-        context.Services.AddOpenTelemetry().UseOtlpExporter();
+        // context.Services.AddOpenTelemetry().UseOtlpExporter();
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
@@ -312,7 +314,7 @@ public class WebModule : AbpModule
         });
 
         app.UseAuditing();
-        // app.UseAbpSerilogEnrichers();
+        app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
     }
 }

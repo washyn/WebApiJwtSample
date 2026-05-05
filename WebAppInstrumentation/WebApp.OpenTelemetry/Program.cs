@@ -11,46 +11,46 @@ public class Program
 {
     public async static Task<int> Main(string[] args)
     {
-//         var loggerConfiguration = new LoggerConfiguration()
-// #if DEBUG
-//                 .MinimumLevel.Debug()
-// #else
-//             .MinimumLevel.Information()
-// #endif
-//                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-//                 .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
-//                 .Enrich.FromLogContext()
-//                 .WriteTo.Async(c => c.File("Logs/logs.log"))
-//                 // .WriteTo.Async(c => c.Console())
-//                 .WriteTo.Async(c => c.OpenTelemetry(opts =>
-//                 {
-//                     opts.ResourceAttributes = new Dictionary<string, object>
-//                     {
-//                         ["app"] = "webapi", ["runtime"] = "dotnet", ["service.name"] = "WebApi"
-//                     };
-//                 }))
-//             ;
-//
-//
-//         if (IsMigrateDatabase(args))
-//         {
-//             loggerConfiguration.MinimumLevel.Override("Volo.Abp", LogEventLevel.Warning);
-//             loggerConfiguration.MinimumLevel.Override("Microsoft", LogEventLevel.Warning);
-//         }
-//
-//         Log.Logger = loggerConfiguration.CreateLogger();
+        var loggerConfiguration = new LoggerConfiguration()
+#if DEBUG
+                .MinimumLevel.Debug()
+#else
+            .MinimumLevel.Information()
+#endif
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
+                .Enrich.FromLogContext()
+                .WriteTo.Async(c => c.File("Logs/logs.log"))
+                .WriteTo.Async(c => c.Console())
+                .WriteTo.Async(c => c.OpenTelemetry(opts =>
+                {
+                    opts.ResourceAttributes = new Dictionary<string, object>
+                    {
+                        ["app"] = "webapi", ["runtime"] = "dotnet", ["service.name"] = "WebApi"
+                    };
+                }))
+            ;
+
+
+        if (IsMigrateDatabase(args))
+        {
+            loggerConfiguration.MinimumLevel.Override("Volo.Abp", LogEventLevel.Warning);
+            loggerConfiguration.MinimumLevel.Override("Microsoft", LogEventLevel.Warning);
+        }
+
+        Log.Logger = loggerConfiguration.CreateLogger();
 
         try
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Logging.AddOpenTelemetry(logging =>
-            {
-                logging.IncludeFormattedMessage = true;
-                logging.IncludeScopes = true;
-            });
+            // builder.Logging.AddOpenTelemetry(logging =>
+            // {
+            //     logging.IncludeFormattedMessage = true;
+            //     logging.IncludeScopes = true;
+            // });
             builder.Host.AddAppSettingsSecretsJson()
                 .UseAutofac()
-                // .UseSerilog()
+                .UseSerilog()
                 ;
             if (IsMigrateDatabase(args))
             {
