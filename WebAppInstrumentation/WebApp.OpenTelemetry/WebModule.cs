@@ -69,57 +69,7 @@ public class WebModule : AbpModule
         ConfigureVirtualFiles(hostingEnvironment);
         ConfigureLocalization();
         ConfigureEfCore(context);
-
-        // context.Services.AddOpenTelemetry()
-        //     .WithTracing(tracerProviderBuilder =>
-        //     {
-        //         tracerProviderBuilder
-        //             .AddSource("CUTOM_WEBAPP_OTEL")
-        //             .SetResourceBuilder(
-        //                 ResourceBuilder.CreateDefault()
-        //                     .AddService("CUTOM_WEBAPP_OTEL"))
-        //             .AddAspNetCoreInstrumentation() // Captura peticiones entrantes
-        //             .AddHttpClientInstrumentation() // Captura llamadas externas a APIs
-        //             .AddOtlpExporter(opt =>
-        //             {
-        //                 // Dirección donde SigNoz escucha trazas vía gRPC
-        //                 opt.Endpoint = new Uri("http://localhost:4317");
-        //                 opt.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
-        //             });
-        //     });
-
-        // context.Services.AddOpenTelemetry()
-        //     .ConfigureResource(resource => resource.AddService(serviceName: "CUTOM_WEBAPP_OTEL"))
-        //     .WithMetrics(metrics =>
-        //         {
-        //             metrics
-        //                 .AddRuntimeInstrumentation()
-        //                 .AddAspNetCoreInstrumentation()
-        //                 .AddProcessInstrumentation()
-        //                 .AddHttpClientInstrumentation()
-        //                 .AddEventCountersInstrumentation(c =>
-        //                 {
-        //                     // https://learn.microsoft.com/en-us/dotnet/core/diagnostics/available-counters
-        //                     c.AddEventSources(
-        //                         "Microsoft.AspNetCore.Hosting",
-        //                         "Microsoft-AspNetCore-Server-Kestrel",
-        //                         "System.Net.Http",
-        //                         "System.Net.Sockets");
-        //                 });
-        //             // metrics.AddOtlpExporter();
-        //             metrics.AddConsoleExporter();
-        //         }
-        //     )
-        //     .WithTracing(tracing =>
-        //     {
-        //         tracing
-        //             .AddAspNetCoreInstrumentation()
-        //             .AddHttpClientInstrumentation();
-        //         // tracing.AddOtlpExporter();
-        //         // tracing.AddConsoleExporter();
-        //     });
         
-
         context.Services.AddOpenTelemetry()
             .WithMetrics(metrics =>
             {
@@ -146,8 +96,6 @@ public class WebModule : AbpModule
                     .AddHttpClientInstrumentation();
                 tracing.AddOtlpExporter();
             });
-        
-        // context.Services.AddOpenTelemetry().UseOtlpExporter();
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)

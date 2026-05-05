@@ -43,11 +43,6 @@ public class Program
         try
         {
             var builder = WebApplication.CreateBuilder(args);
-            // builder.Logging.AddOpenTelemetry(logging =>
-            // {
-            //     logging.IncludeFormattedMessage = true;
-            //     logging.IncludeScopes = true;
-            // });
             builder.Host.AddAppSettingsSecretsJson()
                 .UseAutofac()
                 .UseSerilog()
