@@ -282,3 +282,17 @@ assets
 *.db
 *.db-shm
 *.db-wal
+
+
+######
+
+*.db
+*.db-shm
+*.db-wal
+
+# Use abp install-libs to restore.
+**/wwwroot/libs/*
+
+#
+**/wwwroot/assets/*
+**/Logs/*
