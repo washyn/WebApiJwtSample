@@ -22,6 +22,7 @@ public class Program
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
             .Enrich.FromLogContext()
+            .Enrich.WithProperty("ApplicationName", "WebAppImpersonation")
 #if DEBUG
             .WriteTo.Async(c => c.File(
                 "Logs/logs.log", rollingInterval: RollingInterval.Day, retainedFileCountLimit: 3, shared: true))
