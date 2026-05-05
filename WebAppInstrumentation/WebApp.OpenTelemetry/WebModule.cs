@@ -2,6 +2,11 @@
 
 using Acme.BookStore.Web.Data;
 
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+
 using Volo.Abp;
 using Volo.Abp.Uow;
 using Volo.Abp.AspNetCore.Mvc;
@@ -34,7 +39,7 @@ namespace Acme.BookStore.Web;
     typeof(AbpAutoMapperModule),
     typeof(AbpEntityFrameworkCoreSqliteModule),
     typeof(AbpSwashbuckleModule),
-    typeof(AbpAspNetCoreSerilogModule),
+    // typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpAspNetCoreMvcUiBasicThemeModule)
 )]
 public class WebModule : AbpModule
@@ -64,6 +69,83 @@ public class WebModule : AbpModule
         ConfigureVirtualFiles(hostingEnvironment);
         ConfigureLocalization();
         ConfigureEfCore(context);
+
+        // context.Services.AddOpenTelemetry()
+        //     .WithTracing(tracerProviderBuilder =>
+        //     {
+        //         tracerProviderBuilder
+        //             .AddSource("CUTOM_WEBAPP_OTEL")
+        //             .SetResourceBuilder(
+        //                 ResourceBuilder.CreateDefault()
+        //                     .AddService("CUTOM_WEBAPP_OTEL"))
+        //             .AddAspNetCoreInstrumentation() // Captura peticiones entrantes
+        //             .AddHttpClientInstrumentation() // Captura llamadas externas a APIs
+        //             .AddOtlpExporter(opt =>
+        //             {
+        //                 // Dirección donde SigNoz escucha trazas vía gRPC
+        //                 opt.Endpoint = new Uri("http://localhost:4317");
+        //                 opt.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
+        //             });
+        //     });
+
+        // context.Services.AddOpenTelemetry()
+        //     .ConfigureResource(resource => resource.AddService(serviceName: "CUTOM_WEBAPP_OTEL"))
+        //     .WithMetrics(metrics =>
+        //         {
+        //             metrics
+        //                 .AddRuntimeInstrumentation()
+        //                 .AddAspNetCoreInstrumentation()
+        //                 .AddProcessInstrumentation()
+        //                 .AddHttpClientInstrumentation()
+        //                 .AddEventCountersInstrumentation(c =>
+        //                 {
+        //                     // https://learn.microsoft.com/en-us/dotnet/core/diagnostics/available-counters
+        //                     c.AddEventSources(
+        //                         "Microsoft.AspNetCore.Hosting",
+        //                         "Microsoft-AspNetCore-Server-Kestrel",
+        //                         "System.Net.Http",
+        //                         "System.Net.Sockets");
+        //                 });
+        //             // metrics.AddOtlpExporter();
+        //             metrics.AddConsoleExporter();
+        //         }
+        //     )
+        //     .WithTracing(tracing =>
+        //     {
+        //         tracing
+        //             .AddAspNetCoreInstrumentation()
+        //             .AddHttpClientInstrumentation();
+        //         // tracing.AddOtlpExporter();
+        //         // tracing.AddConsoleExporter();
+        //     });
+        
+
+        context.Services.AddOpenTelemetry()
+            .ConfigureResource(resource => resource.AddService(serviceName: "CUTOM_WEBAPP_OTEL"))
+            .WithMetrics(metrics =>
+            {
+                metrics.AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddProcessInstrumentation()
+                    .AddRuntimeInstrumentation()
+                    .AddEventCountersInstrumentation(c =>
+                    {
+                        // https://learn.microsoft.com/en-us/dotnet/core/diagnostics/available-counters
+                        c.AddEventSources(
+                            "Microsoft.AspNetCore.Hosting",
+                            "Microsoft-AspNetCore-Server-Kestrel",
+                            "System.Net.Http",
+                            "System.Net.Sockets");
+                    });
+            })
+            .WithTracing(tracing =>
+            {
+                tracing
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation();
+            });
+        
+        context.Services.AddOpenTelemetry().UseOtlpExporter();
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
@@ -230,7 +312,9 @@ public class WebModule : AbpModule
         });
 
         app.UseAuditing();
-        app.UseAbpSerilogEnrichers();
+        // app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
     }
 }
+// la mejor referencia de como usar serilog(logs) con open telemetry (traza y metricas)
+// https://dev.to/isaacojeda/aspnet-core-monitoreo-con-opentelemetry-y-grafana-57m9

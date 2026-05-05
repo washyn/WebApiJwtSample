@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.4.33110.190
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11206.111 d18.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{61BFECD7-3631-427B-983B-B59AE2752BF1}"
 EndProject
@@ -74,6 +74,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppImpersonation", "WebAppImpersonation\WebAppImpersonation.csproj", "{457816BF-39F0-432E-89E4-A9FB67F91A8A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp.OpenTelemetry", "WebApp.OpenTelemetry\WebApp.OpenTelemetry.csproj", "{084D511A-C119-4F35-82DE-C6D42014B09F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppHostAspire", "AppHostAspire\AppHostAspire.csproj", "{D22055D8-EE6B-4857-A7BF-DB57820E89CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -517,6 +519,18 @@ Global
 		{084D511A-C119-4F35-82DE-C6D42014B09F}.Release|x64.Build.0 = Release|Any CPU
 		{084D511A-C119-4F35-82DE-C6D42014B09F}.Release|x86.ActiveCfg = Release|Any CPU
 		{084D511A-C119-4F35-82DE-C6D42014B09F}.Release|x86.Build.0 = Release|Any CPU
+		{D22055D8-EE6B-4857-A7BF-DB57820E89CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D22055D8-EE6B-4857-A7BF-DB57820E89CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D22055D8-EE6B-4857-A7BF-DB57820E89CF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D22055D8-EE6B-4857-A7BF-DB57820E89CF}.Debug|x64.Build.0 = Debug|Any CPU
+		{D22055D8-EE6B-4857-A7BF-DB57820E89CF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D22055D8-EE6B-4857-A7BF-DB57820E89CF}.Debug|x86.Build.0 = Debug|Any CPU
+		{D22055D8-EE6B-4857-A7BF-DB57820E89CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D22055D8-EE6B-4857-A7BF-DB57820E89CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D22055D8-EE6B-4857-A7BF-DB57820E89CF}.Release|x64.ActiveCfg = Release|Any CPU
+		{D22055D8-EE6B-4857-A7BF-DB57820E89CF}.Release|x64.Build.0 = Release|Any CPU
+		{D22055D8-EE6B-4857-A7BF-DB57820E89CF}.Release|x86.ActiveCfg = Release|Any CPU
+		{D22055D8-EE6B-4857-A7BF-DB57820E89CF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

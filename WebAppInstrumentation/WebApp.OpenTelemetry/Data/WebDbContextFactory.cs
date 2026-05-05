@@ -7,7 +7,6 @@ public class WebDbContextFactory : IDesignTimeDbContextFactory<WebDbContext>
 {
     public WebDbContext CreateDbContext(string[] args)
     {
-
         var configuration = BuildConfiguration();
 
         var builder = new DbContextOptionsBuilder<WebDbContext>()
