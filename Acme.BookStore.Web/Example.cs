@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 using Volo.Abp.Application.Services;
+using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.Modularity;
 
 namespace Acme.BookStore.Web;
@@ -60,3 +61,7 @@ public class CustomAppModule : AbpModule
             options.UseSqlite(configuration.GetConnectionString("Default")));
     }
 }
+
+// public class AppRepository : EfCoreRepository<ExampleDbContext, Catalog>
+// {
+// }
