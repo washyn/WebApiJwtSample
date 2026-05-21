@@ -6,3 +6,12 @@
 - move to this folder compose and up, conifgin itial
 - add receiver of message from SQS
 - add receiver of message from SNS
+
+
+---
+## NOTES:
+
+- DONE: add send message to SQS
+- DONE: add send receiver of message from SQS
+- TODO: add send message to SNS... revisar
+- TODO: add send receiver of message from SNS...revisar
