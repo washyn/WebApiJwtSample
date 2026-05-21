@@ -1,3 +1,3 @@
 # Readme
 
-- Este es un proyecto de con uso de open telemetry
+- Este es un proyecto plantilla basico de abp framework

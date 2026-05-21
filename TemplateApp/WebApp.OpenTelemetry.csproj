@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-  
+
   <PropertyGroup>
     <AbpVersion>8.3.*</AbpVersion>
     <FrameworkVersion>net8.0</FrameworkVersion>
     <AspNetFrameworkPackageVersion>8.0.*</AspNetFrameworkPackageVersion>
   </PropertyGroup>
-  
+
   <PropertyGroup>
     <TargetFramework>$(FrameworkVersion)</TargetFramework>
     <Nullable>enable</Nullable>
@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-		<PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic" Version="$(AbpVersion)" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic" Version="$(AbpVersion)" />
 
   </ItemGroup>
 
@@ -45,18 +45,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Localization\Web\*.json" />
-    <EmbeddedResource Include="Localization\Web\*.json" />
-  </ItemGroup>
-
-  <ItemGroup Condition="Exists('./openiddict.pfx')">
-    <None Remove="openiddict.pfx" />
-    <EmbeddedResource Include="openiddict.pfx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Logs\**" />
     <Content Remove="Logs\**" />
     <EmbeddedResource Remove="Logs\**" />
@@ -75,32 +63,4 @@
   <ItemGroup>
     <Content Remove="$(UserProfile)\.nuget\packages\*\*\contentFiles\any\*\*.abppkg*" />
   </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Localization\Web\ar.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\cs.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\de.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\en-GB.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\en.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\es.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\fi.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\fr.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\hi.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\hr.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\hu.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\is.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\it.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\nl.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\pl-PL.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\pt-BR.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\ro-RO.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\ru.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\sk.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\sl.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\tr.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\vi.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\zh-Hans.json" />
-    <_ContentIncludedByDefault Remove="Localization\Web\zh-Hant.json" />
-  </ItemGroup>
-
 </Project>
