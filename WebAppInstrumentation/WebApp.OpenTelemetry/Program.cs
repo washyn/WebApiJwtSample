@@ -1,6 +1,7 @@
 using Acme.BookStore.Web.Data;
 
 using Serilog;
+using Serilog.Enrichers.Span;
 using Serilog.Events;
 
 using Volo.Abp.Data;
@@ -20,6 +21,7 @@ public class Program
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
+                .Enrich.WithSpan()
                 .WriteTo.Async(c => c.File("Logs/logs.log"))
                 .WriteTo.Async(c => c.Console())
                 .WriteTo.Async(c => c.OpenTelemetry(opts =>
@@ -61,6 +63,7 @@ public class Program
                 await app.Services.GetRequiredService<WebDbMigrationService>().MigrateAsync();
                 return 0;
             }
+
             //
             // Log.Information("Starting Acme.BookStore.Web.");
             await app.RunAsync();

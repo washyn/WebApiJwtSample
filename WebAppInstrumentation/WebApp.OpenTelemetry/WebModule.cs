@@ -1,16 +1,17 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using System.Diagnostics;
 
 using Acme.BookStore.Web.Data;
 
-using OpenTelemetry;
+using Microsoft.OpenApi.Models;
+
 using OpenTelemetry.Metrics;
-using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+
+using Serilog.Context;
 
 using Volo.Abp;
 using Volo.Abp.Uow;
 using Volo.Abp.AspNetCore.Mvc;
-using Volo.Abp.AspNetCore.Mvc.Localization;
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Bundling;
@@ -21,13 +22,11 @@ using Volo.Abp.AutoMapper;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.Sqlite;
 using Volo.Abp.Localization;
-using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.UI.Navigation.Urls;
-using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
 
 namespace Acme.BookStore.Web;
@@ -69,7 +68,7 @@ public class WebModule : AbpModule
         ConfigureVirtualFiles(hostingEnvironment);
         ConfigureLocalization();
         ConfigureEfCore(context);
-        
+
         context.Services.AddOpenTelemetry()
             .WithMetrics(metrics =>
             {
@@ -93,9 +92,13 @@ public class WebModule : AbpModule
             {
                 tracing
                     .AddAspNetCoreInstrumentation()
+                    .AddEntityFrameworkCoreInstrumentation()
                     .AddHttpClientInstrumentation();
                 tracing.AddOtlpExporter();
             });
+        // TODO: add basic crud
+        // TODO: test tracing
+        // TODO: add open telemetry sqlite
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
@@ -263,8 +266,23 @@ public class WebModule : AbpModule
 
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
+        app.Use(async (context, next) =>
+        {
+            var act = Activity.Current;
+
+            using (LogContext.PushProperty("CustomTraceId", act?.TraceId.ToString()))
+            {
+                using (LogContext.PushProperty("CustomSpanId", act?.SpanId.ToString()))
+                {
+                    await next();
+                }
+            }
+        });
         app.UseConfiguredEndpoints();
     }
 }
 // la mejor referencia de como usar serilog(logs) con open telemetry (traza y metricas)
 // https://dev.to/isaacojeda/aspnet-core-monitoreo-con-opentelemetry-y-grafana-57m9
+// TODO: completar un ejemplo de enricher con data extra de la request actual
+// TODO: validar que en los logs este el traceid y el spanid
+// TODO: validar que en los logs este el span de pipeline o del enricher
