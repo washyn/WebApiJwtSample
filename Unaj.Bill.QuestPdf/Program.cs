@@ -45,23 +45,27 @@ namespace QuestPDF.Invoice
                         Subtext2 = "Teléfono: 051-323200", //  - CENTRAL TELEFÓNICA
                         Subtext3 = "Empresa S.A. 8448"
                     },
-                Customer = new CustomerModel { Name = "Chester Chester Chester", DocumentNumber = "71449257" },
+                Customer = new CustomerModel 
+                { 
+                    Name = "Chester Chester Chester", 
+                    DocumentNumber = "71449257",
+                    Phone = "997 *** 563"
+                },
                 Details = new DocumentDetailsModel
                 {
                     Ruc = "RUC: 20448375688",
                     DocumentType = "COMPROBANTE DE PAGO",
                     DocumentNumber = "UNAJ-2026-0A54AEC8",
-                    IssueDate = DateTime.Now
+                    IssueDate = DateTime.Now,
+                    TransactionId = "235614",
+                    RequestId = "0a54aec8-d872-8e8e-48f4-3a212ed15e23",
+                    VerificationCode = "EA828F8E361C",
+                    VerificationUrl = "https://pagos.unaj.edu.pe/verificar?r=0a54aec8-d872-8e8e-48f4-3a212ed15e23&c=EA828F8E361C"
                 },
-                PaymentMethod = "Contado",
+                PaymentMethod = "Billetera Digital Bipay",
                 HashCode = "hjksdfhjkfdjhksdfjh5",
                 HashImagePath = "opera.png",
-                AmountInWords = NumberLetter.ConvertToLetter(100, "Soles"),
                 Items = new List<InvoiceItemModel>(),
-                MessageWarning =
-                    "La reproducción no autorizada o falsificación de este documento constituye una infracción penalizada conforme a las normas vigentes.",
-                Message =
-                    "Documento emitido con fines de constancia de pago por servicios académicos y administrativos. No sustituye a una factura ni boleta de venta, salvo que el concepto así lo requiera. Cualquier alteración o enmendadura invalida este comprobante. En caso de dudas, verifique la validez del documento en el portal oficial de la universidad utilizando el código de verificación correspondiente."
 
                 // Emido electrónicamente por UNAJ — UNAJ-2026-0A54AEC8
             };

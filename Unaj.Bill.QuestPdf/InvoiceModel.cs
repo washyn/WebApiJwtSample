@@ -13,9 +13,6 @@ namespace QuestPDF.Invoice
         public string PaymentMethod { get; set; }
         public string HashCode { get; set; }
         public string HashImagePath { get; set; }
-        public string AmountInWords { get; set; }
-        public string Message { get; set; }
-        public string MessageWarning { get; set; }
         public decimal TotalAmount => Items.Sum(x => x.Total);
     }
 
@@ -32,6 +29,7 @@ namespace QuestPDF.Invoice
     {
         public string Name { get; set; }
         public string DocumentNumber { get; set; }
+        public string Phone { get; set; }
     }
 
     public class DocumentDetailsModel
@@ -40,6 +38,10 @@ namespace QuestPDF.Invoice
         public string DocumentType { get; set; }
         public string DocumentNumber { get; set; }
         public DateTime IssueDate { get; set; }
+        public string TransactionId { get; set; }
+        public string RequestId { get; set; }
+        public string VerificationCode { get; set; }
+        public string VerificationUrl { get; set; }
     }
 
     public class InvoiceItemModel

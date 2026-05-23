@@ -9,11 +9,14 @@ namespace QuestPDF.Invoice
 {
     public class InvoiceDocument : IDocument
     {
-        private readonly InvoiceModel _model;
+        private readonly InvoiceDocumentViewModel _viewModel;
 
-        public InvoiceDocument(InvoiceModel model)
+        public InvoiceDocument(InvoiceModel model, InvoiceTextResources textResources = null, CultureInfo cultureInfo = null)
         {
-            _model = model ?? throw new ArgumentNullException(nameof(model));
+            _viewModel = InvoiceDocumentViewModelFactory.Create(
+                model ?? throw new ArgumentNullException(nameof(model)),
+                textResources,
+                cultureInfo);
         }
 
         public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
@@ -35,8 +38,6 @@ namespace QuestPDF.Invoice
 
         void ComposeContent(IContainer container)
         {
-            var cultureInfo = new CultureInfo("es-pe");
-
             container.Column(column =>
             {
                 // Encabezado (Logo, Info Empresa, RUC / Nro Comprobante)
@@ -44,10 +45,10 @@ namespace QuestPDF.Invoice
                 {
                     row.Spacing(10);
 
-                    if (!string.IsNullOrEmpty(_model.Seller?.LogoPath))
+                    if (!string.IsNullOrEmpty(_viewModel.SellerLogoPath))
                     {
                         row.RelativeItem().Column(a => a.Item()
-                            .Width(40).Image("opera.png"));
+                            .Width(40).Image(_viewModel.SellerLogoPath));
                     }
                     else
                     {
@@ -57,9 +58,9 @@ namespace QuestPDF.Invoice
 
                     row.RelativeItem(5).Column(col =>
                     {
-                        col.Item().AlignCenter().Text(_model.Seller?.Name ?? string.Empty).Medium().FontSize(12);
-                        col.Item().AlignCenter().Text(_model.Seller?.Subtext1 ?? string.Empty);
-                        col.Item().AlignCenter().Text(_model.Seller?.Subtext2 ?? string.Empty);
+                        col.Item().AlignCenter().Text(_viewModel.SellerName).Medium().FontSize(12);
+                        col.Item().AlignCenter().Text(_viewModel.SellerSubtext1);
+                        col.Item().AlignCenter().Text(_viewModel.SellerSubtext2);
                     });
 
                     row.RelativeItem().Text(string.Empty);
@@ -73,9 +74,9 @@ namespace QuestPDF.Invoice
                             .Column(col =>
                             {
                                 col.Spacing(3);
-                                col.Item().AlignCenter().Text(_model.Details?.DocumentType);
+                                col.Item().AlignCenter().Text(_viewModel.DocumentType);
                                 // col.Item().LineHorizontal(1).LineColor(Colors.Grey.Lighten1);
-                                col.Item().AlignCenter().Text(_model.Details?.DocumentNumber ?? string.Empty);
+                                col.Item().AlignCenter().Text(_viewModel.DocumentNumber);
                             });
                     });
                 });
@@ -85,42 +86,14 @@ namespace QuestPDF.Invoice
                 // Información del Cliente
                 column.Item().Column(col =>
                 {
-                    col.Item().Text(text =>
+                    foreach (var line in _viewModel.CustomerInfoLines)
                     {
-                        text.Span("Cliente: ").SemiBold();
-                        text.Span(_model.Customer?.Name ?? string.Empty);
-                    });
-
-                    col.Item().Text(text =>
-                    {
-                        text.Span("Método de Pago: ").SemiBold();
-                        text.Span("Billetera Digital Bipay");
-                    });
-                    col.Item().Text(text =>
-                    {
-                        text.Span("Fecha de Operación: ").SemiBold();
-                        text.Span(_model.Details?.IssueDate.ToString("D"));
-                    });
-                    col.Item().Text(text =>
-                    {
-                        text.Span("Celular (Bipay): ").SemiBold();
-                        text.Span("997 *** 563");
-                    });
-                    col.Item().Text(text =>
-                    {
-                        text.Span("ID de Transacción Bipay: ").SemiBold();
-                        text.Span("235614");
-                    });
-                    col.Item().Text(text =>
-                    {
-                        text.Span("Nro. de Comprobante: ").SemiBold();
-                        text.Span("UNAJ-2026-0A54AEC8");
-                    });
-                    col.Item().Text(text =>
-                    {
-                        text.Span("ID de Solicitud UNAJ: ").SemiBold();
-                        text.Span("0a54aec8-d872-8e8e-48f4-3a212ed15e23");
-                    });
+                        col.Item().Text(text =>
+                        {
+                            text.Span(line.Label).SemiBold();
+                            text.Span(line.Value);
+                        });
+                    }
                 });
 
 
@@ -136,11 +109,11 @@ namespace QuestPDF.Invoice
                     row.RelativeItem(2).Column(col =>
                     {
                         col.Item().PaddingVertical(2).LineHorizontal(1).LineColor(Colors.White);
-                        col.Item().Text($"Son: {_model.AmountInWords ?? string.Empty}").Medium();
+                        col.Item().Text(_viewModel.AmountInWordsLine).Medium();
                     });
                     row.RelativeItem().Column(col =>
                     {
-                        col.Item().AlignRight().Text($"Importe total: {_model.TotalAmount:C}")
+                        col.Item().AlignRight().Text(_viewModel.TotalAmountLine)
                             .SemiBold();
                     });
                 });
@@ -152,35 +125,22 @@ namespace QuestPDF.Invoice
                     {
                         a.Item().Text(text =>
                         {
-                            text.Span("AUTENTICIDAD DEL DOCUMENTO").FontSize(8);
+                            text.Span(_viewModel.AuthenticityTitle).FontSize(8);
                         });
 
                         a.Item().Text(text =>
                         {
-                            text.Span(
-                                    "Este comprobante fue generado automáticamente tras confirmar el pago en Bipay. Para verificar su autenticidad, utilice el código de verificación o escanee el código QR.")
-                                .FontSize(8);
+                            text.Span(_viewModel.AuthenticityMessage).FontSize(8);
                         });
 
-                        a.Item().Text(text =>
-                        {
-                            text.Span("Código de Verificación: ").FontSize(8);
-                            text.Span("EA828F8E361C").FontSize(8);
-                        });
-
-                        a.Item().Text(text =>
-                        {
-                            text.Span("URL de Verificación: ").FontSize(8);
-                            text.Span(
-                                    "https://pagos.unaj.edu.pe/verificar?r=0a54aec8-d872-8e8e-48f4-3a212ed15e23&c=EA828F8E361C")
-                                .FontSize(8);
-                        });
+                        a.Item().Text(_viewModel.VerificationCodeLine).FontSize(8);
+                        a.Item().Text(_viewModel.VerificationUrlLine).FontSize(8);
                     });
                     row.RelativeItem(2)
                         .Column(a =>
                         {
                             a.Item()
-                                .PaddingHorizontal(10).Width(50).Image("opera.png");
+                                .PaddingHorizontal(10).Width(50).Image(_viewModel.AuthenticityLogoPath);
                         });
                 });
                 column.Item().PaddingVertical(2).LineHorizontal(1).LineColor(Colors.White);
@@ -189,11 +149,11 @@ namespace QuestPDF.Invoice
                     a.Spacing(5);
                     a.Item().Text(text =>
                     {
-                        text.Span(_model.Message ?? string.Empty).Italic().FontSize(7);
+                        text.Span(_viewModel.Message).Italic().FontSize(7);
                     });
                     a.Item().Text(text =>
                     {
-                        text.Span(_model.MessageWarning ?? string.Empty).FontSize(7);
+                        text.Span(_viewModel.MessageWarning).FontSize(7);
                     });
                 });
 
@@ -202,12 +162,12 @@ namespace QuestPDF.Invoice
                 {
                     col.Item().AlignCenter().Text(text =>
                     {
-                        text.Span("Emitido electrónicamente por la UNAJ — ")
+                        text.Span(_viewModel.FooterPrefix)
                             .FontFamily("Calibri")
                             .FontSize(8)
                             .FontColor(Colors.Grey.Darken1);
 
-                        text.Span("UNAJ-2026-0A54AEC8")
+                        text.Span(_viewModel.FooterDocumentNumber)
                             .FontFamily("Calibri")
                             .FontSize(8)
                             .SemiBold()
@@ -233,21 +193,21 @@ namespace QuestPDF.Invoice
 
                 table.Header(header =>
                 {
-                    header.Cell().Text("Código").Style(headerStyle);
-                    header.Cell().Text("Concepto").Style(headerStyle);
+                    header.Cell().Text(_viewModel.TableHeaderCode).Style(headerStyle);
+                    header.Cell().Text(_viewModel.TableHeaderConcept).Style(headerStyle);
 
-                    header.Cell().AlignRight().Text("Importe").Style(headerStyle);
+                    header.Cell().AlignRight().Text(_viewModel.TableHeaderAmount).Style(headerStyle);
 
                     header.Cell().ColumnSpan(3).PaddingTop(2).Border(0.5F).BorderColor(Colors.Grey.Darken1);
                 });
 
-                if (_model.Items != null)
+                if (_viewModel.Items != null)
                 {
-                    foreach (var item in _model.Items)
+                    foreach (var item in _viewModel.Items)
                     {
-                        table.Cell().Element(CellStyle).AlignCenter().Text($"{item.Index}");
-                        table.Cell().Element(CellStyle).Text(item.Description ?? string.Empty);
-                        table.Cell().Element(CellStyle).AlignRight().Text($"{item.Total:C}");
+                        table.Cell().Element(CellStyle).AlignCenter().Text(item.Index);
+                        table.Cell().Element(CellStyle).Text(item.Description);
+                        table.Cell().Element(CellStyle).AlignRight().Text(item.Total);
 
                         static IContainer CellStyle(IContainer container) => container.BorderBottom(0.5F)
                             .BorderColor(Colors.Grey.Lighten2).PaddingVertical(1);
