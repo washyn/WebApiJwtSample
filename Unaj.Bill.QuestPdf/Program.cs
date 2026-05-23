@@ -37,27 +37,33 @@ namespace QuestPDF.Invoice
                     {
                         Name = "UNIVERSIDAD NACIONAL DE JULIACA",
                         LogoPath = "opera.png",
-                        Subtext1 = "Av. Circunvalación s/n, Urb. Ciudad Universitaria, Juliaca — Puno",
-                        Subtext2 = "Teléfono: (051) 320012",
+                        Subtext1 = "Direccion: Av. Nueva Zelandia N° 631 Urb. La Capilla - Juliaca",
+                        Subtext2 = "Teléfono: 051-323200", //  - CENTRAL TELEFÓNICA
                         Subtext3 = "Empresa S.A. 8448"
                     },
                 Customer = new CustomerModel { Name = "Chester Chester Chester", DocumentNumber = "71449257" },
                 Details = new DocumentDetailsModel
                 {
-                    Ruc = "00000000",
+                    Ruc = "RUC - 00000000",
                     DocumentType = "COMPROBANTE DE PAGO",
-                    DocumentNumber = "B00-345788475",
+                    DocumentNumber = "UNAJ-2026-0A54AEC8",
                     IssueDate = DateTime.Now
                 },
                 PaymentMethod = "Contado",
                 HashCode = "hjksdfhjkfdjhksdfjh5",
                 HashImagePath = "opera.png",
                 AmountInWords = "Mucho dineroo",
-                Items = new List<InvoiceItemModel>()
+                Items = new List<InvoiceItemModel>(),
+                MessageWarning =
+                    "La reproducción no autorizada o la falsificación de este documento constuye una infracción sujeta a las normas vigentes.",
+                Message =
+                    "Documento emido con fines de constancia de pago de servicios académicos y administravos. No sustuye factura ni boleta de venta salvo que el concepto así lo requiera.Cualquier alteración invalida este comprobante. Ante dudas, verifique en el portal oficial de la universidad ulizando el código de verificación."
+
+                // Emido electrónicamente por UNAJ — UNAJ-2026-0A54AEC8
             };
 
             // Generate the 10 sample items from the original code
-            for (var i = 1; i <= 10; i++)
+            for (var i = 1; i <= 5; i++)
             {
                 invoice.Items.Add(new InvoiceItemModel
                 {

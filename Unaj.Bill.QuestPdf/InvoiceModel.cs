@@ -14,7 +14,8 @@ namespace QuestPDF.Invoice
         public string HashCode { get; set; }
         public string HashImagePath { get; set; }
         public string AmountInWords { get; set; }
-        
+        public string Message { get; set; }
+        public string MessageWarning { get; set; }
         public decimal TotalAmount => Items.Sum(x => x.Total);
     }
 

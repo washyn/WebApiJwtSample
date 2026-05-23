@@ -46,35 +46,35 @@ namespace QuestPDF.Invoice
 
                     if (!string.IsNullOrEmpty(_model.Seller?.LogoPath))
                     {
-                        row.RelativeItem(1).Image(_model.Seller.LogoPath);
+                        row.RelativeItem().Image(_model.Seller.LogoPath);
                     }
                     else
                     {
-                        row.RelativeItem(1).Text(string.Empty);
+                        row.RelativeItem().Text(string.Empty);
                     }
 
-                    row.RelativeItem(4).Column(col =>
+                    row.RelativeItem(5).Column(col =>
                     {
-                        col.Spacing(3);
+                        // col.Spacing();
                         col.Item().AlignCenter().Text(_model.Seller?.Name ?? string.Empty).Medium().FontSize(12);
                         col.Item().AlignCenter().Text(_model.Seller?.Subtext1 ?? string.Empty);
                         col.Item().AlignCenter().Text(_model.Seller?.Subtext2 ?? string.Empty);
-                        col.Item().AlignCenter().Text(_model.Seller?.Subtext3 ?? string.Empty);
+                        // col.Item().AlignCenter().Text(_model.Seller?.Subtext3 ?? string.Empty);
                     });
 
-                    row.RelativeItem(2).Text(string.Empty);
+                    row.RelativeItem().Text(string.Empty);
 
                     row.RelativeItem(3).AlignMiddle().Row(r =>
                     {
                         r.RelativeItem()
-                            .Border(1)
-                            .BorderColor(Colors.Grey.Lighten1)
+                            .Border(0.5F)
+                            .BorderColor(Colors.Grey.Darken1)
+                            .PaddingVertical(5)
                             .Column(col =>
                             {
-                                col.Item().AlignCenter().Text($"RUC - {_model.Details?.Ruc ?? string.Empty}");
-                                col.Item().LineHorizontal(1).LineColor(Colors.Grey.Lighten1);
-                                col.Item().AlignCenter().Text(_model.Details?.DocumentType ?? string.Empty);
-                                col.Item().LineHorizontal(1).LineColor(Colors.Grey.Lighten1);
+                                col.Spacing(3);
+                                col.Item().AlignCenter().Text(_model.Details?.DocumentType);
+                                // col.Item().LineHorizontal(1).LineColor(Colors.Grey.Lighten1);
                                 col.Item().AlignCenter().Text(_model.Details?.DocumentNumber ?? string.Empty);
                             });
                     });
@@ -98,12 +98,18 @@ namespace QuestPDF.Invoice
                             text.Span("Documento: ").SemiBold();
                             text.Span(_model.Customer?.DocumentNumber ?? string.Empty);
                         });
+                        col.Item().Text(text =>
+                        {
+                            text.Span("Medio de pago: ").SemiBold();
+                            text.Span("Billetera Digital Bipay");
+                        });
+                        // 
                     });
                     row.RelativeItem(2).Column(col =>
                     {
                         col.Item().Text(text =>
                         {
-                            text.Span("Fecha emisión: ").SemiBold();
+                            text.Span("Fecha de operación: ").SemiBold();
                             text.Span(_model.Details?.IssueDate.ToString("d", cultureInfo) ?? string.Empty);
                         });
                     });
@@ -123,10 +129,10 @@ namespace QuestPDF.Invoice
                         col.Item().PaddingVertical(2).LineHorizontal(1).LineColor(Colors.White);
                         col.Item().Text($"Son: {_model.AmountInWords ?? string.Empty}").Medium();
                     });
-                    row.RelativeItem(1).Column(col =>
+                    row.RelativeItem().Column(col =>
                     {
-                        col.Item().PaddingRight(5).AlignRight().Text($"Grand total: {_model.TotalAmount:C}").SemiBold();
-                        col.Item().PaddingRight(5).AlignRight().Text($"Grand total: {_model.TotalAmount:C}").SemiBold();
+                        col.Item().AlignRight().Text($"Importe total: {_model.TotalAmount:C}")
+                            .SemiBold();
                     });
                 });
 
@@ -151,6 +157,32 @@ namespace QuestPDF.Invoice
                         a.Span(_model.PaymentMethod ?? string.Empty);
                     });
                 });
+
+                column.Item().Row(row =>
+                {
+                    row.Spacing(10);
+
+                    row.RelativeItem(8).Column(a =>
+                    {
+                        a.Spacing(5);
+                        a.Item().Text(text =>
+                        {
+                            // text.Span("Mensaje: ").SemiBold();
+                            text.Span(_model.Message ?? string.Empty).Italic().FontSize(7);
+                        });
+                        a.Item().Text(text =>
+                        {
+                            // text.Span("Mensaje de advertencia: ").SemiBold();
+                            text.Span(_model.MessageWarning ?? string.Empty).FontSize(7);
+                        });
+                    });
+                    row.RelativeItem(2)
+                        .Column(a =>
+                        {
+                            a.Item()
+                                .PaddingHorizontal(10).Width(50).Image("opera.png");
+                        });
+                });
             });
         }
 
@@ -162,32 +194,32 @@ namespace QuestPDF.Invoice
             {
                 table.ColumnsDefinition(columns =>
                 {
-                    columns.ConstantColumn(25);
+                    columns.ConstantColumn(35);
                     columns.RelativeColumn(3);
-                    columns.RelativeColumn();
-                    columns.RelativeColumn();
+                    // columns.RelativeColumn();
+                    // columns.RelativeColumn();
                     columns.RelativeColumn();
                 });
 
                 table.Header(header =>
                 {
-                    header.Cell().Text("#");
-                    header.Cell().Text("Producto").Style(headerStyle);
-                    header.Cell().AlignRight().Text("P.U.").Style(headerStyle);
-                    header.Cell().AlignRight().Text("C.").Style(headerStyle);
-                    header.Cell().AlignRight().Text("Total").Style(headerStyle);
+                    header.Cell().Text("Codigo").Style(headerStyle);
+                    header.Cell().Text("Concepto").Style(headerStyle);
+                    // header.Cell().AlignRight().Text("P.U.").Style(headerStyle);
+                    // header.Cell().AlignRight().Text("C.").Style(headerStyle);
+                    header.Cell().AlignRight().Text("Importe").Style(headerStyle);
 
-                    header.Cell().ColumnSpan(5).PaddingTop(2).Border(0.5F).BorderColor(Colors.Grey.Darken1);
+                    header.Cell().ColumnSpan(3).PaddingTop(2).Border(0.5F).BorderColor(Colors.Grey.Darken1);
                 });
 
                 if (_model.Items != null)
                 {
                     foreach (var item in _model.Items)
                     {
-                        table.Cell().Element(CellStyle).Text($"{item.Index}");
+                        table.Cell().Element(CellStyle).AlignCenter().Text($"{item.Index}");
                         table.Cell().Element(CellStyle).Text(item.Description ?? string.Empty);
-                        table.Cell().Element(CellStyle).AlignRight().Text($"{item.UnitPrice:C}");
-                        table.Cell().Element(CellStyle).AlignRight().Text($"{item.Quantity}");
+                        // table.Cell().Element(CellStyle).AlignRight().Text($"{item.UnitPrice:C}");
+                        // table.Cell().Element(CellStyle).AlignRight().Text($"{item.Quantity}");
                         table.Cell().Element(CellStyle).AlignRight().Text($"{item.Total:C}");
 
                         static IContainer CellStyle(IContainer container) => container.BorderBottom(0.5F)
