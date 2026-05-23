@@ -10,13 +10,13 @@ public static class NumberLetter
     private static readonly string[] UNIDADES = new string[]
     {
         "", "un ", "dos ", "tres ", "cuatro ", "cinco ", "seis ", "siete ", "ocho ", "nueve ", "diez ", "once ",
-        "doce ", "trece ", "catorce ", "quince ", "dieciseis ", "diecisiete ", "dieciocho ", "diecinueve ",
+        "doce ", "trece ", "catorce ", "quince ", "dieciséis ", "diecisiete ", "dieciocho ", "diecinueve ",
         "veinte "
     };
 
     private static readonly string[] DECENAS = new string[]
     {
-        "venti", "treinta ", "cuarenta ", "cincuenta ", "sesenta ", "setenta ", "ochenta ", "noventa ", "cien "
+        "veinti", "treinta ", "cuarenta ", "cincuenta ", "sesenta ", "setenta ", "ochenta ", "noventa ", "cien "
     };
 
     private static readonly string[] CENTENAS = new string[]
@@ -57,6 +57,33 @@ public static class NumberLetter
         }
 
         return output;
+    }
+
+    private static string Capitalize(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+            return string.Empty;
+
+        text = System.Text.RegularExpressions.Regex.Replace(text.Trim(), @"\s+", " ");
+        if (text.Length == 1)
+            return text.ToUpper();
+
+        var capitalized = char.ToUpper(text[0]) + text.Substring(1).ToLower();
+        
+        // Corregir acentos en palabras compuestas de "veinti" (versión capitalizada y minúscula)
+        capitalized = capitalized
+            .Replace("Veintiun ", "Veintiún ")
+            .Replace("veintiun ", "veintiún ")
+            .Replace("Veintiun", "Veintiún")
+            .Replace("veintiun", "veintiún")
+            .Replace("Veintidos", "Veintidós")
+            .Replace("veintidos", "veintidós")
+            .Replace("Veintitres", "Veintitrés")
+            .Replace("veintitres", "veintitrés")
+            .Replace("Veintiseis", "Veintiséis")
+            .Replace("veintiseis", "veintiséis");
+
+        return capitalized;
     }
 
     #endregion
@@ -103,7 +130,7 @@ public static class NumberLetter
         {
             if (millones == "001")
             {
-                converted = converted + "un millon ";
+                converted = converted + "un millón ";
             }
             else if (long.Parse(millones) > 0)
             {
@@ -146,12 +173,12 @@ public static class NumberLetter
         {
             if (string.IsNullOrEmpty(decimales))
             {
-                valor_convertido = number.ToString("F2", culturePeru) + " (" + converted.ToPascalCase() + "00/100 " +
+                valor_convertido = number.ToString("F2", culturePeru) + " (" + Capitalize(converted) + " con 00/100 " +
                                    currency + ")";
             }
             else
             {
-                valor_convertido = number.ToString("F2", culturePeru) + " (" + converted.ToPascalCase() + decNumberStr +
+                valor_convertido = number.ToString("F2", culturePeru) + " (" + Capitalize(converted) + " con " + decNumberStr +
                                    "/100 " + currency + ")";
             }
         }
@@ -159,11 +186,11 @@ public static class NumberLetter
         {
             if (string.IsNullOrEmpty(decimales))
             {
-                valor_convertido = converted.ToPascalCase() + "con " + "00/100 " + currency;
+                valor_convertido = Capitalize(converted) + " con 00/100 " + currency;
             }
             else
             {
-                valor_convertido = converted.ToPascalCase() + "con " + decNumberStr + "/100 " + currency;
+                valor_convertido = Capitalize(converted) + " con " + decNumberStr + "/100 " + currency;
             }
         }
 

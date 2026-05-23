@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using QuestPDF.Companion;
+using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 
 namespace QuestPDF.Invoice
@@ -22,6 +23,9 @@ namespace QuestPDF.Invoice
             // Instantiate the dynamic document passing the data
             var document = new InvoiceDocument(model);
 
+            // Generate PDF file on disk
+            document.GeneratePdf("comprobante-poc.pdf");
+
             // Generate PDF file and show it in the default viewer
             document.ShowInCompanion();
 
@@ -37,14 +41,14 @@ namespace QuestPDF.Invoice
                     {
                         Name = "UNIVERSIDAD NACIONAL DE JULIACA",
                         LogoPath = "opera.png",
-                        Subtext1 = "Direccion: Av. Nueva Zelandia N° 631 Urb. La Capilla - Juliaca",
+                        Subtext1 = "Dirección: Av. Nueva Zelandia N° 631, Urb. La Capilla - Juliaca",
                         Subtext2 = "Teléfono: 051-323200", //  - CENTRAL TELEFÓNICA
                         Subtext3 = "Empresa S.A. 8448"
                     },
                 Customer = new CustomerModel { Name = "Chester Chester Chester", DocumentNumber = "71449257" },
                 Details = new DocumentDetailsModel
                 {
-                    Ruc = "RUC - 00000000",
+                    Ruc = "RUC: 20448375688",
                     DocumentType = "COMPROBANTE DE PAGO",
                     DocumentNumber = "UNAJ-2026-0A54AEC8",
                     IssueDate = DateTime.Now
@@ -55,9 +59,9 @@ namespace QuestPDF.Invoice
                 AmountInWords = NumberLetter.ConvertToLetter(100, "Soles"),
                 Items = new List<InvoiceItemModel>(),
                 MessageWarning =
-                    "La reproducción no autorizada o la falsificación de este documento constuye una infracción sujeta a las normas vigentes.",
+                    "La reproducción no autorizada o falsificación de este documento constituye una infracción penalizada conforme a las normas vigentes.",
                 Message =
-                    "Documento emido con fines de constancia de pago de servicios académicos y administravos. No sustuye factura ni boleta de venta salvo que el concepto así lo requiera.Cualquier alteración invalida este comprobante. Ante dudas, verifique en el portal oficial de la universidad ulizando el código de verificación."
+                    "Documento emitido con fines de constancia de pago por servicios académicos y administrativos. No sustituye a una factura ni boleta de venta, salvo que el concepto así lo requiera. Cualquier alteración o enmendadura invalida este comprobante. En caso de dudas, verifique la validez del documento en el portal oficial de la universidad utilizando el código de verificación correspondiente."
 
                 // Emido electrónicamente por UNAJ — UNAJ-2026-0A54AEC8
             };

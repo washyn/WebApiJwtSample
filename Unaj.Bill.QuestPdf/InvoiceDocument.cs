@@ -87,38 +87,38 @@ namespace QuestPDF.Invoice
                 {
                     col.Item().Text(text =>
                     {
-                        text.Span("Nombre y apellido: ").SemiBold();
+                        text.Span("Cliente: ").SemiBold();
                         text.Span(_model.Customer?.Name ?? string.Empty);
                     });
 
                     col.Item().Text(text =>
                     {
-                        text.Span("Medio de pago: ").SemiBold();
+                        text.Span("Método de Pago: ").SemiBold();
                         text.Span("Billetera Digital Bipay");
                     });
                     col.Item().Text(text =>
                     {
-                        text.Span("Fecha de operación: ").SemiBold();
+                        text.Span("Fecha de Operación: ").SemiBold();
                         text.Span(_model.Details?.IssueDate.ToString("D"));
                     });
                     col.Item().Text(text =>
                     {
-                        text.Span("Celular(Bipay): ").SemiBold();
+                        text.Span("Celular (Bipay): ").SemiBold();
                         text.Span("997 *** 563");
                     });
                     col.Item().Text(text =>
                     {
-                        text.Span("ID transacción Bipay: ").SemiBold();
+                        text.Span("ID de Transacción Bipay: ").SemiBold();
                         text.Span("235614");
                     });
                     col.Item().Text(text =>
                     {
-                        text.Span("Nº de comprobante: ").SemiBold();
+                        text.Span("Nro. de Comprobante: ").SemiBold();
                         text.Span("UNAJ-2026-0A54AEC8");
                     });
                     col.Item().Text(text =>
                     {
-                        text.Span("ID solicitud UNAJ: ").SemiBold();
+                        text.Span("ID de Solicitud UNAJ: ").SemiBold();
                         text.Span("0a54aec8-d872-8e8e-48f4-3a212ed15e23");
                     });
                 });
@@ -158,19 +158,19 @@ namespace QuestPDF.Invoice
                         a.Item().Text(text =>
                         {
                             text.Span(
-                                    "Este comprobante fue generado automácamente tras confirmar el pago en Bipay.Para verificar su autencidad, ulice el código o el código QR.")
+                                    "Este comprobante fue generado automáticamente tras confirmar el pago en Bipay. Para verificar su autenticidad, utilice el código de verificación o escanee el código QR.")
                                 .FontSize(8);
                         });
 
                         a.Item().Text(text =>
                         {
-                            text.Span("Código de verificación: ").FontSize(8);
+                            text.Span("Código de Verificación: ").FontSize(8);
                             text.Span("EA828F8E361C").FontSize(8);
                         });
 
                         a.Item().Text(text =>
                         {
-                            text.Span("URL de verificación: ").FontSize(8);
+                            text.Span("URL de Verificación: ").FontSize(8);
                             text.Span(
                                     "https://pagos.unaj.edu.pe/verificar?r=0a54aec8-d872-8e8e-48f4-3a212ed15e23&c=EA828F8E361C")
                                 .FontSize(8);
@@ -202,7 +202,7 @@ namespace QuestPDF.Invoice
                 {
                     col.Item().AlignCenter().Text(text =>
                     {
-                        text.Span("Emido electrónicamente por UNAJ — ").SemiBold();
+                        text.Span("Emitido electrónicamente por la UNAJ — ").SemiBold();
                         text.Span("UNAJ-2026-0A54AEC8");
                     });
                 });
@@ -225,7 +225,7 @@ namespace QuestPDF.Invoice
 
                 table.Header(header =>
                 {
-                    header.Cell().Text("Codigo").Style(headerStyle);
+                    header.Cell().Text("Código").Style(headerStyle);
                     header.Cell().Text("Concepto").Style(headerStyle);
 
                     header.Cell().AlignRight().Text("Importe").Style(headerStyle);
