@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using QRCoder;
+
 using QuestPDF.Companion;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
@@ -32,6 +34,21 @@ namespace QuestPDF.Invoice
             Console.WriteLine("PDF generated and sent to QuestPDF Companion successfully.");
         }
 
+        private static byte[]? GenerateQrCode(string payload)
+        {
+            try
+            {
+                using var generator = new QRCodeGenerator();
+                using var data = generator.CreateQrCode(payload, QRCodeGenerator.ECCLevel.Q);
+                var qrCode = new PngByteQRCode(data);
+                return qrCode.GetGraphic(8);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         private static InvoiceModel CreateSampleInvoice()
         {
             var invoice = new InvoiceModel
@@ -45,12 +62,11 @@ namespace QuestPDF.Invoice
                         Subtext2 = "Teléfono: 051-323200", //  - CENTRAL TELEFÓNICA
                         Subtext3 = "Empresa S.A. 8448"
                     },
-                Customer = new CustomerModel 
-                { 
-                    Name = "Chester Chester Chester", 
-                    DocumentNumber = "71449257",
-                    Phone = "997 *** 563"
-                },
+                Customer =
+                    new CustomerModel
+                    {
+                        Name = "Chester Chester Chester", DocumentNumber = "71449257", Phone = "997 *** 563"
+                    },
                 Details = new DocumentDetailsModel
                 {
                     Ruc = "RUC: 20448375688",
@@ -60,13 +76,13 @@ namespace QuestPDF.Invoice
                     TransactionId = "235614",
                     RequestId = "0a54aec8-d872-8e8e-48f4-3a212ed15e23",
                     VerificationCode = "EA828F8E361C",
-                    VerificationUrl = "https://pagos.unaj.edu.pe/verificar?r=0a54aec8-d872-8e8e-48f4-3a212ed15e23&c=EA828F8E361C"
+                    VerificationUrl =
+                        "https://pagos.unaj.edu.pe/verificar?r=0a54aec8-d872-8e8e-48f4-3a212ed15e23&c=EA828F8E361C"
                 },
                 PaymentMethod = "Billetera Digital Bipay",
-                HashCode = "hjksdfhjkfdjhksdfjh5",
                 HashImagePath = "opera.png",
                 Items = new List<InvoiceItemModel>(),
-
+                QrCode = GenerateQrCode("0a54aec8-d872-8e8e-48f4-3a212ed15e23"),
                 // Emido electrónicamente por UNAJ — UNAJ-2026-0A54AEC8
             };
 

@@ -11,8 +11,11 @@ namespace QuestPDF.Invoice
         public DocumentDetailsModel Details { get; set; }
         public List<InvoiceItemModel> Items { get; set; } = new List<InvoiceItemModel>();
         public string PaymentMethod { get; set; }
-        public string HashCode { get; set; }
+
         public string HashImagePath { get; set; }
+
+        // add qr bytes
+        public byte[]? QrCode { get; set; }
         public decimal TotalAmount => Items.Sum(x => x.Total);
     }
 

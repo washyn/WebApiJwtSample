@@ -19,7 +19,10 @@ namespace QuestPDF.Invoice
         public string LabelRequestId { get; set; } = "ID de Solicitud UNAJ: ";
 
         public string LabelAutenticidadTitle { get; set; } = "AUTENTICIDAD DEL DOCUMENTO";
-        public string LabelAutenticidadMessage { get; set; } = "Este comprobante fue generado automáticamente tras confirmar el pago en Bipay. Para verificar su autenticidad, utilice el código de verificación o escanee el código QR.";
+
+        public string LabelAutenticidadMessage { get; set; } =
+            "Este comprobante fue generado automáticamente tras confirmar el pago en Bipay. Para verificar su autenticidad, utilice el código de verificación o escanee el código QR.";
+
         public string LabelVerificationCode { get; set; } = "Código de Verificación: ";
         public string LabelVerificationUrl { get; set; } = "URL de Verificación: ";
 
@@ -32,8 +35,11 @@ namespace QuestPDF.Invoice
         public string LabelAmountInWordsPrefix { get; set; } = "Son: ";
         public string LabelTotalAmount { get; set; } = "Importe total: ";
 
-        public string Message { get; set; } = "Documento emitido con fines de constancia de pago por servicios académicos y administrativos. No sustituye a una factura ni boleta de venta, salvo que el concepto así lo requiera. Cualquier alteración o enmendadura invalida este comprobante. En caso de dudas, verifique la validez del documento en el portal oficial de la universidad utilizando el código de verificación correspondiente.";
-        public string MessageWarning { get; set; } = "La reproducción no autorizada o falsificación de este documento constituye una infracción penalizada conforme a las normas vigentes.";
+        public string Message { get; set; } =
+            "Documento emitido con fines de constancia de pago por servicios académicos y administrativos. No sustituye a una factura ni boleta de venta, salvo que el concepto así lo requiera. Cualquier alteración o enmendadura invalida este comprobante. En caso de dudas, verifique la validez del documento en el portal oficial de la universidad utilizando el código de verificación correspondiente.";
+
+        public string MessageWarning { get; set; } =
+            "La reproducción no autorizada o falsificación de este documento constituye una infracción penalizada conforme a las normas vigentes.";
     }
 
     public sealed class InvoiceLabelValueLine
@@ -72,7 +78,8 @@ namespace QuestPDF.Invoice
         public string DocumentType { get; init; } = string.Empty;
         public string DocumentNumber { get; init; } = string.Empty;
 
-        public IReadOnlyList<InvoiceLabelValueLine> CustomerInfoLines { get; init; } = Array.Empty<InvoiceLabelValueLine>();
+        public IReadOnlyList<InvoiceLabelValueLine> CustomerInfoLines { get; init; } =
+            Array.Empty<InvoiceLabelValueLine>();
 
         public string TableHeaderCode { get; init; } = string.Empty;
         public string TableHeaderConcept { get; init; } = string.Empty;
@@ -92,7 +99,11 @@ namespace QuestPDF.Invoice
         public string MessageWarning { get; init; } = string.Empty;
 
         public string FooterPrefix { get; init; } = string.Empty;
+
         public string FooterDocumentNumber { get; init; } = string.Empty;
+
+        // add qr bytes
+        public byte[]? QrCode { get; init; } = Array.Empty<byte>();
     }
 
     public static class InvoiceDocumentViewModelFactory
@@ -133,40 +144,37 @@ namespace QuestPDF.Invoice
                 SellerSubtext1 = model.Seller?.Subtext1 ?? string.Empty,
                 SellerSubtext2 = model.Seller?.Subtext2 ?? string.Empty,
                 SellerLogoPath = model.Seller?.LogoPath ?? string.Empty,
-
                 DocumentType = documentType,
                 DocumentNumber = documentNumber,
-
-                CustomerInfoLines = new List<InvoiceLabelValueLine>
-                {
-                    new(textResources.LabelCustomer, model.Customer?.Name ?? string.Empty),
-                    new(textResources.LabelPaymentMethod, model.PaymentMethod ?? string.Empty),
-                    new(textResources.LabelIssueDate, issueDateText),
-                    new(textResources.LabelPhone, model.Customer?.Phone ?? string.Empty),
-                    new(textResources.LabelTransactionId, model.Details?.TransactionId ?? string.Empty),
-                    new(textResources.LabelDocumentNumber, documentNumber),
-                    new(textResources.LabelRequestId, model.Details?.RequestId ?? string.Empty)
-                },
-
+                CustomerInfoLines =
+                    new List<InvoiceLabelValueLine>
+                    {
+                        new(textResources.LabelCustomer, model.Customer?.Name ?? string.Empty),
+                        new(textResources.LabelPaymentMethod, model.PaymentMethod ?? string.Empty),
+                        new(textResources.LabelIssueDate, issueDateText),
+                        new(textResources.LabelPhone, model.Customer?.Phone ?? string.Empty),
+                        new(textResources.LabelTransactionId, model.Details?.TransactionId ?? string.Empty),
+                        new(textResources.LabelDocumentNumber, documentNumber),
+                        new(textResources.LabelRequestId, model.Details?.RequestId ?? string.Empty)
+                    },
                 TableHeaderCode = textResources.LabelTableHeaderCode,
                 TableHeaderConcept = textResources.LabelTableHeaderConcept,
                 TableHeaderAmount = textResources.LabelTableHeaderAmount,
                 Items = viewItems,
-
                 AmountInWordsLine = $"{textResources.LabelAmountInWordsPrefix}{amountInWords}",
                 TotalAmountLine = $"{textResources.LabelTotalAmount}{totalAmount.ToString("C", cultureInfo)}",
-
                 AuthenticityTitle = textResources.LabelAutenticidadTitle,
                 AuthenticityMessage = textResources.LabelAutenticidadMessage,
-                VerificationCodeLine = $"{textResources.LabelVerificationCode}{model.Details?.VerificationCode ?? string.Empty}",
-                VerificationUrlLine = $"{textResources.LabelVerificationUrl}{model.Details?.VerificationUrl ?? string.Empty}",
+                VerificationCodeLine =
+                    $"{textResources.LabelVerificationCode}{model.Details?.VerificationCode ?? string.Empty}",
+                VerificationUrlLine =
+                    $"{textResources.LabelVerificationUrl}{model.Details?.VerificationUrl ?? string.Empty}",
                 AuthenticityLogoPath = model.Seller?.LogoPath ?? string.Empty,
-
                 Message = textResources.Message,
                 MessageWarning = textResources.MessageWarning,
-
                 FooterPrefix = textResources.LabelFooterText,
-                FooterDocumentNumber = documentNumber
+                FooterDocumentNumber = documentNumber,
+                QrCode = model.QrCode
             };
         }
     }

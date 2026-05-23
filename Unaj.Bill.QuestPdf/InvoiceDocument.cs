@@ -11,7 +11,8 @@ namespace QuestPDF.Invoice
     {
         private readonly InvoiceDocumentViewModel _viewModel;
 
-        public InvoiceDocument(InvoiceModel model, InvoiceTextResources textResources = null, CultureInfo cultureInfo = null)
+        public InvoiceDocument(InvoiceModel model, InvoiceTextResources textResources = null,
+            CultureInfo cultureInfo = null)
         {
             _viewModel = InvoiceDocumentViewModelFactory.Create(
                 model ?? throw new ArgumentNullException(nameof(model)),
@@ -127,7 +128,7 @@ namespace QuestPDF.Invoice
                         {
                             text.Span(_viewModel.AuthenticityTitle).FontSize(8);
                         });
-
+                        a.Item().PaddingVertical(2).LineHorizontal(1).LineColor(Colors.Grey.Lighten5);
                         a.Item().Text(text =>
                         {
                             text.Span(_viewModel.AuthenticityMessage).FontSize(8);
@@ -137,10 +138,13 @@ namespace QuestPDF.Invoice
                         a.Item().Text(_viewModel.VerificationUrlLine).FontSize(8);
                     });
                     row.RelativeItem(2)
+                        .AlignRight()
                         .Column(a =>
                         {
                             a.Item()
-                                .PaddingHorizontal(10).Width(50).Image(_viewModel.AuthenticityLogoPath);
+                                .Width(60)
+                                .Height(60)
+                                .Image(_viewModel.QrCode);
                         });
                 });
                 column.Item().PaddingVertical(2).LineHorizontal(1).LineColor(Colors.White);
