@@ -90,28 +90,54 @@ namespace QuestPDF.Invoice
                     {
                         col.Item().Text(text =>
                         {
-                            text.Span("Cliente: ").SemiBold();
+                            text.Span("Nombre y apellido: ").SemiBold();
                             text.Span(_model.Customer?.Name ?? string.Empty);
                         });
-                        col.Item().Text(text =>
-                        {
-                            text.Span("Documento: ").SemiBold();
-                            text.Span(_model.Customer?.DocumentNumber ?? string.Empty);
-                        });
+                        // col.Item().Text(text =>
+                        // {
+                        //     text.Span("Nº de documento: ").SemiBold();
+                        //     text.Span(_model.Customer?.DocumentNumber ?? string.Empty);
+                        // });
                         col.Item().Text(text =>
                         {
                             text.Span("Medio de pago: ").SemiBold();
                             text.Span("Billetera Digital Bipay");
                         });
-                        // 
-                    });
-                    row.RelativeItem(2).Column(col =>
-                    {
                         col.Item().Text(text =>
                         {
                             text.Span("Fecha de operación: ").SemiBold();
-                            text.Span(_model.Details?.IssueDate.ToString("d", cultureInfo) ?? string.Empty);
+                            text.Span(_model.Details?.IssueDate.ToString("D"));
                         });
+                        col.Item().Text(text =>
+                        {
+                            text.Span("Celular(Bipay): ").SemiBold();
+                            text.Span("997 *** 563");
+                        });
+                        col.Item().Text(text =>
+                        {
+                            text.Span("ID transacción Bipay: ").SemiBold();
+                            text.Span("235614");
+                        });
+                        col.Item().Text(text =>
+                        {
+                            text.Span("Nº de comprobante: ").SemiBold();
+                            text.Span("UNAJ-2026-0A54AEC8");
+                        });
+                        col.Item().Text(text =>
+                        {
+                            text.Span("ID solicitud UNAJ: ").SemiBold();
+                            text.Span("0a54aec8-d872-8e8e-48f4-3a212ed15e23");
+                        });
+
+                        // Tipo de documento DNI
+                    });
+                    row.RelativeItem(2).Column(col =>
+                    {
+                        // col.Item().Text(text =>
+                        // {
+                        //     text.Span("Fecha de operación: ").SemiBold();
+                        //     text.Span(_model.Details?.IssueDate.ToString("d", cultureInfo) ?? string.Empty);
+                        // });
                     });
                 });
 
@@ -182,6 +208,30 @@ namespace QuestPDF.Invoice
                             a.Item()
                                 .PaddingHorizontal(10).Width(50).Image("opera.png");
                         });
+                });
+                column.Item().Column(a =>
+                {
+                    a.Spacing(5);
+                    a.Item().Text(text =>
+                    {
+                        // text.Span("Mensaje: ").SemiBold();
+                        text.Span(_model.Message ?? string.Empty).Italic().FontSize(7);
+                    });
+                    a.Item().Text(text =>
+                    {
+                        // text.Span("Mensaje de advertencia: ").SemiBold();
+                        text.Span(_model.MessageWarning ?? string.Empty).FontSize(7);
+                    });
+                });
+
+                // add Emido electrónicamente por UNAJ — UNAJ-2026-0A54AEC8
+                column.Item().PaddingVertical(5).Column(col =>
+                {
+                    col.Item().AlignCenter().Text(text =>
+                    {
+                        text.Span("Emido electrónicamente por UNAJ — ").SemiBold();
+                        text.Span("UNAJ-2026-0A54AEC8");
+                    });
                 });
             });
         }

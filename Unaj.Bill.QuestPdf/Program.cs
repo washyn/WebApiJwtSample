@@ -52,7 +52,7 @@ namespace QuestPDF.Invoice
                 PaymentMethod = "Contado",
                 HashCode = "hjksdfhjkfdjhksdfjh5",
                 HashImagePath = "opera.png",
-                AmountInWords = "Mucho dineroo",
+                AmountInWords = NumberLetter.ConvertToLetter(100, "Soles"),
                 Items = new List<InvoiceItemModel>(),
                 MessageWarning =
                     "La reproducción no autorizada o la falsificación de este documento constuye una infracción sujeta a las normas vigentes.",
