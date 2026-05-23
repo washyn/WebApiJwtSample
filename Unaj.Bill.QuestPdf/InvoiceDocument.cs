@@ -46,11 +46,14 @@ namespace QuestPDF.Invoice
 
                     if (!string.IsNullOrEmpty(_model.Seller?.LogoPath))
                     {
-                        row.RelativeItem().Image(_model.Seller.LogoPath);
+                        // row.RelativeItem().Image(_model.Seller.LogoPath);
+                        row.RelativeItem().Column(a => a.Item()
+                            .Width(40).Image("opera.png"));
                     }
                     else
                     {
-                        row.RelativeItem().Text(string.Empty);
+                        row.RelativeItem().Column(a => a.Item()
+                            .Text(string.Empty));
                     }
 
                     row.RelativeItem(5).Column(col =>
@@ -147,7 +150,7 @@ namespace QuestPDF.Invoice
                 column.Item().Element(ComposeTable);
 
                 // Sección de Totales
-                column.Item().Row(row =>
+                column.Item().PaddingBottom(5).Row(row =>
                 {
                     row.Spacing(10);
                     row.RelativeItem(2).Column(col =>
@@ -162,44 +165,62 @@ namespace QuestPDF.Invoice
                     });
                 });
 
-                column.Item().PaddingVertical(2).LineHorizontal(1).LineColor(Colors.White);
 
                 // Firma / Pie de Página Informativo (QR e información de pago)
-                column.Item().Column(col =>
+                // column.Item().Column(col =>
+                // {
+                //     if (!string.IsNullOrEmpty(_model.HashImagePath))
+                //     {
+                //         col.Item().Width(50).Image(_model.HashImagePath);
+                //     }
+                //     col.Item().Text(a =>
+                //     {
+                //         a.Span("Codigo hash: ").SemiBold();
+                //         a.Span(_model.HashCode ?? string.Empty);
+                //     });
+                //     col.Item().Text(a =>
+                //     {
+                //         a.Span("Condicion pago: ").SemiBold();
+                //         a.Span(_model.PaymentMethod ?? string.Empty);
+                //     });
+                // });
+
+                column.Item().Background(Colors.Grey.Lighten3).Padding(8).Row(row =>
                 {
-                    if (!string.IsNullOrEmpty(_model.HashImagePath))
-                    {
-                        col.Item().Width(50).Image(_model.HashImagePath);
-                    }
+                    // row.Spacing(50);
 
-                    col.Item().Text(a =>
+                    row.RelativeItem(10).Column(a =>
                     {
-                        a.Span("Codigo hash: ").SemiBold();
-                        a.Span(_model.HashCode ?? string.Empty);
-                    });
-                    col.Item().Text(a =>
-                    {
-                        a.Span("Condicion pago: ").SemiBold();
-                        a.Span(_model.PaymentMethod ?? string.Empty);
-                    });
-                });
-
-                column.Item().Row(row =>
-                {
-                    row.Spacing(10);
-
-                    row.RelativeItem(8).Column(a =>
-                    {
-                        a.Spacing(5);
+                        // a.Spacing(5);
                         a.Item().Text(text =>
                         {
                             // text.Span("Mensaje: ").SemiBold();
-                            text.Span(_model.Message ?? string.Empty).Italic().FontSize(7);
+                            text.Span("AUTENTICIDAD DEL DOCUMENTO").FontSize(8);
                         });
+
                         a.Item().Text(text =>
                         {
                             // text.Span("Mensaje de advertencia: ").SemiBold();
-                            text.Span(_model.MessageWarning ?? string.Empty).FontSize(7);
+                            text.Span(
+                                    "Este comprobante fue generado automácamente tras confirmar el pago en Bipay.Para verificar su autencidad, ulice el código o el código QR.")
+                                .FontSize(8);
+                        });
+//                         Código de verificación
+// EA828F8E361C
+// URL de verificaciónhttps://pagos.unaj.edu.pe/verificar?r=0a54aec8-
+// d872-8e8e-48f4-3a212ed15e23&c=EA828F8E361C
+                        a.Item().Text(text =>
+                        {
+                            text.Span("Código de verificación: ").FontSize(8);
+                            text.Span("EA828F8E361C").FontSize(8);
+                        });
+
+                        a.Item().Text(text =>
+                        {
+                            text.Span("URL de verificación: ").FontSize(8);
+                            text.Span(
+                                    "https://pagos.unaj.edu.pe/verificar?r=0a54aec8-d872-8e8e-48f4-3a212ed15e23&c=EA828F8E361C")
+                                .FontSize(8);
                         });
                     });
                     row.RelativeItem(2)
@@ -209,6 +230,7 @@ namespace QuestPDF.Invoice
                                 .PaddingHorizontal(10).Width(50).Image("opera.png");
                         });
                 });
+                column.Item().PaddingVertical(2).LineHorizontal(1).LineColor(Colors.White);
                 column.Item().Column(a =>
                 {
                     a.Spacing(5);
