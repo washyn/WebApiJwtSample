@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
+using QuestPDF.Companion;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -9,10 +10,6 @@ namespace QuestPDF.Invoice
 {
     public class InvoiceDocument : IDocument
     {
-        public InvoiceDocument(object model)
-        {
-        }
-
         public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
 
         public void Compose(IDocumentContainer container)
@@ -66,7 +63,7 @@ namespace QuestPDF.Invoice
                         row.RelativeItem(4)
                             .Column(col =>
                             {
-                                col.Spacing(-3);
+                                col.Spacing(3);
                                 col.Item()
                                     .AlignCenter()
                                     .Text("Empresa S.A.")
@@ -207,7 +204,7 @@ namespace QuestPDF.Invoice
                     header.Cell().AlignRight().Text("C.").Style(headerStyle);
                     header.Cell().AlignRight().Text("Total").Style(headerStyle);
 
-                    header.Cell().ColumnSpan(5).PaddingTop(2).BorderBottom(0.5F).BorderColor(Colors.Grey.Darken1);
+                    header.Cell().ColumnSpan(5).PaddingTop(2).Border(0.5F).BorderColor(Colors.Grey.Darken1);
                 });
 
                 for (var i = 1; i <= 10; i++)
@@ -237,11 +234,10 @@ namespace QuestPDF.Invoice
 
             // For documentation and implementation details, please visit:
             // https://www.questpdf.com/documentation/getting-started.html
-            var model = new { };
-            var document = new InvoiceDocument(model);
+            var document = new InvoiceDocument();
 
             // Generate PDF file and show it in the default viewer
-            document.GeneratePdfAndShow();
+            document.ShowInCompanion();
 
             // Or open the QuestPDF Previewer and experiment with the document's design
             // in real-time without recompilation after each code change
