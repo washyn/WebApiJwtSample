@@ -202,8 +202,16 @@ namespace QuestPDF.Invoice
                 {
                     col.Item().AlignCenter().Text(text =>
                     {
-                        text.Span("Emitido electrónicamente por la UNAJ — ").SemiBold();
-                        text.Span("UNAJ-2026-0A54AEC8");
+                        text.Span("Emitido electrónicamente por la UNAJ — ")
+                            .FontFamily("Calibri")
+                            .FontSize(8)
+                            .FontColor(Colors.Grey.Darken1);
+
+                        text.Span("UNAJ-2026-0A54AEC8")
+                            .FontFamily("Calibri")
+                            .FontSize(8)
+                            .SemiBold()
+                            .FontColor(Colors.Grey.Darken3);
                     });
                 });
             });
