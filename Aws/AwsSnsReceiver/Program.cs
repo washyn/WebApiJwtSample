@@ -1,9 +1,14 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Events;
+using Volo.Abp;
+using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.Modularity;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace AwsSnsReceiver
 {
@@ -27,8 +32,16 @@ namespace AwsSnsReceiver
 
             try
             {
-                Log.Information("Starting console host.");
-                await CreateHostBuilder(args).RunConsoleAsync();
+                var builder = WebApplication.CreateBuilder(args);
+                builder.Host
+                    .UseSerilog();
+
+                await builder.AddApplicationAsync<WebModule>();
+                var app = builder.Build();
+                await app.InitializeApplicationAsync();
+
+                Log.Information("Starting app...");
+                await app.RunAsync();
                 return 0;
             }
             catch (Exception ex)
@@ -41,52 +54,71 @@ namespace AwsSnsReceiver
                 Log.CloseAndFlush();
             }
         }
-
-        internal static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .UseEnvironment("Development")
-                .UseSerilog()
-                .ConfigureServices((hostContext, services) =>
-                {
-                    services.AddHostedService<AppHostedService>();
-                    services.Configure<AwsSnsConfig>(a =>
-                    {
-                        a.TopicArn = "arn:aws:sns:us-east-1:000000000000:mi-topic";
-                        a.AccessKeyId = "test";
-                        a.SecretAccessKey = "test";
-                        a.Region = "us-east-1";
-                    });
-                });
     }
 
-    public class AwsSnsConfig
+    [DependsOn(typeof(AbpAspNetCoreMvcModule))]
+    public class WebModule : AbpModule
     {
-        public string TopicArn { get; set; }
-        public string Region { get; set; }
-        public string AccessKeyId { get; set; }
-        public string SecretAccessKey { get; set; }
-    }
-
-    public class AppHostedService : IHostedService
-    {
-        private readonly ILogger<AppHostedService> _logger;
-        private readonly AwsSnsConfig _options;
-
-        public AppHostedService(ILogger<AppHostedService> logger, IOptions<AwsSnsConfig> options)
+        public override void ConfigureServices(ServiceConfigurationContext context)
         {
-            _logger = logger;
-            _options = options.Value;
+            // context.Services.AddHostedService<AppHostedService>();
+            // context.Services.Configure<AwsSnsConfig>(a =>
+            // {
+            //     a.TopicArn = "arn:aws:sns:us-east-1:000000000000:mi-topic";
+            //     a.AccessKeyId = "test";
+            //     a.SecretAccessKey = "test";
+            //     a.Region = "us-east-1";
+            // });
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
-            _logger.LogInformation($"Starting AppHostedService...");
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            _logger.LogInformation($"Stopping AppHostedService...");
-            return Task.CompletedTask;
+            var app = context.GetApplicationBuilder();
+            app.UseRouting();
+            app.UseSerilogRequestLogging();
+            app.UseConfiguredEndpoints();
         }
     }
+
+    // public class AwsSnsConfig
+    // {
+    //     public string TopicArn { get; set; }
+    //     public string Region { get; set; }
+    //     public string AccessKeyId { get; set; }
+    //     public string SecretAccessKey { get; set; }
+    // }
+
+    // public class AppHostedService : IHostedService
+    // {
+    //     private readonly ILogger<AppHostedService> _logger;
+    //     private readonly AwsSnsConfig _options;
+
+    //     public AppHostedService(ILogger<AppHostedService> logger, IOptions<AwsSnsConfig> options)
+    //     {
+    //         _logger = logger;
+    //         _options = options.Value;
+    //     }
+
+    //     public async Task StartAsync(CancellationToken cancellationToken)
+    //     {
+    //         _logger.LogInformation($"Starting AppHostedService...");
+    //     }
+
+    //     public Task StopAsync(CancellationToken cancellationToken)
+    //     {
+    //         _logger.LogInformation($"Stopping AppHostedService...");
+    //         return Task.CompletedTask;
+    //     }
+    // }
 }
+
+// var builder = WebApplication.CreateBuilder(args);
+// var app = builder.Build();
+// app.MapPost("/sns", async (HttpRequest request) =>
+// {
+//     using var reader = new StreamReader(request.Body);
+//     var body = await reader.ReadToEndAsync();
+//     Console.WriteLine(body);
+//     return Results.Ok();
+// });
+// app.Run();
