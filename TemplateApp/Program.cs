@@ -18,7 +18,8 @@ public class Program
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
             .Enrich.FromLogContext()
-            .WriteTo.Async(c => c.File("Logs/logs.txt"))
+            .WriteTo.Async(c => c.File("Logs/log_.log", rollingInterval: RollingInterval.Day,
+                retainedFileCountLimit: 7, shared: true, restrictedToMinimumLevel: LogEventLevel.Information))
             .WriteTo.Async(c => c.Console());
 
         if (IsMigrateDatabase(args))
