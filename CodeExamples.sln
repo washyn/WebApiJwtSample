@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9 d17.14
+VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{61BFECD7-3631-427B-983B-B59AE2752BF1}"
 EndProject
@@ -73,11 +73,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppEnum", "WebAppEnum\We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppImpersonation", "WebAppImpersonation\WebAppImpersonation.csproj", "{457816BF-39F0-432E-89E4-A9FB67F91A8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp.OpenTelemetry", "WebApp.OpenTelemetry\WebApp.OpenTelemetry.csproj", "{084D511A-C119-4F35-82DE-C6D42014B09F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppHostAspire", "AppHostAspire\AppHostAspire.csproj", "{D22055D8-EE6B-4857-A7BF-DB57820E89CF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAppListDir", "BlazorAppListDir\BlazorAppListDir.csproj", "{E3B8D09D-C999-4E38-957E-66560762A37A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAppInstrumentation", "WebAppInstrumentation", "{79D667BF-AF7B-2D39-75B5-023562AF8B22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp.OpenTelemetry", "WebAppInstrumentation\WebApp.OpenTelemetry\WebApp.OpenTelemetry.csproj", "{DC46DB38-037D-4667-844B-60B67E0366CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp.Aspire", "WebApp.Aspire", "{D1AB1E93-78B5-0AF2-AFB2-2B56797ED558}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppAspire.AppHost", "WebAppInstrumentation\WebApp.Aspire\WebAppAspire.AppHost.csproj", "{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -509,18 +515,6 @@ Global
 		{457816BF-39F0-432E-89E4-A9FB67F91A8A}.Release|x64.Build.0 = Release|Any CPU
 		{457816BF-39F0-432E-89E4-A9FB67F91A8A}.Release|x86.ActiveCfg = Release|Any CPU
 		{457816BF-39F0-432E-89E4-A9FB67F91A8A}.Release|x86.Build.0 = Release|Any CPU
-		{084D511A-C119-4F35-82DE-C6D42014B09F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{084D511A-C119-4F35-82DE-C6D42014B09F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{084D511A-C119-4F35-82DE-C6D42014B09F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{084D511A-C119-4F35-82DE-C6D42014B09F}.Debug|x64.Build.0 = Debug|Any CPU
-		{084D511A-C119-4F35-82DE-C6D42014B09F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{084D511A-C119-4F35-82DE-C6D42014B09F}.Debug|x86.Build.0 = Debug|Any CPU
-		{084D511A-C119-4F35-82DE-C6D42014B09F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{084D511A-C119-4F35-82DE-C6D42014B09F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{084D511A-C119-4F35-82DE-C6D42014B09F}.Release|x64.ActiveCfg = Release|Any CPU
-		{084D511A-C119-4F35-82DE-C6D42014B09F}.Release|x64.Build.0 = Release|Any CPU
-		{084D511A-C119-4F35-82DE-C6D42014B09F}.Release|x86.ActiveCfg = Release|Any CPU
-		{084D511A-C119-4F35-82DE-C6D42014B09F}.Release|x86.Build.0 = Release|Any CPU
 		{D22055D8-EE6B-4857-A7BF-DB57820E89CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D22055D8-EE6B-4857-A7BF-DB57820E89CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D22055D8-EE6B-4857-A7BF-DB57820E89CF}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -545,9 +539,38 @@ Global
 		{E3B8D09D-C999-4E38-957E-66560762A37A}.Release|x64.Build.0 = Release|Any CPU
 		{E3B8D09D-C999-4E38-957E-66560762A37A}.Release|x86.ActiveCfg = Release|Any CPU
 		{E3B8D09D-C999-4E38-957E-66560762A37A}.Release|x86.Build.0 = Release|Any CPU
+		{DC46DB38-037D-4667-844B-60B67E0366CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC46DB38-037D-4667-844B-60B67E0366CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC46DB38-037D-4667-844B-60B67E0366CF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DC46DB38-037D-4667-844B-60B67E0366CF}.Debug|x64.Build.0 = Debug|Any CPU
+		{DC46DB38-037D-4667-844B-60B67E0366CF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DC46DB38-037D-4667-844B-60B67E0366CF}.Debug|x86.Build.0 = Debug|Any CPU
+		{DC46DB38-037D-4667-844B-60B67E0366CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC46DB38-037D-4667-844B-60B67E0366CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC46DB38-037D-4667-844B-60B67E0366CF}.Release|x64.ActiveCfg = Release|Any CPU
+		{DC46DB38-037D-4667-844B-60B67E0366CF}.Release|x64.Build.0 = Release|Any CPU
+		{DC46DB38-037D-4667-844B-60B67E0366CF}.Release|x86.ActiveCfg = Release|Any CPU
+		{DC46DB38-037D-4667-844B-60B67E0366CF}.Release|x86.Build.0 = Release|Any CPU
+		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}.Debug|x64.Build.0 = Debug|Any CPU
+		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}.Debug|x86.Build.0 = Debug|Any CPU
+		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}.Release|x64.ActiveCfg = Release|Any CPU
+		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}.Release|x64.Build.0 = Release|Any CPU
+		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}.Release|x86.ActiveCfg = Release|Any CPU
+		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DC46DB38-037D-4667-844B-60B67E0366CF} = {79D667BF-AF7B-2D39-75B5-023562AF8B22}
+		{D1AB1E93-78B5-0AF2-AFB2-2B56797ED558} = {79D667BF-AF7B-2D39-75B5-023562AF8B22}
+		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69} = {D1AB1E93-78B5-0AF2-AFB2-2B56797ED558}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {09E0B428-5512-48E0-AA80-F16088CBDF55}

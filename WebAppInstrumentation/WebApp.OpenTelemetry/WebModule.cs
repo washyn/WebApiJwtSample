@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
+using Serilog;
 using Serilog.Context;
 
 using Volo.Abp;
@@ -97,7 +98,7 @@ public class WebModule : AbpModule
                 tracing.AddOtlpExporter();
             });
         // TODO: add basic crud
-        // TODO: test tracing
+        // DONE: test tracing
         // TODO: add open telemetry sqlite
     }
 
@@ -266,23 +267,36 @@ public class WebModule : AbpModule
 
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
-        app.Use(async (context, next) =>
-        {
-            var act = Activity.Current;
-
-            using (LogContext.PushProperty("CustomTraceId", act?.TraceId.ToString()))
-            {
-                using (LogContext.PushProperty("CustomSpanId", act?.SpanId.ToString()))
-                {
-                    await next();
-                }
-            }
-        });
+        app.UseSerilogRequestLogging();
+        // DONE: can be add as middleware, and test
+        app.UseMiddleware<ClaimsLoggingMiddleware>();
         app.UseConfiguredEndpoints();
+    }
+}
+
+public class ClaimsLoggingMiddleware
+{
+    private readonly RequestDelegate _next;
+
+    public ClaimsLoggingMiddleware(RequestDelegate next)
+    {
+        _next = next;
+    }
+
+    public async Task Invoke(HttpContext context)
+    {
+        var act = Activity.Current;
+        using (LogContext.PushProperty("CustomTraceId", act?.TraceId.ToString()))
+        {
+            using (LogContext.PushProperty("CustomSpanId", act?.SpanId.ToString()))
+            {
+                await _next(context);
+            }
+        }
     }
 }
 // la mejor referencia de como usar serilog(logs) con open telemetry (traza y metricas)
 // https://dev.to/isaacojeda/aspnet-core-monitoreo-con-opentelemetry-y-grafana-57m9
-// TODO: completar un ejemplo de enricher con data extra de la request actual
-// TODO: validar que en los logs este el traceid y el spanid
-// TODO: validar que en los logs este el span de pipeline o del enricher
+// DONE: completar un ejemplo de enricher con data extra de la request actual
+// DONE: validar que en los logs este el traceid y el spanid
+// DONE: validar que en los logs este el span de pipeline o del enricher
