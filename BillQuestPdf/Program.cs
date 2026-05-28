@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -71,7 +72,7 @@ namespace QuestPDF.Invoice
                                     .Text("Empresa S.A.")
                                     .Medium()
                                     .FontSize(12);
-                                        
+
                                 col.Item()
                                     .AlignCenter()
                                     .Text("Empresa S.A. efhjfsdjkef");
@@ -82,7 +83,7 @@ namespace QuestPDF.Invoice
                                     .AlignCenter()
                                     .Text("Empresa S.A. 8448");
                             });
-                        
+
                         row.RelativeItem(2)
                             .Text(String.Empty);
                         row.RelativeItem(3)
@@ -142,7 +143,7 @@ namespace QuestPDF.Invoice
                                 });
                             });
                     });
-                    
+
                     column.Item().PaddingVertical(2).LineHorizontal(1).LineColor(Colors.White);
 
                     column.Item().Element(ComposeTable);
@@ -162,7 +163,7 @@ namespace QuestPDF.Invoice
                             col.Item().PaddingRight(5).AlignRight().Text($"Grand total: {totalPrice:C}").SemiBold();
                         });
                     });
-                    
+
                     column.Item().PaddingVertical(2).LineHorizontal(1).LineColor(Colors.White);
 
                     column.Item().Column(col =>

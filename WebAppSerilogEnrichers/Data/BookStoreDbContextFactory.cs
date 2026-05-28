@@ -1,0 +1,30 @@
+﻿using System.IO;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+
+namespace Washyn.BookStore.Data
+{
+  public class BookStoreDbContextFactory : IDesignTimeDbContextFactory<BookStoreDbContext>
+  {
+    public BookStoreDbContext CreateDbContext(string[] args)
+    {
+      var configuration = BuildConfiguration();
+
+      var builder = new DbContextOptionsBuilder<BookStoreDbContext>()
+        .UseSqlite(configuration.GetConnectionString("Default"));
+
+      return new BookStoreDbContext(builder.Options);
+    }
+
+    private static IConfigurationRoot BuildConfiguration()
+    {
+      var builder = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", optional: false)
+        .AddEnvironmentVariables();
+
+      return builder.Build();
+    }
+  }
+}

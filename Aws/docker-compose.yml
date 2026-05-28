@@ -1,0 +1,66 @@
+services:
+  localstack:
+    image: localstack/localstack:3.4
+    container_name: delosi-localstack
+    ports:
+      - "4566:4566"
+      - "4510-4559:4510-4559"
+    environment:
+      - DEBUG=1
+      - SERVICES=sqs,sns,dynamodb,events,lambda,iam,logs,s3
+      - LOCALSTACK_AUTH_TOKEN=ls-HODI9586-gEfa-GUYU-gINo-7455hiGe01e0
+      # - PERSISTENCE=1
+      # - LAMBDA_EXECUTOR=docker
+      # - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "./localstack/init:/etc/localstack/init/ready.d"
+    #   - "/var/run/docker.sock:/var/run/docker.sock"
+    #   - "./docker/localstack-data:/var/lib/localstack"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
+
+
+# por que toda esta mierda es replicable, todo esto es open source o que???
+# opensearch si es open source y hay una imagen docker
+# opensearch es open source y otros son mocks de las apis de amazon, pero no imitan por completo todo lo de amazon
+# available services in local stack
+
+# acm: gestión de certificados SSL/TLS para asegurar comunicaciones.
+# apigateway: creación y gestión de APIs REST/HTTP que exponen servicios backend.
+# cloudformation: definición y despliegue de infraestructura como código mediante plantillas.
+# cloudwatch: monitoreo de métricas, logs y alertas de recursos y aplicaciones.
+# config: evaluación y seguimiento de configuraciones de recursos AWS.
+# dynamodb: base de datos NoSQL completamente administrada y de alto rendimiento.
+# dynamodbstreams: captura de cambios en tablas DynamoDB en tiempo real.
+# ec2: provisión de instancias virtuales (máquinas) en la nube.
+# es: servicio administrado de Elasticsearch para búsqueda y análisis (legacy).
+# events: bus de eventos para integrar servicios mediante eventos (EventBridge).
+# firehose: ingestión y entrega de datos en tiempo real hacia destinos como S3 o Redshift.
+# iam: gestión de identidades, usuarios, roles y permisos.
+# kinesis: procesamiento de flujos de datos en tiempo real.
+# kms: gestión de claves criptográficas para cifrado.
+# lambda: ejecución de funciones sin servidor basadas en eventos.
+# logs: almacenamiento y consulta de logs (CloudWatch Logs).
+# opensearch: servicio administrado para búsqueda y análisis basado en OpenSearch.
+# redshift: data warehouse para análisis de grandes volúmenes de datos.
+# resource-groups: agrupación lógica de recursos para su gestión.
+# resourcegroupstaggingapi: gestión y consulta de etiquetas (tags) en recursos.
+# route53: servicio de DNS y enrutamiento de tráfico.
+# route53resolver: resolución de DNS entre redes (inbound/outbound endpoints).
+# s3: almacenamiento de objetos altamente escalable.
+# s3control: operaciones avanzadas y administración de S3 a nivel de cuenta.
+# scheduler: programación de ejecuciones de tareas y eventos.
+# secretsmanager: almacenamiento seguro y rotación de secretos y credenciales.
+# ses: envío de correos electrónicos a gran escala.
+# sns: servicio de mensajería pub/sub basado en tópicos.
+# sqs: colas de mensajes para desacoplar sistemas.
+# ssm: gestión de sistemas, parámetros y automatización de tareas.
+# stepfunctions: orquestación de flujos de trabajo mediante máquinas de estados.
+# sts: emisión de credenciales temporales para acceso seguro.
+# support: gestión de casos de soporte de AWS.
+# swf: orquestación de flujos de trabajo (servicio legacy).
+# transcribe: conversión automática de voz a texto.

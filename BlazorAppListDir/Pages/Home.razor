@@ -1,0 +1,25 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<ul>
+	@foreach (var dir in this.DirElements)
+	{
+		<li>@dir</li>
+	}
+</ul>
+
+@code {
+	private List<string> DirElements = new List<string>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		var path = "D:\\";
+		var files = Directory.EnumerateDirectories(path);
+		this.DirElements = files.ToList();
+	}
+}
