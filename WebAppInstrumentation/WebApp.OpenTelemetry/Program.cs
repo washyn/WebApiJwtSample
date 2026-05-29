@@ -26,15 +26,19 @@ public class Program
             .Enrich.FromLogContext()
             .WriteTo.Async(c => c.File("Logs/logs.log"))
             .WriteTo.Async(c => c.Console())
-            .WriteTo.Async(c => c.AWSSeriLog(new AWSLoggerConfig()
-            {
-                Region = "us-east-2",
-                LogGroup = "AppAspnetCoreLogs",
-                LogStreamNamePrefix = "api-",
-                BatchPushInterval = TimeSpan.FromSeconds(5),
-                Credentials = new BasicAWSCredentials("", ""),
-                LogStreamName = "api-2026",
-            }, textFormatter: new Serilog.Formatting.Json.JsonFormatter()))
+            // TODO: se tiene que configurar bien el fluent-bit el input http y el output file
+            .WriteTo.Async(c => c.DurableHttpUsingFileSizeRolledBuffers("http://localhost:8888/",
+                period: TimeSpan.FromSeconds(2),
+                textFormatter: new Serilog.Formatting.Json.JsonFormatter()))
+            // .WriteTo.Async(c => c.AWSSeriLog(new AWSLoggerConfig()
+            // {
+            //     Region = "us-east-2",
+            //     LogGroup = "AppAspnetCoreLogs",
+            //     LogStreamNamePrefix = "api_",
+            //     BatchPushInterval = TimeSpan.FromSeconds(5),
+            //     Credentials = new BasicAWSCredentials("", ""),
+            //     LogStreamName = "api-2026",
+            // }, textFormatter: new Serilog.Formatting.Json.JsonFormatter()))
             .WriteTo.Async(c => c.OpenTelemetry(opts =>
             {
                 opts.ResourceAttributes = new Dictionary<string, object>
