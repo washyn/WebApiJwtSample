@@ -39,9 +39,14 @@
     <ItemGroup>
         <PackageReference Include="Serilog.AspNetCore" Version="$(AspNetFrameworkPackageVersion)" />
         <PackageReference Include="Serilog.Enrichers.Span" Version="2.3.0" />
+        <PackageReference Include="Serilog.Sinks.AmazonS3" Version="1.6.0" />
+        <PackageReference Include="Serilog.Sinks.OpenObserve-KKP" Version="1.0.5" />
         <PackageReference Include="Serilog.Sinks.OpenTelemetry" Version="4.1.0" />
         <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
         <PackageReference Include="Serilog.Sinks.Http" Version="8.0.0" />
+        <PackageReference Include="Serilog.Sinks.Grafana.Loki" Version="7.1.1" />
+        <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.4.0" />
+
         <PackageReference Include="AWS.Logger.SeriLog" Version="3.4.3" />
     </ItemGroup>
 
