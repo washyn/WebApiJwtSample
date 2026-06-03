@@ -1,9 +1,19 @@
+service:
+  flush: 1
+  log_level: info
+
 pipeline:
   inputs:
     - name: http
       listen: 0.0.0.0
       port: 8888
+      tag: "ak"
 
   outputs:
+    - name: file
+      match: "*"
+      # path: "C:/fluentbit/logs"
+      file: app.log
+
     - name: stdout
-      match: http.0
+      match: "*"

@@ -19,7 +19,7 @@ public class Program
 {
     public async static Task<int> Main(string[] args)
     {
-        Serilog.Debugging.SelfLog.Enable(Console.Error);
+        // Serilog.Debugging.SelfLog.Enable(Console.Error);
         var loggerConfiguration = new LoggerConfiguration()
 #if DEBUG
                 .MinimumLevel.Debug()
@@ -59,8 +59,8 @@ public class Program
                     {
                         ["app"] = "webapi", ["runtime"] = "dotnet", ["service.name"] = "WebApi"
                     };
-                    opts.Endpoint = "http://localhost:3318/v1/logs";
-                    opts.Protocol = OtlpProtocol.Grpc;
+                    opts.Endpoint = "http://localhost:4318/v1/logs";
+                    opts.Protocol = OtlpProtocol.HttpProtobuf;
                 }))
 
                 // not works
@@ -84,10 +84,10 @@ public class Program
                     "root@example.com",
                     "Complexpass#123"
                 )))
-            // TODO: se tiene que configurar bien el fluent-bit el input http y el output file
-            // .WriteTo.Async(c => c.DurableHttpUsingFileSizeRolledBuffers("http://localhost:8888/",
-            //     period: TimeSpan.FromSeconds(2),
-            //     textFormatter: new Serilog.Formatting.Json.JsonFormatter()))
+                // DONE: se tiene que configurar bien el fluent-bit el input http y el output file
+                // Solo funciona con el fluent-bit version 4.x no con 5.x
+                .WriteTo.Async(c => c.DurableHttpUsingFileSizeRolledBuffers(requestUri: "http://localhost:8888",
+                    textFormatter: new Serilog.Formatting.Json.JsonFormatter()))
             ;
         // https://openobserve.ai/blog/serilog-sink-for-openobserve/
         if (IsMigrateDatabase(args))
