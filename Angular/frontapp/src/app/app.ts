@@ -1,12 +1,22 @@
-import { Component, signal } from '@angular/core';
+import { ApplicationConfigurationDto, ConfigStateService } from '@abp/ng.core';
+import { JsonPipe } from '@angular/common';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, JsonPipe],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
-export class App {
+export class App implements OnInit {
   protected readonly title = signal('frontapp');
+  appConfig: ApplicationConfigurationDto = {} as ApplicationConfigurationDto;
+  ngOnInit(): void {
+    this.appConfig = this.configState.getAll();
+  }
+
+  protected readonly configState = inject(ConfigStateService);
+
+
 }
