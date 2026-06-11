@@ -3,16 +3,17 @@ using App.Api.Entities;
 
 using Library.Application.Dtos;
 using Library.Application.Services;
-using Library.Domain.Entities;
 using Library.Domain.Repositories;
 
 using Microsoft.AspNetCore.Mvc;
 
+using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.DependencyInjection;
 
 namespace App.Api.Services;
 
+[RemoteService]
 public class CategoryAppService : CrudAppService<Book, BookDto, Guid>, ITransientDependency
 {
     public CategoryAppService(IRepository<Book, Guid> repository) : base(repository)
