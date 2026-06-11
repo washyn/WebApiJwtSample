@@ -4,6 +4,7 @@ using App.Api.ObjectMapping;
 using App.Api.Repositories;
 using App.Api.Services;
 
+using Library;
 using Library.Application.ObjectMapping;
 using Library.Domain.Repositories;
 
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Volo.Abp.Modularity;
 
+[DependsOn(typeof(LibraryModule))]
 public class WebApp : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
@@ -24,11 +26,6 @@ public class WebApp : AbpModule
         context.Services.AddDbContext<AppDbContext>(options =>
             options.UseInMemoryDatabase("TodoDemoDb"));
 
-// Register generic repositories from MyLibrary using the specific AppDbContextRepository
-        context.Services.AddTransient(typeof(IRepository<,>), typeof(AppDbContextRepository<,>));
-        context.Services.AddTransient(typeof(IReadOnlyRepository<,>), typeof(AppDbContextRepository<,>));
-        context.Services.AddTransient(typeof(IBasicRepository<,>), typeof(AppDbContextRepository<,>));
-        context.Services.AddTransient(typeof(IReadOnlyBasicRepository<,>), typeof(AppDbContextRepository<,>));
 
 // Register ObjectMapper
         context.Services.AddSingleton<IObjectMapper, DemoObjectMapper>();
