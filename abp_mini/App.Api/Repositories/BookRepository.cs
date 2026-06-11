@@ -42,6 +42,6 @@ public class BookRepository : EfCoreRepository<AppDbContext, Book, Guid>, IBookR
         BookFilter input)
     {
         return query.WhereIf(!string.IsNullOrEmpty(input.Filter),
-            b => b.Title.Contains(input.Filter) || b.Author.Contains(input.Filter));
+            b => b.Title.Contains(input.Filter!) || b.Author.Contains(input.Filter!));
     }
 }
