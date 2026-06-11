@@ -1,4 +1,4 @@
-namespace MyLibrary.Application.Services;
+namespace Library.Application.Services;
 
 public interface IApplicationService
 {

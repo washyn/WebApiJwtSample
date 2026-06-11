@@ -1,7 +1,6 @@
-using System.Threading.Tasks;
-using MyLibrary.Application.Dtos;
+using Library.Application.Dtos;
 
-namespace MyLibrary.Application.Services;
+namespace Library.Application.Services;
 
 public interface ICrudAppService<TEntityDto, in TKey, in TGetListInput, in TCreateInput, in TUpdateInput> 
     : IReadOnlyAppService<TEntityDto, TKey, TGetListInput>

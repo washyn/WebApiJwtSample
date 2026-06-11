@@ -1,6 +1,4 @@
-using System;
-
-namespace MyApp.Api.Dtos;
+namespace App.Api.Dtos;
 
 public class CreateUpdateBookDto
 {

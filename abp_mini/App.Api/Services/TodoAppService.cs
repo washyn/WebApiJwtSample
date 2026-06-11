@@ -1,11 +1,11 @@
-using System;
-using MyApp.Api.Dtos;
-using MyApp.Api.Entities;
-using MyLibrary.Application.Dtos;
-using MyLibrary.Application.Services;
-using MyLibrary.Domain.Repositories;
+using App.Api.Dtos;
+using App.Api.Entities;
 
-namespace MyApp.Api.Services;
+using Library.Application.Dtos;
+using Library.Application.Services;
+using Library.Domain.Repositories;
+
+namespace App.Api.Services;
 
 public class TodoAppService : CrudAppService<TodoItem, TodoItemDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateTodoItemDto, CreateUpdateTodoItemDto>
 {

@@ -1,7 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using MyApp.Api.Entities;
+using App.Api.Entities;
 
-namespace MyApp.Api.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace App.Api.Data;
 
 public class AppDbContext : DbContext
 {

@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using MyLibrary.Domain.Entities;
+using Library.Domain.Entities;
 
-namespace MyLibrary.Domain.Repositories;
+namespace Library.Domain.Repositories;
 
 public interface IReadOnlyBasicRepository<TEntity> where TEntity : class, IEntity
 {

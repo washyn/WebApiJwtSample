@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using MyLibrary.Domain.Entities;
-using MyLibrary.Domain.Repositories;
 
-namespace MyLibrary.EntityFrameworkCore;
+using Library.Domain.Entities;
+using Library.Domain.Repositories;
+
+using Microsoft.EntityFrameworkCore;
+
+namespace Library.EntityFrameworkCore;
 
 public class EfCoreRepository<TDbContext, TEntity> : IRepository<TEntity>
     where TDbContext : DbContext

@@ -1,13 +1,16 @@
+using App.Api.Data;
+using App.Api.Entities;
+using App.Api.ObjectMapping;
+using App.Api.Repositories;
+using App.Api.Services;
+
+using Library.Application.ObjectMapping;
+using Library.Domain.Repositories;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MyApp.Api.Data;
-using MyApp.Api.ObjectMapping;
-using MyApp.Api.Services;
-using MyLibrary.Application.ObjectMapping;
-using MyLibrary.Domain.Repositories;
-using MyLibrary.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +35,7 @@ builder.Services.AddSingleton<IObjectMapper, DemoObjectMapper>();
 // Register Application Services with property injection
 builder.Services.AddTransient(provider => 
 {
-    var repository = provider.GetRequiredService<IRepository<MyApp.Api.Entities.TodoItem, System.Guid>>();
+    var repository = provider.GetRequiredService<IRepository<TodoItem, System.Guid>>();
     var mapper = provider.GetRequiredService<IObjectMapper>();
     var service = new TodoAppService(repository);
     service.ObjectMapper = mapper; // Manual Property Injection
@@ -41,18 +44,18 @@ builder.Services.AddTransient(provider =>
 
 builder.Services.AddTransient(provider => 
 {
-    var repository = provider.GetRequiredService<IReadOnlyRepository<MyApp.Api.Entities.Category, System.Guid>>();
+    var repository = provider.GetRequiredService<IReadOnlyRepository<Category, System.Guid>>();
     var mapper = provider.GetRequiredService<IObjectMapper>();
     var service = new CategoryAppService(repository);
     service.ObjectMapper = mapper; 
     return service;
 });
 
-builder.Services.AddTransient<MyApp.Api.Repositories.IBookRepository, MyApp.Api.Repositories.BookRepository>();
+builder.Services.AddTransient<IBookRepository, BookRepository>();
 
 builder.Services.AddTransient(provider => 
 {
-    var repository = provider.GetRequiredService<MyApp.Api.Repositories.IBookRepository>();
+    var repository = provider.GetRequiredService<IBookRepository>();
     var mapper = provider.GetRequiredService<IObjectMapper>();
     var service = new BookAppService(repository);
     service.ObjectMapper = mapper; 
@@ -65,8 +68,8 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Categories.Add(new MyApp.Api.Entities.Category { Id = System.Guid.NewGuid(), Name = "Work" });
-    dbContext.Categories.Add(new MyApp.Api.Entities.Category { Id = System.Guid.NewGuid(), Name = "Personal" });
+    dbContext.Categories.Add(new Category { Id = System.Guid.NewGuid(), Name = "Work" });
+    dbContext.Categories.Add(new Category { Id = System.Guid.NewGuid(), Name = "Personal" });
     dbContext.SaveChanges();
 }
 

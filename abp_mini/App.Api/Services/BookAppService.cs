@@ -1,10 +1,11 @@
-using MyApp.Api.Dtos;
-using MyApp.Api.Entities;
-using MyApp.Api.Repositories;
-using MyLibrary.Application.Dtos;
-using MyLibrary.Application.Services;
+using App.Api.Dtos;
+using App.Api.Entities;
+using App.Api.Repositories;
 
-namespace MyApp.Api.Services;
+using Library.Application.Dtos;
+using Library.Application.Services;
+
+namespace App.Api.Services;
 
 public class BookAppService : CrudAppService<Book, BookDto, Guid, BookFilter, CreateUpdateBookDto,
     CreateUpdateBookDto>

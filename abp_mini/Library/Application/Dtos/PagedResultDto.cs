@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace MyLibrary.Application.Dtos;
+namespace Library.Application.Dtos;
 
 public class PagedResultDto<T>
 {

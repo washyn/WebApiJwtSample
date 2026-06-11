@@ -1,11 +1,11 @@
-using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using MyApp.Api.Dtos;
-using MyApp.Api.Services;
-using MyLibrary.Application.Dtos;
+using App.Api.Dtos;
+using App.Api.Services;
 
-namespace MyApp.Api.Controllers;
+using Library.Application.Dtos;
+
+using Microsoft.AspNetCore.Mvc;
+
+namespace App.Api.Controllers;
 
 [ApiController]
 [Route("api/books")]

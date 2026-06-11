@@ -1,7 +1,7 @@
-using MyLibrary.Domain.Entities;
-using MyLibrary.EntityFrameworkCore;
+using Library.Domain.Entities;
+using Library.EntityFrameworkCore;
 
-namespace MyApp.Api.Data;
+namespace App.Api.Data;
 
 public class AppDbContextRepository<TEntity, TKey> : EfCoreRepository<AppDbContext, TEntity, TKey>
     where TEntity : class, IEntity<TKey>

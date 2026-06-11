@@ -1,7 +1,6 @@
-using System;
-using MyLibrary.Application.Dtos;
+using Library.Application.Dtos;
 
-namespace MyApp.Api.Dtos;
+namespace App.Api.Dtos;
 
 public class CategoryDto : EntityDto<Guid>
 {

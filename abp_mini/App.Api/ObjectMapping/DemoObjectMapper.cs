@@ -1,9 +1,9 @@
-using System;
-using MyApp.Api.Dtos;
-using MyApp.Api.Entities;
-using MyLibrary.Application.ObjectMapping;
+using App.Api.Dtos;
+using App.Api.Entities;
 
-namespace MyApp.Api.ObjectMapping;
+using Library.Application.ObjectMapping;
+
+namespace App.Api.ObjectMapping;
 
 public class DemoObjectMapper : IObjectMapper
 {

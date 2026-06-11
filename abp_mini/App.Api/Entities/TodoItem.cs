@@ -1,7 +1,6 @@
-using System;
-using MyLibrary.Domain.Entities;
+using Library.Domain.Entities;
 
-namespace MyApp.Api.Entities;
+namespace App.Api.Entities;
 
 public class TodoItem : Entity<Guid>
 {

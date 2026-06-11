@@ -1,4 +1,4 @@
-namespace MyLibrary.Application.ObjectMapping;
+namespace Library.Application.ObjectMapping;
 
 public interface IObjectMapper
 {

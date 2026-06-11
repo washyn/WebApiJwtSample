@@ -1,4 +1,4 @@
-namespace MyLibrary.Domain.Entities;
+namespace Library.Domain.Entities;
 
 /// <summary>
 /// Basic implementation of IEntity interface.

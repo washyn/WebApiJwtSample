@@ -1,11 +1,15 @@
-using Microsoft.EntityFrameworkCore;
-using MyApp.Api.Data;
-using MyApp.Api.Entities;
-using MyApp.Api.Services;
-using MyLibrary.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 
-namespace MyApp.Api.Repositories;
+using App.Api.Data;
+using App.Api.Entities;
+using App.Api.Services;
+
+using Library.Domain.Repositories;
+using Library.EntityFrameworkCore;
+
+using Microsoft.EntityFrameworkCore;
+
+namespace App.Api.Repositories;
 
 public class BookRepository : EfCoreRepository<AppDbContext, Book, Guid>, IBookRepository
 {

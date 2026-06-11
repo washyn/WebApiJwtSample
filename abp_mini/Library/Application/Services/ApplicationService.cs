@@ -1,6 +1,6 @@
-using MyLibrary.Application.ObjectMapping;
+using Library.Application.ObjectMapping;
 
-namespace MyLibrary.Application.Services;
+namespace Library.Application.Services;
 
 public abstract class ApplicationService : IApplicationService
 {

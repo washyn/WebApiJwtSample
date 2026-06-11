@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using MyApp.Api.Entities;
-using MyApp.Api.Services;
-using MyLibrary.Domain.Repositories;
+using App.Api.Entities;
+using App.Api.Services;
 
-namespace MyApp.Api.Repositories;
+using Library.Domain.Repositories;
+
+namespace App.Api.Repositories;
 
 public interface IBookRepository : IRepository<Book, Guid>
 {

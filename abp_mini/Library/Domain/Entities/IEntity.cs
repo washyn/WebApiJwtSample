@@ -1,4 +1,4 @@
-namespace MyLibrary.Domain.Entities;
+namespace Library.Domain.Entities;
 
 /// <summary>
 /// Defines an entity. It's primary key may not be "Id" or it may have a composite primary key.

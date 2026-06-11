@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace System.Linq
+namespace Library.Domain.Repositories
 {
     /// <summary>
     /// Some useful extension methods for <see cref="IQueryable{T}"/>.

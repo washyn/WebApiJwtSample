@@ -1,11 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MyLibrary.Application.Dtos;
-using MyLibrary.Domain.Entities;
-using MyLibrary.Domain.Repositories;
+using Library.Application.Dtos;
+using Library.Domain.Entities;
+using Library.Domain.Repositories;
 
-namespace MyLibrary.Application.Services;
+namespace Library.Application.Services;
 
 public abstract class ReadOnlyAppService<TEntity, TEntityDto, TKey, TGetListInput>
     : ApplicationService, IReadOnlyAppService<TEntityDto, TKey, TGetListInput>

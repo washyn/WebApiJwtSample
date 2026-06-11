@@ -1,6 +1,6 @@
-using MyLibrary.Domain.Entities;
+using Library.Domain.Entities;
 
-namespace MyLibrary.Domain.Repositories;
+namespace Library.Domain.Repositories;
 
 public interface IRepository<TEntity> : IReadOnlyRepository<TEntity>, IBasicRepository<TEntity> where TEntity : class, IEntity
 {
