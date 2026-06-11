@@ -1,3 +1,4 @@
+using App.Api.Dtos;
 using App.Api.Entities;
 
 using Library.Application.Dtos;
@@ -12,14 +13,9 @@ using Volo.Abp.DependencyInjection;
 
 namespace App.Api.Services;
 
-public class CategoryDto : EntityDto<Guid>
+public class CategoryAppService : CrudAppService<Book, BookDto, Guid>, ITransientDependency
 {
-    public string Name { get; set; } = string.Empty;
-}
-
-public class CategoryAppService : CrudAppService<Category, CategoryDto, Guid>, ITransientDependency
-{
-    public CategoryAppService(IRepository<Category, Guid> repository) : base(repository)
+    public CategoryAppService(IRepository<Book, Guid> repository) : base(repository)
     {
     }
 }
@@ -36,25 +32,25 @@ public class CategoryController : AbpController
     }
 
     [HttpGet]
-    public async Task<PagedResultDto<CategoryDto>> GetCategories()
+    public async Task<PagedResultDto<BookDto>> GetCategories()
     {
         return await _categoryAppService.GetListAsync(new PagedAndSortedResultRequestDto());
     }
 
     [HttpGet("{id}")]
-    public async Task<CategoryDto> GetCategory(Guid id)
+    public async Task<BookDto> GetCategory(Guid id)
     {
         return await _categoryAppService.GetAsync(id);
     }
 
     [HttpPost]
-    public async Task<CategoryDto> CreateCategory([FromBody] CategoryDto categoryDto)
+    public async Task<BookDto> CreateCategory([FromBody] BookDto categoryDto)
     {
         return await _categoryAppService.CreateAsync(categoryDto);
     }
 
     [HttpPut("{id}")]
-    public async Task<CategoryDto> UpdateCategory([FromRoute] Guid id, [FromBody] CategoryDto categoryDto)
+    public async Task<BookDto> UpdateCategory([FromRoute] Guid id, [FromBody] BookDto categoryDto)
     {
         return await _categoryAppService.UpdateAsync(id, categoryDto);
     }

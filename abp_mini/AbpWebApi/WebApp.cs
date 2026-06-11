@@ -9,6 +9,7 @@ using Microsoft.OpenApi;
 
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 using Volo.Abp.Modularity;
 
 [DependsOn(typeof(AbpAspNetCoreMvcModule))]
@@ -30,6 +31,8 @@ public class WebApp : AbpModule
         context.Services.AddTransient(typeof(IReadOnlyRepository<,>), typeof(AppDbContextRepository<,>));
         context.Services.AddTransient(typeof(IBasicRepository<,>), typeof(AppDbContextRepository<,>));
         context.Services.AddTransient(typeof(IReadOnlyBasicRepository<,>), typeof(AppDbContextRepository<,>));
+
+        Configure<AbpAntiForgeryOptions>(options => { options.AutoValidate = false; });
     }
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)
