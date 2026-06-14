@@ -20,3 +20,10 @@ export class App implements OnInit {
 
 
 }
+// TODO: add all comon components
+// pipes, directives, services, etc.
+// add validations and test custom message
+// primero las librerias requeridas obligatorias
+// - Valdiation de formularios
+// - Loader, top bar, etc.
+// "@ngx-validate/core": "^0.2.0",
