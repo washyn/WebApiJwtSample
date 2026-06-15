@@ -1,0 +1,8 @@
+﻿{
+  "culture": "es",
+  "texts": {
+    "DatatableActionDropdownDefaultText": "",
+    "PagerInfo": "Mostrando de _START_ a _END_ de _TOTAL_ registros",
+    "PagerInfo{0}{1}{2}": "Mostrando de {0} a {1} de {2} registros"
+  }
+}

@@ -1,12 +1,15 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Acme.BookStore.Web.Data;
 
-using Acme.BookStore.Web.Data;
+using Localization.Resources.AbpUi;
 
 using Microsoft.AspNetCore.Cors;
+using Microsoft.OpenApi.Models;
+
+using Unaj.HelpDesk.Localization;
 
 using Volo.Abp;
-using Volo.Abp.Uow;
 using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.AspNetCore.Mvc.Localization;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
@@ -15,12 +18,15 @@ using Volo.Abp.AutoMapper;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.Sqlite;
 using Volo.Abp.Localization;
+using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
+using Volo.Abp.Uow;
+using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
 
-namespace Acme.BookStore.Web;
+namespace WebApp;
 
 [DependsOn(
     // ABP Framework packages
@@ -37,6 +43,17 @@ public class WebModule : AbpModule
     /* Single point to enable/disable multi-tenancy */
     public const bool IsMultiTenant = false;
 
+
+    public override void PreConfigureServices(ServiceConfigurationContext context)
+    {
+        context.Services.PreConfigure<AbpMvcDataAnnotationsLocalizationOptions>(options =>
+        {
+            options.AddAssemblyResource(
+                typeof(HelpDeskResource),
+                typeof(WebModule).Assembly
+            );
+        });
+    }
 
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
@@ -70,6 +87,33 @@ public class WebModule : AbpModule
                     .AllowAnyMethod()
                     .AllowCredentials();
             });
+        });
+
+        Configure<AbpLocalizationOptions>(options =>
+        {
+            options.Resources
+                .Add<HelpDeskResource>("es")
+                .AddBaseTypes(typeof(AbpValidationResource))
+                .AddVirtualJson("/Localization/HelpDesk");
+
+            options.Resources.Get<AbpValidationResource>().AddVirtualJson("/Localization/CustomValidation");
+
+            options.Resources
+                .Get<AbpUiResource>()
+                .AddVirtualJson("/Localization/Custom");
+
+
+            options.DefaultResourceType = typeof(HelpDeskResource);
+        });
+
+        Configure<AbpExceptionLocalizationOptions>(options =>
+        {
+            options.MapCodeNamespace("WebApp", typeof(HelpDeskResource));
+        });
+
+        Configure<AbpVirtualFileSystemOptions>(options =>
+        {
+            options.FileSets.AddEmbedded<WebModule>("WebApp");
         });
     }
 

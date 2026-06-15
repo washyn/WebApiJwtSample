@@ -1,0 +1,6 @@
+﻿{
+  "culture": "en",
+  "texts": {
+    "The {0} field is required.": "The {0} field is required. Custom validation message."
+  }
+}

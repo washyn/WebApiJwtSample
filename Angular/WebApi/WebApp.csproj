@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic" Version="$(AbpVersion)" />
-
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +30,6 @@
     <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="$(AbpVersion)" />
     <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="$(AbpVersion)" />
   </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="$(AspNetFrameworkPackageVersion)" />
@@ -59,7 +57,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\HelpDesk\*.json" />
+    <Content Remove="Localization\HelpDesk\*.json" />
+    <EmbeddedResource Include="Localization\Custom\*.json" />
+    <Content Remove="Localization\Custom\*.json" />
+    <EmbeddedResource Include="Localization\CustomValidation\*.json" />
+    <Content Remove="Localization\CustomValidation\*.json" />
+    <!--  -->
+  </ItemGroup>
   <ItemGroup>
     <Content Remove="$(UserProfile)\.nuget\packages\*\*\contentFiles\any\*\*.abppkg*" />
   </ItemGroup>

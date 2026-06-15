@@ -1,9 +1,9 @@
 using Acme.BookStore.Web.Data;
+
 using Serilog;
 using Serilog.Events;
-using Volo.Abp.Data;
 
-namespace Acme.BookStore.Web;
+namespace WebApp;
 
 public class Program
 {
@@ -40,6 +40,7 @@ public class Program
             {
                 // builder.Services.AddDataMigrationEnvironment();
             }
+
             await builder.AddApplicationAsync<WebModule>();
             var app = builder.Build();
             await app.InitializeApplicationAsync();
