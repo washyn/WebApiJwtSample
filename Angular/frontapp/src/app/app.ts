@@ -27,3 +27,6 @@ export class App implements OnInit {
 // - Valdiation de formularios
 // - Loader, top bar, etc.
 // "@ngx-validate/core": "^0.2.0",
+
+// cutomizar logs for valirtion message for test only
+// add config fronted
