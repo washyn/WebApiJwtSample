@@ -1,6 +1,7 @@
 ﻿{
   "culture": "en",
   "texts": {
-    "The {0} field is required.": "The {0} field is required. Custom validation message."
+    "The {0} field is required.": "The {0} field is required. Custom validation message.",
+    "ThisFieldIsNotAValidEmailAddress.": "Esto debe ser un corrreo."
   }
 }
