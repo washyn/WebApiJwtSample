@@ -53,13 +53,11 @@ export class App implements OnInit {
     console.log(this.formExample.value);
   }
 }
-// TODO: add all comon components
-// pipes, directives, services, etc.
-// add validations and test custom message
-// primero las librerias requeridas obligatorias
-// - Valdiation de formularios
-// - Loader, top bar, etc.
-// "@ngx-validate/core": "^0.2.0",
+// TODO: add all comon components, primero las librerias requeridas obligatorias
+// TODO: pipes, directives, services, etc.
+// DONE: add validations and test custom message
+// DONE: Valdiation de formularios "@ngx-validate/core": "^0.2.0",
+// TODO: Loader, etc.
 
 // cutomizar logs for valirtion message for test only
 // add config fronted
