@@ -318,12 +318,23 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <hr />
-<form>
-  <div>
-    <label for="testValue">TestValue</label>
-    <input type="text" name="testValue" />
-    <div class="validationnnn"></div>
+
+<!-- <form
+class="grid formgrid p-fluid"
+[formGroup]="formGroup"
+id="formCreateUpdate"
+[validateOnSubmit]="true"
+(ngSubmit)="save()"
+>
+</form> -->
+<form [formGroup]="formExample" (ngSubmit)="save()">
+  <div class="field">
+    <label>TestValue *</label>
+    <input type="text" name="testValue" formControlName="filter" />
+    <!-- can be remove -->
+    <!-- <div class="validation-div"></div>  -->
   </div>
+  <button type="submit">Save</button>
 </form>
 <hr />
 
