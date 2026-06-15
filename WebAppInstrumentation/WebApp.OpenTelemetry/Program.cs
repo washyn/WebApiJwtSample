@@ -53,6 +53,7 @@ public class Program
                 //     Credentials = new BasicAWSCredentials("", ""),
                 //     LogStreamName = "api-2026",
                 // }, textFormatter: new Serilog.Formatting.Json.JsonFormatter()))
+                // FOR SIGNOZ
                 .WriteTo.Async(c => c.OpenTelemetry(opts =>
                 {
                     opts.ResourceAttributes = new Dictionary<string, object>
@@ -62,32 +63,55 @@ public class Program
                     opts.Endpoint = "http://localhost:4318/v1/logs";
                     opts.Protocol = OtlpProtocol.HttpProtobuf;
                 }))
+                // FOR PARSEABLE
+                // .WriteTo.OpenTelemetry(options =>
+                // {
+                //     options.Endpoint = "http://localhost:8000/v1/logs";
+                //     options.Protocol = OtlpProtocol.HttpProtobuf;
+                //     options.Headers = new Dictionary<string, string>
+                //     {
+                //         ["Authorization"] = "Basic " +
+                //                             Convert.ToBase64String(
+                //                                 System.Text.Encoding.UTF8.GetBytes("admin:admin")),
+                //         ["X-P-Stream"] = "app-logs"
+                //     };
+                //     options.ResourceAttributes = new Dictionary<string, object>
+                //     {
+                //         ["service.name"] = "MyApi", ["service.version"] = "1.0.0"
+                //     };
+                // })
+                // FOR PARSEABLE
+                // TODO: send via http sink
+// curl -X POST "http://localhost:8000/api/v1/ingest" \
+//   -H "X-P-Stream: string" \
+//   -H "Authorization: Basic Og==" \
+//   -H "Content-Type: application/json" \
+//   -d '{}'
 
-                // not works
-                .WriteTo.GrafanaLoki(
-                    "http://localhost:3100",
-                    labels: new[]
-                    {
-                        new LokiLabel { Key = "app", Value = "mi-api" },
-                        new LokiLabel { Key = "env", Value = "prod" }
-                    }
-                    // ,
-                    // credentials: new LokiCredentials()
-                    // {
-                    //     Login = "",
-                    //     Password = "",
-                    // }
-                )
-                .WriteTo.Async(c => c.Async(a => a.OpenObserve(
-                    "http://localhost:5080/api/default",
-                    "default",
-                    "root@example.com",
-                    "Complexpass#123"
-                )))
-                // DONE: se tiene que configurar bien el fluent-bit el input http y el output file
-                // Solo funciona con el fluent-bit version 4.x no con 5.x
-                .WriteTo.Async(c => c.DurableHttpUsingFileSizeRolledBuffers(requestUri: "http://localhost:8888",
-                    textFormatter: new Serilog.Formatting.Json.JsonFormatter()))
+            // not works
+            .WriteTo.GrafanaLoki(
+                "http://localhost:3100",
+                labels: new[]
+                {
+                    new LokiLabel { Key = "app", Value = "mi-api" }, new LokiLabel { Key = "env", Value = "prod" }
+                }
+                // ,
+                // credentials: new LokiCredentials()
+                // {
+                //     Login = "",
+                //     Password = "",
+                // }
+            )
+            .WriteTo.Async(c => c.Async(a => a.OpenObserve(
+                "http://localhost:5080/api/default",
+                "default",
+                "root@example.com",
+                "Complexpass#123"
+            )))
+            // DONE: se tiene que configurar bien el fluent-bit el input http y el output file
+            // Solo funciona con el fluent-bit version 4.x no con 5.x, durable al parecer se guarda temporalmente en el disco
+            .WriteTo.Async(c => c.DurableHttpUsingFileSizeRolledBuffers(requestUri: "http://localhost:8888",
+                textFormatter: new Serilog.Formatting.Json.JsonFormatter()))
             ;
         // https://openobserve.ai/blog/serilog-sink-for-openobserve/
         if (IsMigrateDatabase(args))
