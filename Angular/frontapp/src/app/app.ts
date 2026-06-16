@@ -68,9 +68,10 @@ export class App implements OnInit {
 }
 // TODO: add all comon components, primero las librerias requeridas obligatorias
 // TODO: pipes, directives, services, etc.
+// TODO: improve with gpt and remove modularity.
 // DONE: add validations and test custom message
 // DONE: Valdiation de formularios "@ngx-validate/core": "^0.2.0",
-// TODO: Loader, etc.
+// DONE: Loader, etc.
 
 // cutomizar logs for valirtion message for test only
 // add config fronted
