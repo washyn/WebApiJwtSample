@@ -26,7 +26,7 @@ namespace QuestPDF.Invoice
             var document = new InvoiceDocument(model);
 
             // Generate PDF file on disk
-            document.GeneratePdf("comprobante-poc.pdf");
+            // document.GeneratePdf("comprobante-poc.pdf");
 
             // Generate PDF file and show it in the default viewer
             document.ShowInCompanion();
