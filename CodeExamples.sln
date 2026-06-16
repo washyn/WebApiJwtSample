@@ -85,6 +85,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp.Aspire", "WebApp.Asp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppAspire.AppHost", "WebAppInstrumentation\WebApp.Aspire\WebAppAspire.AppHost.csproj", "{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unaj.Bill.QuestPdf", "Unaj.Bill.QuestPdf\Unaj.Bill.QuestPdf.csproj", "{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -563,6 +565,18 @@ Global
 		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}.Release|x64.Build.0 = Release|Any CPU
 		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}.Release|x86.ActiveCfg = Release|Any CPU
 		{E3BA8CC1-C272-4DE2-8D70-51B03EED9B69}.Release|x86.Build.0 = Release|Any CPU
+		{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}.Debug|x64.Build.0 = Debug|Any CPU
+		{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}.Debug|x86.Build.0 = Debug|Any CPU
+		{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}.Release|x64.ActiveCfg = Release|Any CPU
+		{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}.Release|x64.Build.0 = Release|Any CPU
+		{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}.Release|x86.ActiveCfg = Release|Any CPU
+		{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

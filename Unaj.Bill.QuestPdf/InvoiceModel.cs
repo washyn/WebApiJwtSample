@@ -12,7 +12,7 @@ namespace QuestPDF.Invoice
         public List<InvoiceItemModel> Items { get; set; } = new List<InvoiceItemModel>();
         public string PaymentMethod { get; set; }
 
-        public string HashImagePath { get; set; }
+        [Obsolete] public string HashImagePath { get; set; }
 
         // add qr bytes
         public byte[]? QrCode { get; set; }
