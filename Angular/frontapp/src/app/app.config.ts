@@ -22,6 +22,8 @@ import {
 } from '@ngx-validate/core';
 import { DEFAULT_VALIDATION_BLUEPRINTS } from './validation';
 import { CustomValidationErrorComponent } from './validation-error.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { OAuthApiInterceptor } from './api.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -65,6 +67,12 @@ export const appConfig: ApplicationConfig = {
       provide: VALIDATION_ERROR_TEMPLATE,
       // useValue: ValidationErrorComponent, // default emplate
       useValue: CustomValidationErrorComponent,
+    },
+    // interceptors
+    {
+      provide: HTTP_INTERCEPTORS,
+      useExisting: OAuthApiInterceptor,
+      multi: true,
     },
   ],
 };

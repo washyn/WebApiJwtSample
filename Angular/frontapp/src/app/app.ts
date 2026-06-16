@@ -10,10 +10,12 @@ import {
 } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { NgxValidateCoreModule } from '@ngx-validate/core';
+import { LoaderModule } from './loader-bar/loader.module';
+import { ErrorSampleService } from './proxy/web-app/controllers';
 @Component({
   selector: 'app-root',
   // imports: [RouterOutlet, JsonPipe, ReactiveFormsModule, NgxValidateCoreModule.forRoot()],
-  imports: [RouterOutlet, JsonPipe, ReactiveFormsModule, NgxValidateCoreModule],
+  imports: [RouterOutlet, JsonPipe, ReactiveFormsModule, NgxValidateCoreModule, LoaderModule],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -22,6 +24,7 @@ export class App implements OnInit {
   appConfig: ApplicationConfigurationDto = {} as ApplicationConfigurationDto;
   formExample: FormGroup = new FormGroup({});
   protected readonly configState = inject(ConfigStateService);
+  public exampleService = inject(ErrorSampleService);
   public formBuilder = inject(FormBuilder);
   ngOnInit(): void {
     this.appConfig = this.configState.getAll();
@@ -43,6 +46,10 @@ export class App implements OnInit {
         // Validators.email,
         AbpValidators.emailAddress(),
       ]),
+    });
+
+    this.exampleService.largeRequest().subscribe((res) => {
+      console.log('res end request');
     });
   }
 
