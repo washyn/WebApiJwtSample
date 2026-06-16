@@ -53,6 +53,12 @@ export class App implements OnInit {
     });
   }
 
+  callLargeRequest() {
+    this.exampleService.largeRequest().subscribe((res) => {
+      console.log('res end request');
+    });
+  }
+
   save() {
     // validate form before save
     // if (!this.form.valid || this.modalBusy) return;
