@@ -48,8 +48,8 @@ namespace QuestPDF.Invoice
 
                     if (!string.IsNullOrEmpty(_viewModel.SellerLogoPath))
                     {
-                        row.RelativeItem().Column(a => a.Item()
-                            .Width(40).Image(_viewModel.SellerLogoPath));
+                        row.RelativeItem(3).Column(a => a.Item()
+                            .Width(120).Image(_viewModel.SellerLogoPath));
                     }
                     else
                     {
@@ -64,7 +64,8 @@ namespace QuestPDF.Invoice
                         col.Item().AlignCenter().Text(_viewModel.SellerSubtext2);
                     });
 
-                    row.RelativeItem().Text(string.Empty);
+                    // row.RelativeItem().Column(a => a.Item()
+                    //     .Text(string.Empty));
 
                     row.RelativeItem(3).AlignMiddle().Row(r =>
                     {
@@ -148,16 +149,18 @@ namespace QuestPDF.Invoice
                         });
                 });
                 column.Item().PaddingVertical(2).LineHorizontal(1).LineColor(Colors.White);
+                // can be addd padding top
                 column.Item().Column(a =>
                 {
                     a.Spacing(5);
                     a.Item().Text(text =>
                     {
-                        text.Span(_viewModel.Message).Italic().FontSize(7);
+                        text.Justify();
+                        text.Span(_viewModel.Message).FontSize(7);
                     });
                     a.Item().Text(text =>
                     {
-                        text.Span(_viewModel.MessageWarning).FontSize(7);
+                        text.Span(_viewModel.MessageWarning).Italic().FontSize(7);
                     });
                 });
 
@@ -174,8 +177,7 @@ namespace QuestPDF.Invoice
                         text.Span(_viewModel.FooterDocumentNumber)
                             .FontFamily("Calibri")
                             .FontSize(8)
-                            .SemiBold()
-                            .FontColor(Colors.Grey.Darken3);
+                            .FontColor(Colors.Grey.Darken1);
                     });
                 });
             });
