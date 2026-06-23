@@ -54,21 +54,32 @@ export const appConfig: ApplicationConfig = {
       useValue: defaultMapErrorsFn,
     },
     {
+      // componente objetivo selector de clase
       provide: VALIDATION_TARGET_SELECTOR,
       useValue: '.field',
     },
     {
+      // clase a agregar incencesario ya que el compontnet ya le agrega, pero se requiere el injector para q compile
       provide: VALIDATION_INVALID_CLASSES,
       useValue: 'field-error-class',
     },
     {
       provide: VALIDATION_BLUEPRINTS,
+      // useValue: { ...BLUEPRINTS }, // default
+      // para usar con abp y junto con el template para que funcione bien
       useValue: { ...DEFAULT_VALIDATION_BLUEPRINTS },
     },
     {
       provide: VALIDATION_ERROR_TEMPLATE,
+      // useValue: ValidationErrorComponent, // default emplate
       useValue: CustomValidationErrorComponent,
     },
   ],
 };
-
+// available tokens
+// export * from './blueprints.token'; // USED
+// export * from './error-template.token';// USED
+// export * from './invalid-classes.token'; // USED
+// export * from './map-errors-fn.token'; // USED
+// export * from './target-selector.token'; // USED
+// export * from './validate-on-submit.token'; // USED
