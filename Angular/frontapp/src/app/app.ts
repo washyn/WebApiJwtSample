@@ -10,12 +10,12 @@ import {
 } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { NgxValidateCoreModule } from '@ngx-validate/core';
-import { LoaderModule } from './loader-bar/loader.module';
+import { LoaderBarComponent } from './loader-bar/loader-bar.component';
 import { ErrorSampleService } from './proxy/web-app/controllers';
 @Component({
   selector: 'app-root',
   // imports: [RouterOutlet, JsonPipe, ReactiveFormsModule, NgxValidateCoreModule.forRoot()],
-  imports: [RouterOutlet, JsonPipe, ReactiveFormsModule, NgxValidateCoreModule, LoaderModule],
+  imports: [RouterOutlet, JsonPipe, ReactiveFormsModule, NgxValidateCoreModule, LoaderBarComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

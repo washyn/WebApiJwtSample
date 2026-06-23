@@ -2,10 +2,11 @@ import { HttpWaitService, RouterWaitService, SubscriptionService } from '@abp/ng
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { combineLatest, Subscription, timer } from 'rxjs';
+import { NgClass, NgStyle } from '@angular/common';
 
 @Component({
-  standalone: false,
   selector: 'abp-loader-bar',
+  imports: [NgClass, NgStyle],
   template: `
     <div id="abp-loader-bar" [ngClass]="containerClass" [class.is-loading]="isLoading">
       <div
