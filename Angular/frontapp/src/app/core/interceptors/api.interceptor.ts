@@ -12,6 +12,8 @@ import {
   providedIn: 'root',
 })
 export class OAuthApiInterceptor implements IApiInterceptor {
+  // private oAuthService: OAuthService,
+  // @Inject(TENANT_KEY) private tenantKey: string
   constructor(
     private sessionState: SessionStateService,
     private httpWaitService: HttpWaitService
@@ -35,12 +37,18 @@ export class OAuthApiInterceptor implements IApiInterceptor {
     const headers = {} as any;
     console.log(this.sessionState.getTenant());
     console.log('call to getAdditionalHeaders from api.interceptor');
-
+    // const token = this.oAuthService.getAccessToken();
+    // if (!existingHeaders?.has('Authorization') && token) {
+    //   headers['Authorization'] = `Bearer ${token}`;
+    // }
     const lang = this.sessionState.getLanguage();
     if (!existingHeaders?.has('Accept-Language') && lang) {
       headers['Accept-Language'] = lang;
     }
-
+    // const tenant = this.sessionState.getTenant();
+    // if (!existingHeaders?.has(this.tenantKey) && tenant?.id) {
+    //   headers[this.tenantKey] = tenant.id;
+    // }
     headers['X-Requested-With'] = 'XMLHttpRequest';
 
     return headers;
