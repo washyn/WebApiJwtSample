@@ -67,10 +67,14 @@ export class App implements OnInit {
   }
 }
 // TODO: add all comon components, primero las librerias requeridas obligatorias
-// TODO: pipes, directives, services, etc.
+// DONE: pipes,
+// TODO: directives.
+// TODO: services, etc.
 // TODO: improve with gpt and remove modularity.
-// TODO: add abp-core, abp-utils and common.
+// DONE: add abp-core, abp-utils and common.
 // TODO: add som einterceptor for request display and another for inject jwt token
+// TODO: add abp loader by default
+// TODO: Customize title page, is localization
 // DONE: add validations and test custom message
 // DONE: Valdiation de formularios "@ngx-validate/core": "^0.2.0",
 // DONE: Loader, etc.
