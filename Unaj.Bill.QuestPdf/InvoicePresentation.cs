@@ -35,8 +35,11 @@ namespace QuestPDF.Invoice
         public string LabelAmountInWordsPrefix { get; set; } = "Son: ";
         public string LabelTotalAmount { get; set; } = "Importe total: ";
 
+        // public string Message { get; set; } =
+        //     "Documento emitido con fines de constancia de pago por servicios académicos y administrativos. No sustituye a una factura ni boleta de venta, salvo que el concepto así lo requiera. Cualquier alteración o enmendadura invalida este comprobante. En caso de dudas, verifique la validez del documento en el portal oficial de la universidad utilizando el código de verificación correspondiente.";
+// TODO: align text
         public string Message { get; set; } =
-            "Documento emitido con fines de constancia de pago por servicios académicos y administrativos. No sustituye a una factura ni boleta de venta, salvo que el concepto así lo requiera. Cualquier alteración o enmendadura invalida este comprobante. En caso de dudas, verifique la validez del documento en el portal oficial de la universidad utilizando el código de verificación correspondiente.";
+            "Este documento se emite como constancia de pago por servicios académicos y administrativos prestados por la Universidad Nacional de Juliaca. Cualquier alteración, enmendadura o modificación invalida su contenido y autenticidad. Se recomienda verificar cuidadosamente el importe abonado y los datos consignados en el presente comprobante, ya que, una vez emitido, la Universidad no se responsabiliza por errores derivados de información incorrecta proporcionada por el usuario. Para confirmar la validez del documento, utilice el código de verificación o acceda al portal institucional correspondiente. Las solicitudes de anulación o devolución del importe pagado únicamente podrán presentarse el mismo día de la emisión del comprobante, dentro del horario laboral y previa presentación del sustento correspondiente.";
 
         public string MessageWarning { get; set; } =
             "La reproducción no autorizada o falsificación de este documento constituye una infracción penalizada conforme a las normas vigentes.";
@@ -174,7 +177,7 @@ namespace QuestPDF.Invoice
                 MessageWarning = textResources.MessageWarning,
                 FooterPrefix = textResources.LabelFooterText,
                 FooterDocumentNumber = documentNumber,
-                QrCode = model.QrCode
+                QrCode = model.QrCode,
             };
         }
     }

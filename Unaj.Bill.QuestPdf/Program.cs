@@ -57,8 +57,9 @@ namespace QuestPDF.Invoice
                     new CompanyModel
                     {
                         Name = "UNIVERSIDAD NACIONAL DE JULIACA",
-                        LogoPath = "opera.png",
-                        Subtext1 = "Dirección: Av. Nueva Zelandia N° 631, Urb. La Capilla - Juliaca",
+                        // LogoPath = "opera.png",
+                        LogoPath = "logo.png",
+                        Subtext1 = "Av. Nueva Zelandia N° 631, Urb. La Capilla - Juliaca",
                         Subtext2 = "Teléfono: 051-323200", //  - CENTRAL TELEFÓNICA
                         Subtext3 = "Empresa S.A. 8448"
                     },
