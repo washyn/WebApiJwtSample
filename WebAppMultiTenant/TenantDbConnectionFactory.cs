@@ -1,4 +1,5 @@
 using System.Data;
+
 using Microsoft.Data.Sqlite;
 
 namespace WebAppMultiTenant;
@@ -18,6 +19,7 @@ public class TenantDbConnectionFactory : ITenantDbConnectionFactory
         _initializer = initializer;
         _tenantStore = tenantStore;
     }
+
     // TODO: conexion should be disposable... check proyect master or products
     // where has conexion factory
     public IDbConnection Create()

@@ -1,0 +1,74 @@
+﻿@page
+@model Acme.BookStore.Web.Pages.IndexModel
+
+@{
+    Layout = "";
+}
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Chat Local con Gemini Nano</title>
+
+        <style>
+            body {
+                font-family: Arial;
+                margin: 40px;
+                max-width: 900px;
+            }
+
+            #chat {
+                border: 1px solid #ccc;
+                height: 500px;
+                overflow-y: auto;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+
+            .user {
+                color: blue;
+                margin: 10px 0;
+            }
+
+            .assistant {
+                color: green;
+                margin: 10px 0;
+            }
+
+            textarea {
+                width: 100%;
+                height: 90px;
+            }
+
+            button {
+                margin-top: 10px;
+                padding: 10px 20px;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <h2>Chat Local usando Gemini Nano</h2>
+
+        <div id="status">
+            Inicializando...
+        </div>
+
+        <div id="chat"></div>
+
+        <textarea id="prompt"></textarea>
+
+        <br>
+
+        <button id="send">
+            Enviar
+        </button>
+
+        <script src="app.js"></script>
+
+    </body>
+
+</html>

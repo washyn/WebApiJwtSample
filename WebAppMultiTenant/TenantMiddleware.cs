@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -42,8 +43,7 @@ public class TenantMiddleware
             return;
         }
 
-        using (_logger.BeginScope(new Dictionary<string, object>
-                   { { "Tenant", tenantName } }))
+        using (_logger.BeginScope(new Dictionary<string, object> { { "Tenant", tenantName } }))
         {
             await _next(context);
         }
