@@ -17,9 +17,6 @@ export class PrefixNamePipe implements PipeTransform {
     // Asegurarnos de que la cadena tiene al menos tres partes
     if (partes.length < 3) {
       return '...';
-      // throw new Error(
-      //     'Formato inválido. Se requiere al menos dos apellidos y un nombre.'
-      // );
     }
 
     // Extraer el primer apellido (primer carácter), el segundo apellido y el primer nombre

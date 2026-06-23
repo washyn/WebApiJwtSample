@@ -1,13 +1,10 @@
-import { NgModule } from '@angular/core';
+import { Provider } from '@angular/core';
 import { IMessageService, INotifyService } from './interfaces';
 import { ConsoleMessageService } from './console-message.service';
 import { ConsoleNotifyService } from './console-notify.service';
 
-@NgModule({
-  declarations: [],
-  imports: [],
-  exports: [],
-  providers: [
+export function provideAbpUtils(): Provider[] {
+  return [
     {
       provide: INotifyService,
       useClass: ConsoleNotifyService,
@@ -16,6 +13,5 @@ import { ConsoleNotifyService } from './console-notify.service';
       provide: IMessageService,
       useClass: ConsoleMessageService,
     },
-  ],
-})
-export class AbpUtilsModule {}
+  ];
+}

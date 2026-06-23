@@ -1,4 +1,4 @@
-import { LocalizationModule, LocalizationPipe } from '@abp/ng.core';
+import { LocalizationPipe } from '@abp/ng.core';
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { Validation, ValidationErrorComponent as ErrorComponent } from '@ngx-validate/core';
 

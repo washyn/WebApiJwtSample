@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { NgxValidateCoreModule } from '@ngx-validate/core';
-import { LoaderBarComponent } from './loader-bar/loader-bar.component';
+import { LoaderBarComponent } from './shared';
 import { ErrorSampleService } from './proxy/web-app/controllers';
 @Component({
   selector: 'app-root',
