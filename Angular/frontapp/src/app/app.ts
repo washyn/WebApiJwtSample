@@ -74,7 +74,7 @@ export class App implements OnInit {
 // DONE: add abp-core, abp-utils and common.
 // TODO: add som einterceptor for request display and another for inject jwt token
 // TODO: add abp loader by default
-// TODO: Customize title page, is localization
+// TODO: Customize title page, is localization, hard code specicfic lolcalization find documentetation of abp and find key
 // DONE: add validations and test custom message
 // DONE: Valdiation de formularios "@ngx-validate/core": "^0.2.0",
 // DONE: Loader, etc.
