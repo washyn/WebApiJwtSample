@@ -1,21 +1,42 @@
-import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpHeaders } from '@angular/common/http';
-import { inject } from '@angular/core';
+import { HttpHandler, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { HttpWaitService, IS_EXTERNAL_REQUEST, SessionStateService } from '@abp/ng.core';
+import {
+  HttpWaitService,
+  IApiInterceptor,
+  IS_EXTERNAL_REQUEST,
+  SessionStateService,
+} from '@abp/ng.core';
 
-export const oAuthApiInterceptor: HttpInterceptorFn = (request: HttpRequest<unknown>, next: HttpHandlerFn) => {
-  const httpWaitService = inject(HttpWaitService);
-  const sessionState = inject(SessionStateService);
+@Injectable({
+  providedIn: 'root',
+})
+export class OAuthApiInterceptor implements IApiInterceptor {
+  constructor(
+    private sessionState: SessionStateService,
+    private httpWaitService: HttpWaitService
+  ) {}
 
-  httpWaitService.addRequest(request);
-  const isExternalRequest = request.context?.get(IS_EXTERNAL_REQUEST);
+  intercept(request: HttpRequest<any>, next: HttpHandler) {
+    this.httpWaitService.addRequest(request);
+    const isExternalRequest = request.context?.get(IS_EXTERNAL_REQUEST);
+    const newRequest = isExternalRequest
+      ? request
+      : request.clone({
+          setHeaders: this.getAdditionalHeaders(request.headers),
+        });
 
-  const getAdditionalHeaders = (existingHeaders?: HttpHeaders) => {
+    return next
+      .handle(newRequest)
+      .pipe(finalize(() => this.httpWaitService.deleteRequest(request)));
+  }
+
+  getAdditionalHeaders(existingHeaders?: HttpHeaders) {
     const headers = {} as any;
-    console.log(sessionState.getTenant());
-    console.log('call to getAdditionalHeaders from functional api interceptor');
+    console.log(this.sessionState.getTenant());
+    console.log('call to getAdditionalHeaders from api.interceptor');
 
-    const lang = sessionState.getLanguage();
+    const lang = this.sessionState.getLanguage();
     if (!existingHeaders?.has('Accept-Language') && lang) {
       headers['Accept-Language'] = lang;
     }
@@ -23,15 +44,5 @@ export const oAuthApiInterceptor: HttpInterceptorFn = (request: HttpRequest<unkn
     headers['X-Requested-With'] = 'XMLHttpRequest';
 
     return headers;
-  };
-
-  const newRequest = isExternalRequest
-    ? request
-    : request.clone({
-        setHeaders: getAdditionalHeaders(request.headers),
-      });
-
-  return next(newRequest).pipe(
-    finalize(() => httpWaitService.deleteRequest(request))
-  );
-};
+  }
+}

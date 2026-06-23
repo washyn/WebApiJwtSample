@@ -8,7 +8,7 @@ import { routes } from './app.routes';
 import { AuthService, provideAbpCore, withOptions } from '@abp/ng.core';
 import { environment } from '../environments/environment';
 import { registerLocaleForEsBuild } from '@abp/ng.core/locale';
-import { CustomAuthService, oAuthApiInterceptor, provideAbpUtils } from './core';
+import { CustomAuthService, OAuthApiInterceptor, provideAbpUtils } from './core';
 import {
   defaultMapErrorsFn,
   VALIDATION_BLUEPRINTS,
@@ -19,14 +19,19 @@ import {
   VALIDATION_VALIDATE_ON_SUBMIT,
 } from '@ngx-validate/core';
 import { DEFAULT_VALIDATION_BLUEPRINTS, CustomValidationErrorComponent } from './shared';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([oAuthApiInterceptor])),
+    provideHttpClient(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useExisting: OAuthApiInterceptor,
+      multi: true,
+    },
     provideAbpUtils(),
     provideAbpCore(
       withOptions({
