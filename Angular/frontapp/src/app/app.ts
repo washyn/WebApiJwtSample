@@ -64,7 +64,7 @@ export class App implements OnInit {
   }
   ejecutarCarga() {
     this.isLoading = true;
-    setTimeout(() => (this.isLoading = false), 5000); // Ejemplo de 3 segundos
+    setTimeout(() => (this.isLoading = false), 5000);
   }
   callLargeRequest() {
     this.exampleService.largeRequest().subscribe((res) => {
