@@ -38,19 +38,19 @@ export const appConfig: ApplicationConfig = {
         environment,
         registerLocaleFn: registerLocaleForEsBuild(),
         // shoud be add this locale in back "AppName": "Pagos UNAJ" in back
-        localizations: [
-          {
-            culture: 'es-PE',
-            resources: [
-              {
-                resourceName: 'MyProjectName',
-                texts: {
-                  AppName: 'Configured in angular',
-                },
-              },
-            ],
-          },
-        ],
+        // localizations: [
+        //   {
+        //     culture: 'es',
+        //     resources: [
+        //       {
+        //         resourceName: 'HelpDesk',
+        //         texts: {
+        //           AppName: 'Configurado en angular',
+        //         },
+        //       },
+        //     ],
+        //   },
+        // ],
       }),
     ),
     // added for default missed auth service
