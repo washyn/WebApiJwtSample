@@ -1,11 +1,7 @@
-﻿using Acme.BookStore.Web.Data;
-
-using Localization.Resources.AbpUi;
+﻿using Localization.Resources.AbpUi;
 
 using Microsoft.AspNetCore.Cors;
 using Microsoft.OpenApi.Models;
-
-using Unaj.HelpDesk.Localization;
 
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
@@ -25,6 +21,9 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.Uow;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
+
+using WebApp.Data;
+using WebApp.Localization;
 
 namespace WebApp;
 

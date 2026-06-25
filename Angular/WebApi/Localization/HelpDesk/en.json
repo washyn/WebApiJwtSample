@@ -97,6 +97,6 @@
     "NewConcept": "New Concept",
     "EditConcept": "Edit Concept",
     "Permission:Concepts": "Concept Management",
-    "ConceptDeletionConfirmationMessage": "Are you sure you want to delete this concept?"
+    "ConceptDeletionConfirmationMessage": "Are you sure you want to delete this concept?",
   }
 }

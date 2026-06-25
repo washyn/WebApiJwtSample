@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+
 using Volo.Abp.EntityFrameworkCore;
 
-namespace Acme.BookStore.Web.Data;
+namespace WebApp.Data;
 
 public class WebDbContext : AbpDbContext<WebDbContext>
 {

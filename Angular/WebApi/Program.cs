@@ -1,7 +1,7 @@
-using Acme.BookStore.Web.Data;
-
 using Serilog;
 using Serilog.Events;
+
+using WebApp.Data;
 
 namespace WebApp;
 

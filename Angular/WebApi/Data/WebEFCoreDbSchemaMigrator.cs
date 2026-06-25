@@ -2,7 +2,7 @@
 
 using Volo.Abp.DependencyInjection;
 
-namespace Acme.BookStore.Web.Data;
+namespace WebApp.Data;
 
 public class WebEFCoreDbSchemaMigrator : ITransientDependency
 {

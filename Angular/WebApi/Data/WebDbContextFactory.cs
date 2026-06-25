@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace Acme.BookStore.Web.Data;
+namespace WebApp.Data;
 
 public class WebDbContextFactory : IDesignTimeDbContextFactory<WebDbContext>
 {

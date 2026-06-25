@@ -97,6 +97,7 @@
     "NewConcept": "Nuevo Concepto",
     "EditConcept": "Editar Concepto",
     "Permission:Concepts": "Gestión de Conceptos",
-    "ConceptDeletionConfirmationMessage": "¿Está seguro de que desea eliminar este concepto?"
+    "ConceptDeletionConfirmationMessage": "¿Está seguro de que desea eliminar este concepto?",
+    "AppName": "HelpDesk - UNAJ from backend"
   }
 }
