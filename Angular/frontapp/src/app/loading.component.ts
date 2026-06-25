@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  standalone: false,
+  standalone: true,
   selector: 'abp-loading',
   template: `
     <div class="abp-loading">
@@ -34,4 +34,4 @@ import { Component, ViewEncapsulation } from '@angular/core';
     `,
   ],
 })
-export class LoadingComponent {}
+export class LoadingComponent { }
