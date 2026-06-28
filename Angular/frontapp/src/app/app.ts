@@ -14,6 +14,7 @@ import { LoaderBarComponent } from './shared';
 import { ErrorSampleService } from './proxy/web-app/controllers';
 import { LoadingDirective } from './loading.directive';
 import { LangComponent } from './lang-component';
+import { SpinerAbpComponent } from './abpspinner';
 @Component({
   selector: 'app-root',
   // imports: [RouterOutlet, JsonPipe, ReactiveFormsModule, NgxValidateCoreModule.forRoot()],
@@ -23,8 +24,8 @@ import { LangComponent } from './lang-component';
     ReactiveFormsModule,
     NgxValidateCoreModule,
     LoaderBarComponent,
-    LoadingDirective,
     LangComponent,
+    SpinerAbpComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
@@ -37,7 +38,6 @@ export class App implements OnInit {
   public exampleService = inject(ErrorSampleService);
   public formBuilder = inject(FormBuilder);
 
-  isLoading = false;
   ngOnInit(): void {
     this.appConfig = this.configState.getAll();
 
@@ -52,6 +52,7 @@ export class App implements OnInit {
       //     maximumLength: 3,
       //   }),
       // ]),
+      // NOTE: shoud be use angular standar validations same as default theme abp
       filter: new FormControl<string>('', [
         Validators.required,
         Validators.maxLength(10),
@@ -64,14 +65,13 @@ export class App implements OnInit {
       console.log('res end request');
     });
   }
-  ejecutarCarga() {
-    this.isLoading = true;
-    setTimeout(() => (this.isLoading = false), 5000);
-  }
+
   callLargeRequest() {
     this.exampleService.largeRequest().subscribe((res) => {
       console.log('res end request');
     });
+
+    // this.exampleService.largeRequest().subscribe((res) => {});
   }
 
   save() {
@@ -81,7 +81,7 @@ export class App implements OnInit {
     console.log(this.formExample.value);
   }
 }
-// TODO: add example of multilanguage
+// DONE: add example of multilanguage
 // TODO: add all comon components, primero las librerias requeridas obligatorias
 // DONE: pipes,
 // TODO: directives.

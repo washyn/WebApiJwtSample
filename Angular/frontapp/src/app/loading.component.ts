@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-
+// TODO: fix icon
 @Component({
   standalone: true,
   selector: 'abp-loading',
