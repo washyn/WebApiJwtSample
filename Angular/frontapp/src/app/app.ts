@@ -82,14 +82,19 @@ export class App implements OnInit {
   }
 }
 // DONE: add example of multilanguage
-// TODO: add all comon components, primero las librerias requeridas obligatorias
 // DONE: pipes,
+// TODO: add all comon components, primero las librerias requeridas obligatorias
 // TODO: directives.
 // TODO: services, etc.
 // TODO: improve with gpt and remove modularity.
-// DONE: add abp-core, abp-utils and common.
 // TODO: add som einterceptor for request display and another for inject jwt token
-// TODO: add abp loader by default
+//--
+// TODO: add common services for notifications, and confirmation.
+// TODO: add interceptors for request and response.
+// TODO: add message error localization.
+// DONE: add abp-core, abp-utils and common.
+
+// DONE: add abp loader by default
 // DONE: Customize title page, is localization, hard code specicfic lolcalization find documentetation of abp and find key, implemetned in pagos.unaj.edu.pe
 // DONE: add validations and test custom message
 // DONE: Valdiation de formularios "@ngx-validate/core": "^0.2.0",
