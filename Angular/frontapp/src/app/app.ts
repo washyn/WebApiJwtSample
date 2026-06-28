@@ -13,6 +13,7 @@ import { NgxValidateCoreModule } from '@ngx-validate/core';
 import { LoaderBarComponent } from './shared';
 import { ErrorSampleService } from './proxy/web-app/controllers';
 import { LoadingDirective } from './loading.directive';
+import { LangComponent } from './lang-component';
 @Component({
   selector: 'app-root',
   // imports: [RouterOutlet, JsonPipe, ReactiveFormsModule, NgxValidateCoreModule.forRoot()],
@@ -23,6 +24,7 @@ import { LoadingDirective } from './loading.directive';
     NgxValidateCoreModule,
     LoaderBarComponent,
     LoadingDirective,
+    LangComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
