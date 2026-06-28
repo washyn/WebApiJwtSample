@@ -66,6 +66,7 @@ export class App implements OnInit {
     console.log(this.formExample.value);
   }
 }
+// TODO: add example of multilanguage
 // TODO: add all comon components, primero las librerias requeridas obligatorias
 // DONE: pipes,
 // TODO: directives.
