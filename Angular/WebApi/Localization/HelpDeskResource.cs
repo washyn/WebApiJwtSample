@@ -1,6 +1,6 @@
 ﻿using Volo.Abp.Localization;
 
-namespace Unaj.HelpDesk.Localization
+namespace WebApp.Localization
 {
     [LocalizationResourceName("HelpDesk")]
     public class HelpDeskResource

@@ -2,7 +2,7 @@
 
 using Volo.Abp.AspNetCore.Mvc.UI.RazorPages;
 
-namespace Acme.BookStore.Web.Pages;
+namespace WebApp.Pages;
 
 public class IndexModel : AbpPageModel
 {
