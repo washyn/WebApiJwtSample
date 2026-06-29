@@ -359,8 +359,17 @@ id="formCreateUpdate"
 <button (click)="confirmExample()">Confirm message</button>
 
 <hr />
-<button (click)="callLargeRequest()">Call large request</button>
-<button (click)="exampleCallError401()">Call error 401</button>
+<button (click)="error500()">Error 500</button>
+<button (click)="error401()">Error 401</button>
+<button (click)="error403()">Error 403</button>
+<button (click)="error40XXX()">Error 40XXX</button>
+
+<button (click)="error404()">Error 404</button>
+<button (click)="errorBusinessException()">Error Business Exception</button>
+<button (click)="largeRequest()">Error Large Request</button>
+<button (click)="requireAuth()">Error Require Auth</button>
+<hr />
+
 <pre>{{ appConfig | json }}</pre>
 <hr />
 

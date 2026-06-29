@@ -22,6 +22,7 @@ namespace WebApp.Controllers
             throw new Exception("Internal error.");
         }
 
+        // FIX
         [HttpGet]
         public void Error401()
         {
@@ -59,6 +60,7 @@ namespace WebApp.Controllers
             return new { };
         }
 
+        // FIX
         [Authorize]
         [HttpGet]
         public async Task RequireAuth()

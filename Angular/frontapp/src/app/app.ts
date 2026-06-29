@@ -71,23 +71,50 @@ export class App implements OnInit {
     // NOTA: cuando hay 2 suscriptores aun mismo request no se llega a mostrar el loader
     // this.exampleService.largeRequest().subscribe((res) => {});
   }
-
-  exampleCallError401() {
-    // before
-    this.exampleService
-      .error401({
-        skipHandleError: false, // not hadle error in interceptor
-      })
-      .subscribe(
-        (res) => {
-          console.log('res 401');
-        },
-        (err) => {
-          console.log('error 401');
-        }
-      );
+  ////////////////////////////////////////
+  error500() {
+    this.exampleService.error500().subscribe((res) => {
+      console.log('res 500');
+    });
   }
-
+  // TODO: fix for return 401 in backend, impment authorization
+  error401() {
+    this.exampleService.error401().subscribe((res) => {
+      console.log('res 401');
+    });
+  }
+  error403() {
+    this.exampleService.error403().subscribe((res) => {
+      console.log('res 403');
+    });
+  }
+  error40XXX() {
+    this.exampleService.error40XXXByModelSample({}).subscribe((res) => {
+      console.log('res 40XXX');
+    });
+  }
+  error404() {
+    this.exampleService.error404().subscribe((res) => {
+      console.log('res 404');
+    });
+  }
+  errorBusinessException() {
+    this.exampleService.errorBusinessException().subscribe((res) => {
+      console.log('res business exception');
+    });
+  }
+  largeRequest() {
+    this.exampleService.largeRequest().subscribe((res) => {
+      console.log('res large request');
+    });
+  }
+  // TODO: fix for return unathorized in backend, impment authorization
+  requireAuth() {
+    this.exampleService.requireAuth().subscribe((res) => {
+      console.log('res require auth');
+    });
+  }
+  ////////////////////////////////////////
   save() {
     // validate form before save
     // if (!this.form.valid || this.modalBusy) return;
@@ -102,25 +129,22 @@ export class App implements OnInit {
     });
   }
 }
+// TODO: include spinner un abp utils, add angular global another library
+// TODO: add interceptors for request and response.
+// - add message error localization.
+// TODO: improve with gpt and remove modularity.
 // DONE: add example of multilanguage
 // DONE: pipes,
 // DONE: add all comon components, primero las librerias requeridas obligatorias
 // DONE: directives.
 // DONE: services, etc.
-// TODO: improve with gpt and remove modularity.
-// TODO: add som einterceptor for request display and another for inject jwt token
-//--
+// TEST: add som einterceptor for request display and another for inject jwt token
 // DONE: add common services for notifications, and confirmation.
-// TODO: add interceptors for request and response.
-// TODO: add message error localization.
-// TODO: include spinner un abp utils
 // DONE: add abp-core, abp-utils and common.
-
 // DONE: add abp loader by default
 // DONE: Customize title page, is localization, hard code specicfic lolcalization find documentetation of abp and find key, implemetned in pagos.unaj.edu.pe
 // DONE: add validations and test custom message
 // DONE: Valdiation de formularios "@ngx-validate/core": "^0.2.0",
 // DONE: Loader, etc.
-
 // cutomizar logs for valirtion message for test only
 // add config fronted
