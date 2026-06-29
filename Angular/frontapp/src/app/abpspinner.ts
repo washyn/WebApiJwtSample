@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoadingDirective } from './loading.directive';
 
 @Component({
   selector: 'abp-spinner',
   imports: [LoadingDirective],
   template: `
-    <div class="abp-spinner" [abpLoading]="true" [abpLoadingDelay]="500">
+    <div class="abp-spinner" [abpLoading]="isLoading" [abpLoadingDelay]="1000">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero est, culpa quasi dolorum quidem
       tempora minima! Nesciunt omnis impedit et enim, expedita autem est voluptas atque nihil
       doloremque hic corporis!
@@ -13,13 +13,11 @@ import { LoadingDirective } from './loading.directive';
     <button (click)="ejecutarCarga()">Simular Carga</button>
   `,
 })
-export class SpinerAbpComponent {
-  isLoading = true;
-  ngOnInit(): void {
-    setTimeout(() => (this.isLoading = false), 5000);
-  }
+export class SpinerAbpComponent implements OnInit {
+  isLoading = false;
+  ngOnInit(): void {}
   ejecutarCarga() {
     this.isLoading = true;
-    setTimeout(() => (this.isLoading = false), 5000);
+    setTimeout(() => (this.isLoading = false), 2000);
   }
 }

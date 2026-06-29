@@ -347,7 +347,20 @@ id="formCreateUpdate"
   <button type="submit">Save</button>
 </form>
 <hr />
+<button (click)="util.notify.info('info', 'title')">Notify info</button>
+<button (click)="util.notify.success('success', 'title')">Notify success</button>
+<button (click)="util.notify.warn('warn', 'title')">Notify warn</button>
+<button (click)="util.notify.error('error', 'title')">Notify error</button>
+<hr />
+<button (click)="util.message.info('info', 'title')">Message info</button>
+<button (click)="util.message.success('success', 'title')">Message success</button>
+<button (click)="util.message.warn('warn', 'title')">Message warn</button>
+<button (click)="util.message.error('error', 'title')">Message error</button>
+<button (click)="confirmExample()">Confirm message</button>
+
+<hr />
 <button (click)="callLargeRequest()">Call large request</button>
+<button (click)="exampleCallError401()">Call error 401</button>
 <pre>{{ appConfig | json }}</pre>
 <hr />
 

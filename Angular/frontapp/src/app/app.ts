@@ -15,6 +15,7 @@ import { ErrorSampleService } from './proxy/web-app/controllers';
 import { LoadingDirective } from './loading.directive';
 import { LangComponent } from './lang-component';
 import { SpinerAbpComponent } from './abpspinner';
+import { AbpUtilService } from './core/abp-utils/abp-util.service';
 @Component({
   selector: 'app-root',
   // imports: [RouterOutlet, JsonPipe, ReactiveFormsModule, NgxValidateCoreModule.forRoot()],
@@ -37,6 +38,7 @@ export class App implements OnInit {
   protected readonly configState = inject(ConfigStateService);
   public exampleService = inject(ErrorSampleService);
   public formBuilder = inject(FormBuilder);
+  public util = inject(AbpUtilService);
 
   ngOnInit(): void {
     this.appConfig = this.configState.getAll();
@@ -60,18 +62,30 @@ export class App implements OnInit {
         AbpValidators.emailAddress(),
       ]),
     });
-
-    this.exampleService.largeRequest().subscribe((res) => {
-      console.log('res end request');
-    });
   }
 
   callLargeRequest() {
     this.exampleService.largeRequest().subscribe((res) => {
       console.log('res end request');
     });
-
+    // NOTA: cuando hay 2 suscriptores aun mismo request no se llega a mostrar el loader
     // this.exampleService.largeRequest().subscribe((res) => {});
+  }
+
+  exampleCallError401() {
+    // before
+    this.exampleService
+      .error401({
+        skipHandleError: false, // not hadle error in interceptor
+      })
+      .subscribe(
+        (res) => {
+          console.log('res 401');
+        },
+        (err) => {
+          console.log('error 401');
+        }
+      );
   }
 
   save() {
@@ -80,18 +94,26 @@ export class App implements OnInit {
     if (this.formExample.invalid) return;
     console.log(this.formExample.value);
   }
+
+  confirmExample() {
+    this.util.message.confirm('Are you sure?', 'Confirm', (isConfirmed) => {
+      console.log('isConfirmed');
+      console.log(isConfirmed);
+    });
+  }
 }
 // DONE: add example of multilanguage
 // DONE: pipes,
-// TODO: add all comon components, primero las librerias requeridas obligatorias
-// TODO: directives.
-// TODO: services, etc.
+// DONE: add all comon components, primero las librerias requeridas obligatorias
+// DONE: directives.
+// DONE: services, etc.
 // TODO: improve with gpt and remove modularity.
 // TODO: add som einterceptor for request display and another for inject jwt token
 //--
-// TODO: add common services for notifications, and confirmation.
+// DONE: add common services for notifications, and confirmation.
 // TODO: add interceptors for request and response.
 // TODO: add message error localization.
+// TODO: include spinner un abp utils
 // DONE: add abp-core, abp-utils and common.
 
 // DONE: add abp loader by default

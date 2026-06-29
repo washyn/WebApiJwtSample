@@ -18,6 +18,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
         top: 0;
         left: 0;
         z-index: 1040;
+        background-color: rgba(23, 218, 33, 0.61);
       }
 
       .abp-loading .abp-spinner {
