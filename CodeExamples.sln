@@ -87,6 +87,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppAspire.AppHost", "Web
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unaj.Bill.QuestPdf", "Unaj.Bill.QuestPdf\Unaj.Bill.QuestPdf.csproj", "{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilesWiper", "FilesWiper\FilesWiper.csproj", "{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -577,6 +579,18 @@ Global
 		{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}.Release|x64.Build.0 = Release|Any CPU
 		{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}.Release|x86.ActiveCfg = Release|Any CPU
 		{A79676F1-3EBE-4339-A82A-6A56DB3CAF6C}.Release|x86.Build.0 = Release|Any CPU
+		{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}.Debug|x64.Build.0 = Debug|Any CPU
+		{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}.Debug|x86.Build.0 = Debug|Any CPU
+		{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}.Release|x64.ActiveCfg = Release|Any CPU
+		{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}.Release|x64.Build.0 = Release|Any CPU
+		{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}.Release|x86.ActiveCfg = Release|Any CPU
+		{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
