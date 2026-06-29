@@ -491,6 +491,21 @@
               "allowAnonymous": null,
               "implementFrom": "WebApp.Controllers.ErrorSampleController"
             },
+            "LargeRequestSecondExample": {
+              "uniqueName": "LargeRequestSecondExample",
+              "name": "LargeRequestSecondExample",
+              "httpMethod": "GET",
+              "url": "api/app/error-sample/large-request-second-example",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Object",
+                "typeSimple": "object"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "WebApp.Controllers.ErrorSampleController"
+            },
             "RequireAuth": {
               "uniqueName": "RequireAuth",
               "name": "RequireAuth",

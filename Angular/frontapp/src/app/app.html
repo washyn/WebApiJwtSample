@@ -368,9 +368,11 @@ id="formCreateUpdate"
 <button (click)="errorBusinessException()">Error Business Exception</button>
 <button (click)="largeRequest()">Error Large Request</button>
 <button (click)="requireAuth()">Error Require Auth</button>
+<button (click)="largeRequestSecondExample()">Req with spinner custom</button>
 <hr />
 
 <pre>{{ appConfig | json }}</pre>
 <hr />
 
 <router-outlet />
+<ngx-spinner type="ball-clip-rotate" size="medium" color="#fff"></ngx-spinner>

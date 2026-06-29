@@ -29,7 +29,9 @@
     "@angular/forms": "^20.3.0",
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
+    "@angular/animations": "^20.3.0",
     "@ngx-validate/core": "^0.2.0",
+    "ngx-spinner": "^21.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

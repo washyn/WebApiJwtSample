@@ -60,6 +60,13 @@ namespace WebApp.Controllers
             return new { };
         }
 
+        [HttpGet]
+        public async Task<object> LargeRequestSecondExample()
+        {
+            await Task.Delay(5000);
+            return new { };
+        }
+
         // FIX
         [Authorize]
         [HttpGet]

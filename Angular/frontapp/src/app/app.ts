@@ -12,13 +12,13 @@ import { RouterOutlet } from '@angular/router';
 import { NgxValidateCoreModule } from '@ngx-validate/core';
 import { LoaderBarComponent } from './shared';
 import { ErrorSampleService } from './proxy/web-app/controllers';
-import { LoadingDirective } from './loading.directive';
 import { LangComponent } from './lang-component';
 import { SpinerAbpComponent } from './abpspinner';
 import { AbpUtilService } from './core/abp-utils/abp-util.service';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs';
 @Component({
   selector: 'app-root',
-  // imports: [RouterOutlet, JsonPipe, ReactiveFormsModule, NgxValidateCoreModule.forRoot()],
   imports: [
     RouterOutlet,
     JsonPipe,
@@ -27,6 +27,7 @@ import { AbpUtilService } from './core/abp-utils/abp-util.service';
     LoaderBarComponent,
     LangComponent,
     SpinerAbpComponent,
+    NgxSpinnerModule,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
@@ -39,6 +40,7 @@ export class App implements OnInit {
   public exampleService = inject(ErrorSampleService);
   public formBuilder = inject(FormBuilder);
   public util = inject(AbpUtilService);
+  public spinner = inject(NgxSpinnerService);
 
   ngOnInit(): void {
     this.appConfig = this.configState.getAll();
@@ -114,6 +116,17 @@ export class App implements OnInit {
       console.log('res require auth');
     });
   }
+
+  largeRequestSecondExample() {
+    this.spinner.show();
+    this.exampleService
+      .largeRequestSecondExample()
+      .pipe(finalize(() => this.spinner.hide()))
+      .subscribe((res) => {
+        console.log('res large request');
+      });
+  }
+
   ////////////////////////////////////////
   save() {
     // validate form before save

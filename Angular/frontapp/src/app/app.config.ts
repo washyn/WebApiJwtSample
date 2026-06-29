@@ -20,12 +20,14 @@ import {
 } from '@ngx-validate/core';
 import { DEFAULT_VALIDATION_BLUEPRINTS, CustomValidationErrorComponent } from './shared';
 import { provideHttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+    provideAnimations(),
     provideHttpClient(),
     {
       provide: HTTP_INTERCEPTORS,
@@ -51,7 +53,7 @@ export const appConfig: ApplicationConfig = {
         //     ],
         //   },
         // ],
-      }),
+      })
     ),
     // added for default missed auth service
     {

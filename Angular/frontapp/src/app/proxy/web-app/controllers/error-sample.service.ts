@@ -67,6 +67,14 @@ export class ErrorSampleService {
     { apiName: this.apiName,...config });
   
 
+  largeRequestSecondExample = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, object>({
+      method: 'GET',
+      url: '/api/app/error-sample/large-request-second-example',
+    },
+    { apiName: this.apiName,...config });
+  
+
   requireAuth = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'GET',
