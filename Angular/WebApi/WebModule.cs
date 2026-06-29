@@ -227,6 +227,7 @@ public class WebModule : AbpModule
         app.UseRouting();
         app.UseCors();
         app.UseAuthentication();
+        app.UseAuthorization();
 
         app.UseUnitOfWork();
         app.UseAuthorization();
