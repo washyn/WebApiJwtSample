@@ -343,6 +343,54 @@
       "rootPath": "app",
       "remoteServiceName": "Default",
       "controllers": {
+        "Unaj.Payment.Public.Controllers.AccountController": {
+          "controllerName": "Account",
+          "controllerGroupName": null,
+          "isRemoteService": false,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "Unaj.Payment.Public.Controllers.AccountController",
+          "interfaces": [],
+          "actions": {
+            "PostByModel": {
+              "uniqueName": "PostByModel",
+              "name": "Post",
+              "httpMethod": "POST",
+              "url": "api/app/account/login",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "model",
+                  "typeAsString": "Unaj.Payment.Public.Controllers.LoginInput, WebApp",
+                  "type": "Unaj.Payment.Public.Controllers.LoginInput",
+                  "typeSimple": "Unaj.Payment.Public.Controllers.LoginInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "model",
+                  "name": "model",
+                  "jsonName": null,
+                  "type": "Unaj.Payment.Public.Controllers.LoginInput",
+                  "typeSimple": "Unaj.Payment.Public.Controllers.LoginInput",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Unaj.Payment.Public.Controllers.LoginOutput",
+                "typeSimple": "Unaj.Payment.Public.Controllers.LoginOutput"
+              },
+              "allowAnonymous": true,
+              "implementFrom": "Unaj.Payment.Public.Controllers.AccountController"
+            }
+          }
+        },
         "WebApp.Controllers.ErrorSampleController": {
           "controllerName": "ErrorSample",
           "controllerGroupName": "ErrorSample",
@@ -520,6 +568,36 @@
               },
               "allowAnonymous": false,
               "implementFrom": "WebApp.Controllers.ErrorSampleController"
+            },
+            "Error400": {
+              "uniqueName": "Error400",
+              "name": "Error400",
+              "httpMethod": "GET",
+              "url": "api/app/error-sample/error400",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "WebApp.Controllers.ErrorSampleController"
+            },
+            "Error501": {
+              "uniqueName": "Error501",
+              "name": "Error501",
+              "httpMethod": "GET",
+              "url": "api/app/error-sample/error501",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "WebApp.Controllers.ErrorSampleController"
             }
           }
         }
@@ -527,6 +605,60 @@
     }
   },
   "types": {
+    "Unaj.Payment.Public.Controllers.LoginInput": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "User",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Password",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "Unaj.Payment.Public.Controllers.LoginOutput": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "AccessToken",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
     "Volo.Abp.AspNetCore.Mvc.ApplicationConfigurations.ApplicationAuthConfigurationDto": {
       "baseType": null,
       "isEnum": false,

@@ -10,6 +10,14 @@ export class ErrorSampleService {
   apiName = 'Default';
   
 
+  error400 = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'GET',
+      url: '/api/app/error-sample/error400',
+    },
+    { apiName: this.apiName,...config });
+  
+
   error401 = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'GET',
@@ -47,6 +55,14 @@ export class ErrorSampleService {
     this.restService.request<any, void>({
       method: 'GET',
       url: '/api/app/error-sample/error500',
+    },
+    { apiName: this.apiName,...config });
+  
+
+  error501 = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'GET',
+      url: '/api/app/error-sample/error501',
     },
     { apiName: this.apiName,...config });
   

@@ -79,7 +79,7 @@ export class App implements OnInit {
       console.log('res 500');
     });
   }
-  // TODO: fix for return 401 in backend, impment authorization
+
   error401() {
     this.exampleService.error401().subscribe((res) => {
       console.log('res 401');
@@ -110,12 +110,6 @@ export class App implements OnInit {
       console.log('res large request');
     });
   }
-  // TODO: fix for return unathorized in backend, impment authorization
-  requireAuth() {
-    this.exampleService.requireAuth().subscribe((res) => {
-      console.log('res require auth');
-    });
-  }
 
   largeRequestSecondExample() {
     this.spinner.show();
@@ -127,6 +121,23 @@ export class App implements OnInit {
       });
   }
 
+  requireAuth() {
+    this.exampleService.requireAuth().subscribe((res) => {
+      console.log('res require auth');
+    });
+  }
+
+  error400() {
+    this.exampleService.error400().subscribe((res) => {
+      console.log('res 400');
+    });
+  }
+  error501() {
+    this.exampleService.error501().subscribe((res) => {
+      console.log('res 501');
+    });
+  }
+  // https://github.com/abpframework/abp/issues/4560
   ////////////////////////////////////////
   save() {
     // validate form before save
@@ -142,6 +153,7 @@ export class App implements OnInit {
     });
   }
 }
+// DONE: impkement bearer token in back... continue
 // TODO: include spinner un abp utils, add angular global another library
 // TODO: add interceptors for request and response.
 // - add message error localization.

@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.Authorization;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.Validation;
 
 namespace WebApp.Controllers
 {
@@ -26,7 +28,7 @@ namespace WebApp.Controllers
         [HttpGet]
         public void Error401()
         {
-            throw new UnauthorizedAccessException("Un autorized ex");
+            throw new AbpAuthorizationException("Un autorized ex");
         }
 
         [HttpGet]
@@ -72,6 +74,18 @@ namespace WebApp.Controllers
         [HttpGet]
         public async Task RequireAuth()
         {
+        }
+
+        [HttpGet]
+        public void Error400()
+        {
+            throw new AbpValidationException("message 400");
+        }
+
+        [HttpGet]
+        public void Error501()
+        {
+            throw new NotImplementedException();
         }
     }
 
