@@ -20,6 +20,7 @@ export class OAuthApiInterceptor implements IApiInterceptor {
   ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
+    // start loading
     this.httpWaitService.addRequest(request);
     const isExternalRequest = request.context?.get(IS_EXTERNAL_REQUEST);
     const newRequest = isExternalRequest
@@ -27,7 +28,7 @@ export class OAuthApiInterceptor implements IApiInterceptor {
       : request.clone({
           setHeaders: this.getAdditionalHeaders(request.headers),
         });
-
+    // finalize instrucction for end loading
     return next
       .handle(newRequest)
       .pipe(finalize(() => this.httpWaitService.deleteRequest(request)));
