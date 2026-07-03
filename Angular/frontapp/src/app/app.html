@@ -319,9 +319,11 @@ add example of ui service
 <button (click)="error400()">Error 400</button>
 <button (click)="error501()">Error 501</button>
 <hr />
+<button (click)="skipHandleError()">Skip handle error</button>
+<button (click)="skipHandleErrorSuccess()">Skip handle error success</button>
+<hr />
 
 <pre>{{ appConfig | json }}</pre>
 <hr />
 
 <router-outlet />
-<ngx-spinner type="ball-clip-rotate" size="medium" color="#fff"></ngx-spinner>

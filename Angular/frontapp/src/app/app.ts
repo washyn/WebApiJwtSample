@@ -14,7 +14,6 @@ import { LoaderBarComponent } from './shared';
 import { ErrorSampleService } from './proxy/web-app/controllers';
 import { LangComponent } from './lang-component';
 import { AbpUtilService } from './core/abp-utils/abp-util.service';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs';
 
 @Component({
@@ -26,7 +25,6 @@ import { finalize } from 'rxjs';
     NgxValidateCoreModule,
     LoaderBarComponent,
     LangComponent,
-    NgxSpinnerModule,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
@@ -39,7 +37,6 @@ export class App implements OnInit {
   public exampleService = inject(ErrorSampleService);
   public formBuilder = inject(FormBuilder);
   public util = inject(AbpUtilService);
-  public spinner = inject(NgxSpinnerService);
 
   ngOnInit(): void {
     this.appConfig = this.configState.getAll();
@@ -111,14 +108,36 @@ export class App implements OnInit {
   }
 
   largeRequestSecondExample() {
-    // TODO: removpe
-    this.spinner.show();
+    this.util.ui.setBusy();
     this.exampleService
       .largeRequestSecondExample()
-      .pipe(finalize(() => this.spinner.hide()))
+      .pipe(finalize(() => this.util.ui.clearBusy()))
       .subscribe((res) => {
         console.log('res large request');
       });
+    // if requiered skip handle error, use skip handle error arg in reuest 
+    // and add two args in suscribe, next and error
+  }
+
+  skipHandleError() {
+    this.exampleService.error500({
+      skipHandleError: true,
+    }).subscribe((res) => {
+      console.log('next when success');
+    }, (err) => {
+      console.log("Custom handled error");
+      console.log(err);
+    });
+  }
+
+  skipHandleErrorSuccess() {
+    this.exampleService.largeRequest({
+      skipHandleError: true,
+    }).subscribe(res => {
+      console.log('habdkerd success');
+    }, err => {
+      console.log("Custom handled error");
+    });
   }
 
   requireAuth() {
