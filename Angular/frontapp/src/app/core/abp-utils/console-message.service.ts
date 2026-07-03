@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IMessageService } from './interfaces';
+import { of } from 'rxjs';
+import { Confirmation } from '../../models';
 
 @Injectable()
 export class ConsoleMessageService implements IMessageService {
@@ -26,6 +28,9 @@ export class ConsoleMessageService implements IMessageService {
     console.error(message, title);
     alert(message);
     console.groupEnd();
+    // let resAlert = alert(message);
+    // let temp = of(Confirmation.Status.confirm)
+    // return temp;
   }
   confirm(
     message: string,
