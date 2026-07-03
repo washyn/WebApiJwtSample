@@ -1,5 +1,6 @@
 import {
   ApplicationConfig,
+  ErrorHandler,
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
 } from '@angular/core';
@@ -20,14 +21,15 @@ import {
 } from '@ngx-validate/core';
 import { DEFAULT_VALIDATION_BLUEPRINTS, CustomValidationErrorComponent } from './shared';
 import { provideHttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { DEFAULT_HANDLERS_PROVIDERS } from './providers';
+import { ErrorHandler as CustomErrorHandler } from './handlers/error.handler';
+import { HTTP_ERROR_CONFIG } from './tokens';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideAnimations(),
     provideHttpClient(),
     {
       provide: HTTP_INTERCEPTORS,
@@ -90,6 +92,12 @@ export const appConfig: ApplicationConfig = {
       // useValue: ValidationErrorComponent, // default emplate
       useValue: CustomValidationErrorComponent,
     },
+    { provide: HTTP_ERROR_CONFIG, useValue: undefined },
+    {
+      provide: ErrorHandler,
+      useClass: CustomErrorHandler,
+    },
+    DEFAULT_HANDLERS_PROVIDERS,
   ],
 };
 // available tokens
