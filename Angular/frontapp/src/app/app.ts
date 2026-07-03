@@ -16,7 +16,7 @@ import { LangComponent } from './lang-component';
 import { AbpUtilService } from './core/abp-utils/abp-util.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs';
-import { InternetConnectionStatusComponent } from './shared/internet-connection-status.component';
+
 @Component({
   selector: 'app-root',
   imports: [
@@ -27,7 +27,6 @@ import { InternetConnectionStatusComponent } from './shared/internet-connection-
     LoaderBarComponent,
     LangComponent,
     NgxSpinnerModule,
-    InternetConnectionStatusComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
