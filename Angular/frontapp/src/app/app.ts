@@ -152,9 +152,9 @@ export class App implements OnInit {
   }
 }
 // DONE: impkement bearer token in back... continue
-// TODO: include spinner un abp utils, add angular global another library
-// TODO: add interceptors for request and response.
-// TODO: Remove dep ngx-spinner, and angular animations package reference
+// DONE: include spinner un abp utils, add angular global another library
+// TODO: add interceptors for request and response... CONTINUE HERE
+// DONE: Remove dep ngx-spinner, and angular animations package reference
 // - add message error localization.
 // TODO: improve with gpt and remove modularity.
 // DONE: add example of multilanguage
