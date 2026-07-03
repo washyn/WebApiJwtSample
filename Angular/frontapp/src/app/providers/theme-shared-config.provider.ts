@@ -1,5 +1,5 @@
 import { Provider, makeEnvironmentProviders, inject, provideAppInitializer } from '@angular/core';
-import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import {
   VALIDATION_BLUEPRINTS,
   VALIDATION_MAP_ERRORS_FN,
@@ -8,21 +8,21 @@ import {
   Validation,
 } from '@ngx-validate/core';
 import { DEFAULT_VALIDATION_BLUEPRINTS } from '../constants';
-import { DocumentDirHandlerService, ErrorHandler } from '../handlers';
+import { ErrorHandler } from '../handlers';
 import { HttpErrorConfig } from '../models';
 import {
-  THEME_SHARED_APPEND_CONTENT,
+  // THEME_SHARED_APPEND_CONTENT,
   HTTP_ERROR_CONFIG,
-  CONFIRMATION_ICONS,
-  ConfirmationIcons,
-  DEFAULT_CONFIRMATION_ICONS,
+  // CONFIRMATION_ICONS,
+  // ConfirmationIcons,
+  // DEFAULT_CONFIRMATION_ICONS,
 } from '../tokens';
-import { DateParserFormatter } from '../utils';
+// import { DateParserFormatter } from '../utils';
 import {
   DEFAULT_HANDLERS_PROVIDERS,
-  NG_BOOTSTRAP_CONFIG_PROVIDERS,
-  THEME_SHARED_ROUTE_PROVIDERS,
-  tenantNotFoundProvider,
+  // NG_BOOTSTRAP_CONFIG_PROVIDERS,
+  // THEME_SHARED_ROUTE_PROVIDERS,
+  // tenantNotFoundProvider,
 } from './';
 
 export enum ThemeSharedFeatureKind {
@@ -96,28 +96,28 @@ export function withValidateOnSubmit(
   ]);
 }
 
-export function withConfirmationIcon(
-  confirmationIcons: Partial<ConfirmationIcons>,
-): ThemeSharedFeature<ThemeSharedFeatureKind.HttpErrorConfig> {
-  return makeThemeSharedFeature(ThemeSharedFeatureKind.HttpErrorConfig, [
-    {
-      provide: CONFIRMATION_ICONS,
-      useValue: { ...DEFAULT_CONFIRMATION_ICONS, ...(confirmationIcons || {}) },
-    },
-  ]);
-}
+// export function withConfirmationIcon(
+//   confirmationIcons: Partial<ConfirmationIcons>,
+// ): ThemeSharedFeature<ThemeSharedFeatureKind.HttpErrorConfig> {
+//   return makeThemeSharedFeature(ThemeSharedFeatureKind.HttpErrorConfig, [
+//     {
+//       provide: CONFIRMATION_ICONS,
+//       useValue: { ...DEFAULT_CONFIRMATION_ICONS, ...(confirmationIcons || {}) },
+//     },
+//   ]);
+// }
 
 export function provideAbpThemeShared(...features: ThemeSharedFeature<ThemeSharedFeatureKind>[]) {
   const providers = [
     provideAppInitializer(() => {
       inject(ErrorHandler);
-      inject(THEME_SHARED_APPEND_CONTENT);
-      inject(DocumentDirHandlerService);
+      // inject(THEME_SHARED_APPEND_CONTENT);
+      // inject(DocumentDirHandlerService);
     }),
-    THEME_SHARED_ROUTE_PROVIDERS,
+    // THEME_SHARED_ROUTE_PROVIDERS,
     { provide: HTTP_ERROR_CONFIG, useValue: undefined },
-    { provide: NgbDateParserFormatter, useClass: DateParserFormatter },
-    NG_BOOTSTRAP_CONFIG_PROVIDERS,
+    // { provide: NgbDateParserFormatter, useClass: DateParserFormatter },
+    // NG_BOOTSTRAP_CONFIG_PROVIDERS,
     {
       provide: VALIDATION_BLUEPRINTS,
       useValue: { ...DEFAULT_VALIDATION_BLUEPRINTS },
@@ -130,18 +130,18 @@ export function provideAbpThemeShared(...features: ThemeSharedFeature<ThemeShare
       provide: VALIDATION_VALIDATE_ON_SUBMIT,
       useValue: undefined,
     },
-    DocumentDirHandlerService,
-    {
-      provide: CONFIRMATION_ICONS,
-      useValue: { ...DEFAULT_CONFIRMATION_ICONS },
-    },
-    tenantNotFoundProvider,
+    // DocumentDirHandlerService,
+    // {
+    //   provide: CONFIRMATION_ICONS,
+    //   useValue: { ...DEFAULT_CONFIRMATION_ICONS },
+    // },
+    // tenantNotFoundProvider,
     DEFAULT_HANDLERS_PROVIDERS,
   ];
 
-  for (const feature of features) {
-    providers.push(...feature.ɵproviders);
-  }
+  // for (const feature of features) {
+  //   providers.push(...feature.ɵproviders);
+  // }
 
   return makeEnvironmentProviders(providers);
 }
