@@ -1,22 +1,22 @@
 import { Component, inject } from '@angular/core';
 import { InternetConnectionService, LocalizationModule } from '@abp/ng.core';
-import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'abp-internet-status',
-  imports: [LocalizationModule, NgbTooltip],
+  imports: [
+    LocalizationModule,
+    // NgbTooltip
+  ],
   template: `
     @if (!isOnline()) {
       <div class="status-icon">
-        <i
-          ngbTooltip="{{ 'AbpUi::InternetConnectionInfo' | abpLocalization }}"
-          container="body"
-          placement="left-top"
-          class="fa fa-wifi text-blinking blink"
-        >
-        </i>
+        <!-- ngbTooltip="{{ 'AbpUi::InternetConnectionInfo' | abpLocalization }}" -->
+        <i container="body" placement="left-top" class="fa fa-wifi text-blinking blink"> </i>
+        YU ARE OFFLINE ...
       </div>
     }
+    compoonent internet connection status
   `,
   styles: [
     `
