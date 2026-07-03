@@ -165,8 +165,9 @@ public class WebModule : AbpModule
 
         Configure<AbpLocalizationOptions>(options =>
         {
+            // TODO: add fix of reuired validation messages with lenth in angular message validation
             options.Resources
-                .Add<HelpDeskResource>("es")
+                .Add<HelpDeskResource>("en")
                 .AddBaseTypes(typeof(AbpValidationResource))
                 .AddVirtualJson("/Localization/HelpDesk");
 

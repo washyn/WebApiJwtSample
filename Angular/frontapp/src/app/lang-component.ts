@@ -58,9 +58,11 @@ export class LangComponent {
     return this.sessionState.getLanguage();
   }
 
-  constructor(private sessionState: SessionStateService, private configState: ConfigStateService) {}
+  constructor(private sessionState: SessionStateService, private configState: ConfigStateService) { }
 
   onChangeLang(cultureName: string) {
     this.sessionState.setLanguage(cultureName);
+    // NOTE:aded only for test
+    window.location.reload();
   }
 }

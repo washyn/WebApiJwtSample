@@ -111,6 +111,7 @@ export class App implements OnInit {
   }
 
   largeRequestSecondExample() {
+    // TODO: removpe
     this.spinner.show();
     this.exampleService
       .largeRequestSecondExample()
@@ -147,7 +148,6 @@ export class App implements OnInit {
 
   confirmExample() {
     this.util.message.confirm('Are you sure?', 'Confirm', (isConfirmed) => {
-      console.log('isConfirmed');
       console.log(isConfirmed);
     });
   }
