@@ -34,7 +34,7 @@ export abstract class INotifyService {
   abstract warn(message: string, title?: string, options?: any): void;
   abstract error(message: string, title?: string, options?: any): void;
 }
-
+// TODO: add extra service fake and remove ngx-spinner
 export abstract class IUIService {
   abstract block(elm?: any): void;
   abstract unblock(elm?: any): void;
