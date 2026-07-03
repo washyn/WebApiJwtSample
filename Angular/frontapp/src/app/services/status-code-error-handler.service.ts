@@ -4,17 +4,20 @@ import {
   DEFAULT_ERROR_LOCALIZATIONS,
   DEFAULT_ERROR_MESSAGES,
 } from '../constants/default-errors';
-import { AuthService, LocalizationParam } from '@abp/ng.core';
-import { Observable } from 'rxjs';
+import { AuthService, LocalizationParam, LocalizationService } from '@abp/ng.core';
+import { Observable, of } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
-import { ConfirmationService } from './confirmation.service';
+// import { ConfirmationService } from './confirmation.service';
 import { CreateErrorComponentService } from './create-error-component.service';
+import { AbpUtilService } from '../core/abp-utils/abp-util.service';
 
 @Injectable({ providedIn: 'root' })
 export class StatusCodeErrorHandlerService implements CustomHttpErrorHandlerService {
-  protected readonly confirmationService = inject(ConfirmationService);
+  // protected readonly confirmationService = inject(ConfirmationService);
   protected readonly createErrorComponentService = inject(CreateErrorComponentService);
   protected readonly authService = inject(AuthService);
+  protected readonly abpUtilService = inject(AbpUtilService);
+  protected readonly localizationService = inject(LocalizationService);
 
   protected readonly handledStatusCodes = [401, 403, 404, 500] as const;
   protected status: (typeof this.handledStatusCodes)[number];
@@ -29,10 +32,18 @@ export class StatusCodeErrorHandlerService implements CustomHttpErrorHandlerServ
     message: LocalizationParam,
     title: LocalizationParam,
   ): Observable<Confirmation.Status> {
-    return this.confirmationService.error(message, title, {
-      hideCancelBtn: true,
-      yesText: 'AbpAccount::Close',
-    });
+    // return this.confirmationService.error(message, title, {
+    //   hideCancelBtn: true,
+    //   yesText: 'AbpAccount::Close',
+    // });
+
+    // TODO: aply localization, can be use default localization
+    let messageLocalized = this.localizationService.instant(message);
+    let titleLocalized = this.localizationService.instant(title);
+
+    this.abpUtilService.message.error(messageLocalized, titleLocalized);
+
+    return of(Confirmation.Status.confirm);
   }
 
   protected showPage(): void {

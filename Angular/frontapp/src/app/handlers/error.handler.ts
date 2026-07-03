@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 
-import { HttpErrorReporterService } from '@abp/ng.core';
+import { HttpErrorReporterService, LocalizationService } from '@abp/ng.core';
 
 import { CustomHttpErrorHandlerService } from '../models/common';
 import { Confirmation } from '../models/confirmation';
@@ -14,11 +14,14 @@ import { DEFAULT_ERROR_LOCALIZATIONS, DEFAULT_ERROR_MESSAGES } from '../constant
 
 // import { ConfirmationService } from '../services/confirmation.service';
 import { RouterErrorHandlerService } from '../services/router-error-handler.service';
+import { AbpUtilService } from '../core/abp-utils/abp-util.service';
 
 @Injectable({ providedIn: 'root' })
 export class ErrorHandler {
   protected readonly httpErrorReporter = inject(HttpErrorReporterService);
-  protected readonly confirmationService = inject(ConfirmationService);
+  // protected readonly confirmationService = inject(ConfirmationService);
+  protected readonly abpUtilService = inject(AbpUtilService);
+  protected readonly localizationService = inject(LocalizationService);
   protected readonly routerErrorHandlerService = inject(RouterErrorHandlerService);
   protected readonly httpErrorConfig = inject(HTTP_ERROR_CONFIG);
   protected readonly customErrorHandlers = inject(CUSTOM_ERROR_HANDLERS);
@@ -78,10 +81,16 @@ export class ErrorHandler {
       key: DEFAULT_ERROR_LOCALIZATIONS.defaultError.details,
       defaultValue: DEFAULT_ERROR_MESSAGES.defaultError.details,
     };
-    return this.confirmationService.error(message, title, {
-      hideCancelBtn: true,
-      yesText: 'AbpAccount::Close',
-    });
+    // return this.confirmationService.error(message, title, {
+    //   hideCancelBtn: true,
+    //   yesText: 'AbpAccount::Close',
+    // });
+    let messageLocalized = this.localizationService.instant(message);
+    let titleLocalized = this.localizationService.instant(title);
+
+    this.abpUtilService.message.error(messageLocalized, titleLocalized);
+
+    return of(Confirmation.Status.confirm);
   }
 
   protected filterRestErrors = ({ status }: HttpErrorResponse): boolean => {
