@@ -34,13 +34,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="$(AspNetFrameworkPackageVersion)" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded"
+      Version="$(AspNetFrameworkPackageVersion)" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="$(AspNetFrameworkPackageVersion)">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools"
+      Version="$(AspNetFrameworkPackageVersion)">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      <PrivateAssets>compile; contentFiles; build; buildMultitargeting; buildTransitive; analyzers; native</PrivateAssets>
+      <PrivateAssets>compile; contentFiles; build; buildMultitargeting; buildTransitive; analyzers;
+        native</PrivateAssets>
     </PackageReference>
   </ItemGroup>
 
@@ -68,6 +71,12 @@
     <Content Remove="Localization\CustomValidation\*.json" />
     <!--  -->
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="ExtendLocalization\LotExtend\*.json" />
+    <EmbeddedResource Include="ExtendLocalization\LotExtend\*.json" />
+  </ItemGroup>
+
   <ItemGroup>
     <Content Remove="$(UserProfile)\.nuget\packages\*\*\contentFiles\any\*\*.abppkg*" />
   </ItemGroup>
