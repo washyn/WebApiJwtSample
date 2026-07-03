@@ -1,7 +1,8 @@
 import { Provider } from '@angular/core';
-import { IMessageService, INotifyService } from './interfaces';
+import { IMessageService, INotifyService, IUIService } from './interfaces';
 import { ConsoleMessageService } from './console-message.service';
 import { ConsoleNotifyService } from './console-notify.service';
+import { ConsoleUIService } from './console-ui.service';
 
 export function provideAbpUtils(): Provider[] {
   return [
@@ -12,6 +13,10 @@ export function provideAbpUtils(): Provider[] {
     {
       provide: IMessageService,
       useClass: ConsoleMessageService,
+    },
+    {
+      provide: IUIService,
+      useClass: ConsoleUIService,
     },
   ];
 }

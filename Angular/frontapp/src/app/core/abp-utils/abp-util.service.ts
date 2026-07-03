@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbpWindowService } from '@abp/ng.core';
-import { IMessageService, INotifyService } from './interfaces';
+import { IMessageService, INotifyService, IUIService } from './interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +8,8 @@ import { IMessageService, INotifyService } from './interfaces';
 export class AbpUtilService {
   constructor(
     public notify: INotifyService,
+    public message: IMessageService,
+    public ui: IUIService,
     public window: AbpWindowService,
-    public message: IMessageService
   ) {}
 }

@@ -13,7 +13,6 @@ import { NgxValidateCoreModule } from '@ngx-validate/core';
 import { LoaderBarComponent } from './shared';
 import { ErrorSampleService } from './proxy/web-app/controllers';
 import { LangComponent } from './lang-component';
-import { SpinerAbpComponent } from './abpspinner';
 import { AbpUtilService } from './core/abp-utils/abp-util.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs';
@@ -26,7 +25,6 @@ import { finalize } from 'rxjs';
     NgxValidateCoreModule,
     LoaderBarComponent,
     LangComponent,
-    SpinerAbpComponent,
     NgxSpinnerModule,
   ],
   templateUrl: './app.html',
