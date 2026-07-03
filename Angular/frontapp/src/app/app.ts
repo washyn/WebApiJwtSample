@@ -71,6 +71,7 @@ export class App implements OnInit {
   }
   ////////////////////////////////////////
   error500() {
+    // TODO: this disply double message check this behavior
     this.exampleService.error500().subscribe((res) => {
       console.log('res 500');
     });
