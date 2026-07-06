@@ -70,10 +70,7 @@ export class App implements OnInit {
     // this.exampleService.largeRequest().subscribe((res) => {});
   }
   ////////////////////////////////////////
-  // TODO: display double message check this behavior
   error500() {
-    // TODO: this disply double message check this behavior
-    // comparar los error handers con el otro proyecto
     this.exampleService.error500().subscribe((res) => {
       console.log('res 500');
     });
@@ -84,25 +81,21 @@ export class App implements OnInit {
       console.log('res 401');
     });
   }
-  // TODO: check this behavior double message
   error403() {
     this.exampleService.error403().subscribe((res) => {
       console.log('res 403');
     });
   }
-  // TODO: check this behavior double message
   error40XXX() {
     this.exampleService.error40XXXByModelSample({}).subscribe((res) => {
       console.log('res 40XXX');
     });
   }
-  // TODO: check this behavior double message
   error404() {
     this.exampleService.error404().subscribe((res) => {
       console.log('res 404');
     });
   }
-  // TODO: check this behavior double message
   errorBusinessException() {
     this.exampleService.errorBusinessException().subscribe((res) => {
       console.log('res business exception');
@@ -131,13 +124,11 @@ export class App implements OnInit {
       console.log('res require auth');
     });
   }
-  // TODO: check this behavior double message
   error400() {
     this.exampleService.error400().subscribe((res) => {
       console.log('res 400');
     });
   }
-  // TODO: check this behavior double message
   error501() {
     this.exampleService.error501().subscribe((res) => {
       console.log('res 501');
@@ -194,7 +185,7 @@ export class App implements OnInit {
 }
 // DONE: impkement bearer token in back... continue
 // DONE: include spinner un abp utils, add angular global another library
-// TODO: add interceptors for request and response... CONTINUE HERE
+// DONE: add interceptors for request and response... CONTINUE HERE
 // DONE: Remove dep ngx-spinner, and angular animations package reference
 // - add message error localization.
 // TODO: improve with gpt and remove modularity.

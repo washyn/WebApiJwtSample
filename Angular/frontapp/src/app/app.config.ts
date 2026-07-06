@@ -1,6 +1,8 @@
 import {
+  APP_INITIALIZER,
   ApplicationConfig,
-  ErrorHandler,
+  ENVIRONMENT_INITIALIZER,
+  inject,
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
 } from '@angular/core';
@@ -10,6 +12,7 @@ import { AuthService, provideAbpCore, withOptions } from '@abp/ng.core';
 import { environment } from '../environments/environment';
 import { registerLocaleForEsBuild } from '@abp/ng.core/locale';
 import { CustomAuthService, OAuthApiInterceptor, provideAbpUtils } from './core';
+import { noop } from '@abp/ng.core';
 import {
   defaultMapErrorsFn,
   VALIDATION_BLUEPRINTS,
@@ -94,8 +97,10 @@ export const appConfig: ApplicationConfig = {
     },
     { provide: HTTP_ERROR_CONFIG, useValue: undefined },
     {
-      provide: ErrorHandler,
-      useClass: CustomErrorHandler,
+      provide: APP_INITIALIZER,
+      multi: true,
+      deps: [CustomErrorHandler],
+      useFactory: noop,
     },
     DEFAULT_HANDLERS_PROVIDERS,
   ],
