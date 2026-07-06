@@ -70,6 +70,7 @@ export class App implements OnInit {
     // this.exampleService.largeRequest().subscribe((res) => {});
   }
   ////////////////////////////////////////
+  // TODO: display double message check this behavior
   error500() {
     // TODO: this disply double message check this behavior
     // comparar los error handers con el otro proyecto
@@ -83,21 +84,25 @@ export class App implements OnInit {
       console.log('res 401');
     });
   }
+  // TODO: check this behavior double message
   error403() {
     this.exampleService.error403().subscribe((res) => {
       console.log('res 403');
     });
   }
+  // TODO: check this behavior double message
   error40XXX() {
     this.exampleService.error40XXXByModelSample({}).subscribe((res) => {
       console.log('res 40XXX');
     });
   }
+  // TODO: check this behavior double message
   error404() {
     this.exampleService.error404().subscribe((res) => {
       console.log('res 404');
     });
   }
+  // TODO: check this behavior double message
   errorBusinessException() {
     this.exampleService.errorBusinessException().subscribe((res) => {
       console.log('res business exception');
@@ -117,29 +122,8 @@ export class App implements OnInit {
       .subscribe((res) => {
         console.log('res large request');
       });
-    // if requiered skip handle error, use skip handle error arg in reuest 
+    // if requiered skip handle error, use skip handle error arg in reuest
     // and add two args in suscribe, next and error
-  }
-
-  skipHandleError() {
-    this.exampleService.error500({
-      skipHandleError: true,
-    }).subscribe((res) => {
-      console.log('next when success');
-    }, (err) => {
-      console.log("Custom handled error");
-      console.log(err);
-    });
-  }
-
-  skipHandleErrorSuccess() {
-    this.exampleService.largeRequest({
-      skipHandleError: true,
-    }).subscribe(res => {
-      console.log('habdkerd success');
-    }, err => {
-      console.log("Custom handled error");
-    });
   }
 
   requireAuth() {
@@ -147,17 +131,52 @@ export class App implements OnInit {
       console.log('res require auth');
     });
   }
-
+  // TODO: check this behavior double message
   error400() {
     this.exampleService.error400().subscribe((res) => {
       console.log('res 400');
     });
   }
+  // TODO: check this behavior double message
   error501() {
     this.exampleService.error501().subscribe((res) => {
       console.log('res 501');
     });
   }
+
+  /////////////////////////
+
+  skipHandleError() {
+    // this.exampleService
+    //   .error500({
+    //     skipHandleError: true,
+    //   })
+    //   .subscribe(
+    //     (res) => {
+    //       console.log('next when success');
+    //     },
+    //     (err) => {
+    //       console.log('Custom handled error');
+    //       console.log(err);
+    //     }
+    //   );
+  }
+
+  skipHandleErrorSuccess() {
+    // this.exampleService
+    //   .largeRequest({
+    //     skipHandleError: true,
+    //   })
+    //   .subscribe(
+    //     (res) => {
+    //       console.log('habdkerd success');
+    //     },
+    //     (err) => {
+    //       console.log('Custom handled error');
+    //     }
+    //   );
+  }
+
   // https://github.com/abpframework/abp/issues/4560
   ////////////////////////////////////////
   save() {

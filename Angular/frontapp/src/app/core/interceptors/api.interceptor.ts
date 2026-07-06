@@ -36,8 +36,10 @@ export class OAuthApiInterceptor implements IApiInterceptor {
 
   getAdditionalHeaders(existingHeaders?: HttpHeaders) {
     const headers = {} as any;
-    console.log(this.sessionState.getTenant());
-    console.log('call to getAdditionalHeaders from api.interceptor');
+
+    // console.log(this.sessionState.getTenant());
+    // console.log('call to getAdditionalHeaders from api.interceptor');
+
     // const token = this.oAuthService.getAccessToken();
     // if (!existingHeaders?.has('Authorization') && token) {
     //   headers['Authorization'] = `Bearer ${token}`;
