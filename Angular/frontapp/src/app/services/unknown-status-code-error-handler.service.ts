@@ -23,6 +23,7 @@ export class UnknownStatusCodeErrorHandlerService implements CustomHttpErrorHand
   }
 
   execute() {
+    console.log('UnknownStatusCodeErrorHandlerService');
     this.createErrorComponentService.execute({
       title: {
         key: DEFAULT_ERROR_LOCALIZATIONS.defaultError.title,
