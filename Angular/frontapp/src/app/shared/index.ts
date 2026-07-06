@@ -1,6 +1,5 @@
 export * from './components/loader-bar/loader-bar.component';
 export * from './components/validation-error/validation-error.component';
-export * from './utils/validation';
 export * from './pipes/boolean.pipe';
 export * from './pipes/display-text.pipe';
 export * from './pipes/pen-currency.pipe';

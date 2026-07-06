@@ -19,11 +19,12 @@ import {
   VALIDATION_TARGET_SELECTOR,
   VALIDATION_VALIDATE_ON_SUBMIT,
 } from '@ngx-validate/core';
-import { DEFAULT_VALIDATION_BLUEPRINTS, CustomValidationErrorComponent } from './shared';
+import { CustomValidationErrorComponent } from './shared';
 import { provideHttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DEFAULT_HANDLERS_PROVIDERS } from './providers';
 import { ErrorHandler as CustomErrorHandler } from './handlers/error.handler';
 import { HTTP_ERROR_CONFIG } from './tokens';
+import { DEFAULT_VALIDATION_BLUEPRINTS } from './constants';
 
 export const appConfig: ApplicationConfig = {
   providers: [
