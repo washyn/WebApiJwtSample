@@ -29,6 +29,7 @@ export class AbpFormatErrorHandlerService implements CustomHttpErrorHandlerServi
   }
 
   execute() {
+    console.log('AbpFormatErrorHandlerService');
     const { message, title } = getErrorFromRequestBody(this.error?.error?.error);
     ///////////////////////////////////////////////////////
     // this.confirmationService

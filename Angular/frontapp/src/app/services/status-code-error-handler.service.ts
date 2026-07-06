@@ -30,7 +30,7 @@ export class StatusCodeErrorHandlerService implements CustomHttpErrorHandlerServ
 
   protected showConfirmation(
     message: LocalizationParam,
-    title: LocalizationParam,
+    title: LocalizationParam
   ): Observable<Confirmation.Status> {
     // return this.confirmationService.error(message, title, {
     //   hideCancelBtn: true,
@@ -74,6 +74,7 @@ export class StatusCodeErrorHandlerService implements CustomHttpErrorHandlerServ
   }
 
   execute(): void {
+    console.log('StatusCodeErrorHandlerService');
     const key = `defaultError${this.status}`;
     const title = {
       key: DEFAULT_ERROR_LOCALIZATIONS[key]?.title,

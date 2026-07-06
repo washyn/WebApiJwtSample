@@ -71,8 +71,6 @@ export class App implements OnInit {
   }
   ////////////////////////////////////////
   error500() {
-    // TODO: this disply double message check this behavior
-    // comparar los error handers con el otro proyecto
     this.exampleService.error500().subscribe((res) => {
       console.log('res 500');
     });
@@ -117,29 +115,8 @@ export class App implements OnInit {
       .subscribe((res) => {
         console.log('res large request');
       });
-    // if requiered skip handle error, use skip handle error arg in reuest 
+    // if requiered skip handle error, use skip handle error arg in reuest
     // and add two args in suscribe, next and error
-  }
-
-  skipHandleError() {
-    this.exampleService.error500({
-      skipHandleError: true,
-    }).subscribe((res) => {
-      console.log('next when success');
-    }, (err) => {
-      console.log("Custom handled error");
-      console.log(err);
-    });
-  }
-
-  skipHandleErrorSuccess() {
-    this.exampleService.largeRequest({
-      skipHandleError: true,
-    }).subscribe(res => {
-      console.log('habdkerd success');
-    }, err => {
-      console.log("Custom handled error");
-    });
   }
 
   requireAuth() {
@@ -147,7 +124,6 @@ export class App implements OnInit {
       console.log('res require auth');
     });
   }
-
   error400() {
     this.exampleService.error400().subscribe((res) => {
       console.log('res 400');
@@ -158,6 +134,40 @@ export class App implements OnInit {
       console.log('res 501');
     });
   }
+
+  /////////////////////////
+
+  skipHandleError() {
+    // this.exampleService
+    //   .error500({
+    //     skipHandleError: true,
+    //   })
+    //   .subscribe(
+    //     (res) => {
+    //       console.log('next when success');
+    //     },
+    //     (err) => {
+    //       console.log('Custom handled error');
+    //       console.log(err);
+    //     }
+    //   );
+  }
+
+  skipHandleErrorSuccess() {
+    // this.exampleService
+    //   .largeRequest({
+    //     skipHandleError: true,
+    //   })
+    //   .subscribe(
+    //     (res) => {
+    //       console.log('habdkerd success');
+    //     },
+    //     (err) => {
+    //       console.log('Custom handled error');
+    //     }
+    //   );
+  }
+
   // https://github.com/abpframework/abp/issues/4560
   ////////////////////////////////////////
   save() {
@@ -175,7 +185,7 @@ export class App implements OnInit {
 }
 // DONE: impkement bearer token in back... continue
 // DONE: include spinner un abp utils, add angular global another library
-// TODO: add interceptors for request and response... CONTINUE HERE
+// DONE: add interceptors for request and response... CONTINUE HERE
 // DONE: Remove dep ngx-spinner, and angular animations package reference
 // - add message error localization.
 // TODO: improve with gpt and remove modularity.

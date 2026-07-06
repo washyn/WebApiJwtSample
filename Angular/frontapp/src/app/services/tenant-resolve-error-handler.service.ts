@@ -18,6 +18,7 @@ export class TenantResolveErrorHandlerService implements CustomHttpErrorHandlerS
   }
 
   execute() {
+    console.log('TenantResolveErrorHandlerService');
     this.sessionService.setTenant(null);
     this.authService.logout().subscribe();
   }

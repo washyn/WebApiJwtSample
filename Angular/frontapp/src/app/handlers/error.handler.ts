@@ -52,7 +52,7 @@ export class ErrorHandler {
 
   protected sortHttpErrorHandlers(
     a: CustomHttpErrorHandlerService,
-    b: CustomHttpErrorHandlerService,
+    b: CustomHttpErrorHandlerService
   ) {
     return (b.priority || 0) - (a.priority || 0);
   }
