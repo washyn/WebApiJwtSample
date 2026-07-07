@@ -1,0 +1,31 @@
+# ABP Shared Utilities
+
+Carpeta autocontenida para copiar a otro proyecto Angular con ABP.
+
+## Uso standalone
+
+```ts
+import { provideAbpSharedUtilities } from './abp-shared';
+
+export const appConfig = {
+  providers: [provideAbpSharedUtilities()],
+};
+```
+
+## Uso con modulo
+
+```ts
+import { AbpSharedUtilitiesModule } from './abp-shared';
+
+@NgModule({
+  imports: [AbpSharedUtilitiesModule.forRoot()],
+})
+export class AppModule {}
+```
+
+## Componentes y pipes
+
+- `LoaderBarComponent`
+- `CustomValidationErrorComponent`
+- `HttpErrorWrapperComponent`
+- Pipes exportados desde `shared/index.ts`

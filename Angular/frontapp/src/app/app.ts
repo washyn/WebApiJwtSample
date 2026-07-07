@@ -10,10 +10,9 @@ import {
 } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { NgxValidateCoreModule } from '@ngx-validate/core';
-import { LoaderBarComponent } from './shared';
+import { AbpUtilService, LoaderBarComponent } from './abp-shared';
 import { ErrorSampleService } from './proxy/web-app/controllers';
 import { LangComponent } from './lang-component';
-import { AbpUtilService } from './core/abp-utils/abp-util.service';
 import { finalize } from 'rxjs';
 
 @Component({
