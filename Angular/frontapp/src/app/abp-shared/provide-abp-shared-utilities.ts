@@ -19,7 +19,7 @@ import { DEFAULT_VALIDATION_BLUEPRINTS } from './constants';
 import { ErrorHandler } from './handlers';
 import { HttpErrorConfig } from './models';
 import { DEFAULT_HANDLERS_PROVIDERS } from './providers';
-import { OAuthApiInterceptor, provideAbpUtils } from './core';
+import { ConsoleMessageService, ConsoleNotifyService, ConsoleUIService, IMessageService, INotifyService, IUIService, OAuthApiInterceptor, provideAbpUtils } from './core';
 import { CustomValidationErrorComponent } from './shared';
 import { HTTP_ERROR_CONFIG } from './tokens';
 
@@ -44,7 +44,21 @@ export function getAbpSharedUtilityProviders(
       deps: [ErrorHandler],
       useFactory: () => () => undefined,
     },
-    provideAbpUtils(),
+    ////////////////////////////////////////////////////////////////////////////
+    // provideAbpUtils(),
+    {
+      provide: INotifyService,
+      useClass: ConsoleNotifyService
+    },
+    {
+      provide: IMessageService,
+      useClass: ConsoleMessageService
+    },
+    {
+      provide: IUIService,
+      useClass: ConsoleUIService
+    },
+    ////////////////////////////////////////////////////////////////////////////
     {
       provide: VALIDATION_VALIDATE_ON_SUBMIT,
       useValue: options.validateOnSubmit ?? true,
