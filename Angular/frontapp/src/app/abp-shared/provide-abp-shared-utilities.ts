@@ -68,14 +68,18 @@ export function getAbpSharedUtilityProviders(
       useValue: options.validationMapErrorsFn ?? defaultMapErrorsFn,
     },
     {
+      // componente objetivo selector de clase, parent wraper of field(label, input)
       provide: VALIDATION_TARGET_SELECTOR,
       useValue: options.validationTargetSelector ?? '.field',
     },
     {
+      // clase a agregar incencesario ya que el compontnet ya le agrega, pero se requiere el injector para q compile
       provide: VALIDATION_INVALID_CLASSES,
       useValue: options.validationInvalidClasses ?? 'field-error-class',
     },
     {
+      // useValue: { ...BLUEPRINTS }, // default
+      // para usar con abp y junto con el template para que funcione bien
       provide: VALIDATION_BLUEPRINTS,
       useValue: {
         ...DEFAULT_VALIDATION_BLUEPRINTS,
@@ -83,9 +87,11 @@ export function getAbpSharedUtilityProviders(
       },
     },
     {
+      // useValue: ValidationErrorComponent, // default emplate
       provide: VALIDATION_ERROR_TEMPLATE,
       useValue: options.validationErrorComponent ?? CustomValidationErrorComponent,
     },
+    //////////////////////////////////////////////////////////////////////////
     {
       provide: HTTP_ERROR_CONFIG,
       useValue: options.httpErrorConfig,
@@ -109,3 +115,10 @@ export function provideAbpSharedUtilities(
 ) {
   return makeEnvironmentProviders(getAbpSharedUtilityProviders(options));
 }
+// available tokens
+// export * from './blueprints.token'; // USED
+// export * from './error-template.token';// USED
+// export * from './invalid-classes.token'; // USED
+// export * from './map-errors-fn.token'; // USED
+// export * from './target-selector.token'; // USED
+// export * from './validate-on-submit.token'; // USED
