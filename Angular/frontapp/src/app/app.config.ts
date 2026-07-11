@@ -1,4 +1,8 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { AuthService, provideAbpCore, withOptions } from '@abp/ng.core';
@@ -33,7 +37,7 @@ export const appConfig: ApplicationConfig = {
         //     ],
         //   },
         // ],
-      })
+      }),
     ),
     // added for default missed auth service
     {
@@ -49,3 +53,4 @@ export const appConfig: ApplicationConfig = {
 // export * from './map-errors-fn.token'; // USED
 // export * from './target-selector.token'; // USED
 // export * from './validate-on-submit.token'; // USED
+// TODO: add role
