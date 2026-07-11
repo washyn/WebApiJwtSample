@@ -3,6 +3,7 @@ export * from './provide-abp-shared-utilities';
 export * from './components/http-error-wrapper/http-error-wrapper.component';
 export * from './constants';
 export * from './core';
+export * from './directives';
 export * from './handlers';
 export * from './models';
 export * from './providers';

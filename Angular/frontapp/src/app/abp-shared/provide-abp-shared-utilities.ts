@@ -1,10 +1,5 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import {
-  APP_INITIALIZER,
-  Provider,
-  Type,
-  makeEnvironmentProviders,
-} from '@angular/core';
+import { APP_INITIALIZER, Provider, Type, makeEnvironmentProviders } from '@angular/core';
 import {
   Validation,
   VALIDATION_BLUEPRINTS,
@@ -19,9 +14,19 @@ import { DEFAULT_VALIDATION_BLUEPRINTS } from './constants';
 import { ErrorHandler } from './handlers';
 import { HttpErrorConfig } from './models';
 import { DEFAULT_HANDLERS_PROVIDERS } from './providers';
-import { ConsoleMessageService, ConsoleNotifyService, ConsoleUIService, IMessageService, INotifyService, IUIService, OAuthApiInterceptor, provideAbpUtils } from './core';
+import {
+  ConsoleMessageService,
+  ConsoleNotifyService,
+  ConsoleUIService,
+  IMessageService,
+  INotifyService,
+  IUIService,
+  OAuthApiInterceptor,
+  provideAbpUtils,
+} from './core';
 import { CustomValidationErrorComponent } from './shared';
 import { HTTP_ERROR_CONFIG } from './tokens';
+import { RoleDirective } from './directives/role.directive';
 
 export interface AbpSharedUtilitiesOptions {
   httpErrorConfig?: HttpErrorConfig;
@@ -34,9 +39,7 @@ export interface AbpSharedUtilitiesOptions {
   registerHttpInterceptor?: boolean;
 }
 
-export function getAbpSharedUtilityProviders(
-  options: AbpSharedUtilitiesOptions = {}
-): Provider[] {
+export function getAbpSharedUtilityProviders(options: AbpSharedUtilitiesOptions = {}): Provider[] {
   const providers: Provider[] = [
     {
       provide: APP_INITIALIZER,
@@ -48,15 +51,15 @@ export function getAbpSharedUtilityProviders(
     // provideAbpUtils(),
     {
       provide: INotifyService,
-      useClass: ConsoleNotifyService
+      useClass: ConsoleNotifyService,
     },
     {
       provide: IMessageService,
-      useClass: ConsoleMessageService
+      useClass: ConsoleMessageService,
     },
     {
       provide: IUIService,
-      useClass: ConsoleUIService
+      useClass: ConsoleUIService,
     },
     ////////////////////////////////////////////////////////////////////////////
     {
@@ -110,9 +113,7 @@ export function getAbpSharedUtilityProviders(
   return providers;
 }
 
-export function provideAbpSharedUtilities(
-  options: AbpSharedUtilitiesOptions = {}
-) {
+export function provideAbpSharedUtilities(options: AbpSharedUtilitiesOptions = {}) {
   return makeEnvironmentProviders(getAbpSharedUtilityProviders(options));
 }
 // available tokens
