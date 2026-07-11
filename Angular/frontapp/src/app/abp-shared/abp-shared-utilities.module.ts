@@ -1,6 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { HttpErrorWrapperComponent } from './components/http-error-wrapper/http-error-wrapper.component';
 import { AbpSharedUtilitiesOptions, getAbpSharedUtilityProviders } from './provide-abp-shared-utilities';
+import { RoleDirective } from './directives';
 import {
   BooleanPipe,
   CustomValidationErrorComponent,
@@ -18,6 +19,7 @@ import {
     HttpErrorWrapperComponent,
     LoaderBarComponent,
     CustomValidationErrorComponent,
+    RoleDirective,
     BooleanPipe,
     DisplayTextPipe,
     PenCurrencyPipe,
@@ -30,6 +32,7 @@ import {
     HttpErrorWrapperComponent,
     LoaderBarComponent,
     CustomValidationErrorComponent,
+    RoleDirective,
     BooleanPipe,
     DisplayTextPipe,
     PenCurrencyPipe,

@@ -5,3 +5,4 @@ export * from './status-code-error-handler.service';
 export * from './unknown-status-code-error-handler.service';
 export * from './router-error-handler.service';
 export * from './authentication-error-handler.service';
+export * from './role.service';
