@@ -1,4 +1,3 @@
-using Library.Application.ObjectMapping;
 using Library.Domain.Repositories;
 using Library.EntityFrameworkCore;
 
@@ -19,8 +18,6 @@ public class LibraryModule : AbpModule
         context.Services.AddTransient(typeof(IReadOnlyRepository<,>), typeof(DbContextRepository<,>));
         context.Services.AddTransient(typeof(IBasicRepository<,>), typeof(DbContextRepository<,>));
         context.Services.AddTransient(typeof(IReadOnlyBasicRepository<,>), typeof(DbContextRepository<,>));
-        context.Services.AddTransient<IObjectMapper, AutoMapperObjectMapper>();
-        context.Services.AddTransient(typeof(IObjectMapper<>), typeof(AutoMapperObjectMapper<>));
     }
 }
 // DONE: improve this app service, include same as another lib

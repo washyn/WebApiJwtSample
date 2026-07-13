@@ -4,16 +4,16 @@ using Library.Domain.Repositories;
 
 namespace Library.Application.Services;
 
-public abstract class CrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TCreateInput, TUpdateInput> 
-    : ReadOnlyAppService<TEntity, TEntityDto, TKey, TGetListInput>, 
-      ICrudAppService<TEntityDto, TKey, TGetListInput, TCreateInput, TUpdateInput>
+public abstract class CrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TCreateInput, TUpdateInput>
+    : ReadOnlyAppService<TEntity, TEntityDto, TKey, TGetListInput>,
+        ICrudAppService<TEntityDto, TKey, TGetListInput, TCreateInput, TUpdateInput>
     where TEntity : class, IEntity<TKey>
     where TEntityDto : class, IEntityDto<TKey>
     where TGetListInput : PagedAndSortedResultRequestDto
 {
     protected new IRepository<TEntity, TKey> Repository => (IRepository<TEntity, TKey>)base.Repository;
 
-    protected CrudAppService(IRepository<TEntity, TKey> repository) 
+    protected CrudAppService(IRepository<TEntity, TKey> repository)
         : base(repository)
     {
     }
@@ -56,7 +56,7 @@ public abstract class CrudAppService<TEntity, TEntityDto, TKey, TGetListInput, T
 
 public abstract class CrudAppService<TEntity, TEntityDto, TKey>
     : CrudAppService<TEntity, TEntityDto, TKey, PagedAndSortedResultRequestDto, TEntityDto, TEntityDto>,
-      ICrudAppService<TEntityDto, TKey>
+        ICrudAppService<TEntityDto, TKey>
     where TEntity : class, IEntity<TKey>
     where TEntityDto : class, IEntityDto<TKey>
 {
@@ -68,7 +68,7 @@ public abstract class CrudAppService<TEntity, TEntityDto, TKey>
 
 public abstract class CrudAppService<TEntity, TEntityDto, TKey, TGetListInput>
     : CrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TEntityDto, TEntityDto>,
-      ICrudAppService<TEntityDto, TKey, TGetListInput>
+        ICrudAppService<TEntityDto, TKey, TGetListInput>
     where TEntity : class, IEntity<TKey>
     where TEntityDto : class, IEntityDto<TKey>
     where TGetListInput : PagedAndSortedResultRequestDto
@@ -81,7 +81,7 @@ public abstract class CrudAppService<TEntity, TEntityDto, TKey, TGetListInput>
 
 public abstract class CrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TCreateInput>
     : CrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TCreateInput, TCreateInput>,
-      ICrudAppService<TEntityDto, TKey, TGetListInput, TCreateInput>
+        ICrudAppService<TEntityDto, TKey, TGetListInput, TCreateInput>
     where TEntity : class, IEntity<TKey>
     where TEntityDto : class, IEntityDto<TKey>
     where TGetListInput : PagedAndSortedResultRequestDto

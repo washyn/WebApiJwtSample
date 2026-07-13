@@ -25,7 +25,7 @@ public class WebApp : AbpModule
         context.Services.AddEndpointsApiExplorer();
         context.Services.AddSwaggerGen();
 
-// Register DbContext (In-Memory for demo)
+        // Register DbContext (In-Memory for demo)
         context.Services.AddDbContext<AppDbContext>(options =>
             options.UseInMemoryDatabase("TodoDemoDb"));
         context.Services.AddTransient(typeof(IRepository<,>), typeof(AppDbContextRepository<,>));
@@ -34,40 +34,7 @@ public class WebApp : AbpModule
         context.Services.AddTransient(typeof(IReadOnlyBasicRepository<,>), typeof(AppDbContextRepository<,>));
 
         context.Services.AddTransient<IBookRepository, BookRepository>();
-        context.Services.AddTransient(provider =>
-        {
-            var service = new TodoAppService(provider.GetRequiredService<IRepository<TodoItem, Guid>>())
-            {
-                LazyServiceProvider = provider.GetRequiredService<IAbpLazyServiceProvider>()
-            };
-            return service;
-        });
-        context.Services.AddTransient(provider =>
-        {
-            var service = new CategoryAppService(provider.GetRequiredService<IReadOnlyRepository<Category, Guid>>())
-            {
-                LazyServiceProvider = provider.GetRequiredService<IAbpLazyServiceProvider>()
-            };
-            return service;
-        });
-        context.Services.AddTransient(provider =>
-        {
-            var service = new BookAppService(provider.GetRequiredService<IBookRepository>())
-            {
-                LazyServiceProvider = provider.GetRequiredService<IAbpLazyServiceProvider>()
-            };
-            return service;
-        });
-        context.Services.AddTransient(provider =>
-        {
-            var service = new StudentAppService(provider.GetRequiredService<IRepository<Book, Guid>>())
-            {
-                LazyServiceProvider = provider.GetRequiredService<IAbpLazyServiceProvider>()
-            };
-            return service;
-        });
-
-
+        
         context.Services.AddAutoMapperObjectMapper<WebApp>();
         Configure<AbpAutoMapperOptions>(options =>
         {
@@ -79,5 +46,3 @@ public class WebApp : AbpModule
         });
     }
 }
-// DONE: test lazy service provuder for mapper
-// integrar con el library
