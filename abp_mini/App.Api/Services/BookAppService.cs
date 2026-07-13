@@ -10,7 +10,7 @@ using Volo.Abp.DependencyInjection;
 namespace App.Api.Services;
 
 public class BookAppService : CrudAppService<Book, BookDto, Guid, BookFilter, CreateUpdateBookDto,
-    CreateUpdateBookDto> , ITransientDependency
+    CreateUpdateBookDto>, ITransientDependency
 {
     private readonly IBookRepository _bookRepository;
 
@@ -69,8 +69,6 @@ public class BookAppService : CrudAppService<Book, BookDto, Guid, BookFilter, Cr
     {
         return base.DeleteAsync(id);
     }
-
-    // TODO: add another crud and override of filterable and
 
     protected override IQueryable<Book> ApplyDefaultSorting(IQueryable<Book> query)
     {
