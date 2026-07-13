@@ -1,4 +1,4 @@
-namespace Library.Application.Dtos;
+namespace Lib.Application.Dtos;
 
 public abstract class EntityDto<TKey> : EntityDto, IEntityDto<TKey>
 {

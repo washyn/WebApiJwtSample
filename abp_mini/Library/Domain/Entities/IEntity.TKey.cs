@@ -1,4 +1,4 @@
-namespace Library.Domain.Entities;
+namespace Lib.Domain.Entities;
 
 /// <summary>
 /// Defines an entity with a single primary key with "Id" property.

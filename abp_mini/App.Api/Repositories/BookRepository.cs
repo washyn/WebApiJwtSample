@@ -4,13 +4,13 @@ using App.Api.Data;
 using App.Api.Entities;
 using App.Api.Services;
 
-using Library.Domain.Repositories;
-using Library.EntityFrameworkCore;
+using Lib.EntityFrameworkCore;
 
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Api.Repositories;
 
+// this shoud be use AppDbContextRepository
 public class BookRepository : EfCoreRepository<AppDbContext, Book, Guid>, IBookRepository
 {
     public BookRepository(AppDbContext dbContext) : base(dbContext)

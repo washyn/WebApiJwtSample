@@ -1,4 +1,4 @@
-using Library.Domain.Entities;
+using Lib.Domain.Entities;
 
 namespace App.Api.Entities;
 

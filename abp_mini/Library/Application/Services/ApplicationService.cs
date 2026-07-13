@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.ObjectMapping;
 
-namespace Library.Application.Services;
+namespace Lib.Application.Services;
 
 public abstract class ApplicationService : IApplicationService
 {

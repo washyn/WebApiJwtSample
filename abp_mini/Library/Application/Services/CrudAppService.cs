@@ -1,8 +1,8 @@
-using Library.Application.Dtos;
-using Library.Domain.Entities;
-using Library.Domain.Repositories;
+using Lib.Application.Dtos;
+using Lib.Domain.Entities;
+using Lib.Domain.Repositories;
 
-namespace Library.Application.Services;
+namespace Lib.Application.Services;
 
 public abstract class CrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TCreateInput, TUpdateInput>
     : ReadOnlyAppService<TEntity, TEntityDto, TKey, TGetListInput>,

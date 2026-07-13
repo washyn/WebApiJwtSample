@@ -1,7 +1,7 @@
 using App.Api.Entities;
 using App.Api.Services;
 
-using Library.Domain.Repositories;
+using Lib.Domain.Repositories;
 
 namespace App.Api.Repositories;
 

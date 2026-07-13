@@ -1,6 +1,6 @@
-using Library.Application.Dtos;
+using Lib.Application.Dtos;
 
-namespace Library.Application.Services;
+namespace Lib.Application.Services;
 
 public interface ICrudAppService<TEntityDto, in TKey, in TGetListInput, in TCreateInput, in TUpdateInput> 
     : IReadOnlyAppService<TEntityDto, TKey, TGetListInput>

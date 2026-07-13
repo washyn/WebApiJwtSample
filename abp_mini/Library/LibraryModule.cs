@@ -1,12 +1,12 @@
-using Library.Domain.Repositories;
-using Library.EntityFrameworkCore;
+using Lib.Domain.Repositories;
+using Lib.EntityFrameworkCore;
 
 using Microsoft.Extensions.DependencyInjection;
 
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
 
-namespace Library;
+namespace Lib;
 
 [DependsOn(typeof(AbpAutoMapperModule))]
 public class LibraryModule : AbpModule

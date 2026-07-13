@@ -1,18 +1,16 @@
 using App.Api.Data;
-using App.Api.Entities;
-using App.Api.ObjectMapping;
 using App.Api.Repositories;
-using App.Api.Services;
 
-using Library;
-using Library.Domain.Repositories;
+using Lib;
+using Lib.Domain.Repositories;
 
 using Microsoft.EntityFrameworkCore;
 
 using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
-using Volo.Abp.DependencyInjection;
 using Volo.Abp.Modularity;
+
+namespace App.Api;
 
 [DependsOn(typeof(AbpAutofacModule))]
 [DependsOn(typeof(LibraryModule))]

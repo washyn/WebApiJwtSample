@@ -1,6 +1,6 @@
-using Library.Application.Dtos;
+using Lib.Application.Dtos;
 
-namespace Library.Application.Services;
+namespace Lib.Application.Services;
 
 public interface IReadOnlyAppService<TEntityDto, in TKey, in TGetListInput> : IApplicationService
     where TEntityDto : class, IEntityDto<TKey>

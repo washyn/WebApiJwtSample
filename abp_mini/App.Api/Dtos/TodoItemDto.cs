@@ -1,4 +1,4 @@
-using Library.Application.Dtos;
+using Lib.Application.Dtos;
 
 namespace App.Api.Dtos;
 

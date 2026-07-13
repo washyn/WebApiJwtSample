@@ -1,12 +1,12 @@
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 
-using Library.Domain.Entities;
-using Library.Domain.Repositories;
+using Lib.Domain.Entities;
+using Lib.Domain.Repositories;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Library.EntityFrameworkCore;
+namespace Lib.EntityFrameworkCore;
 
 public class EfCoreRepository<TDbContext, TEntity> : IRepository<TEntity>
     where TDbContext : DbContext

@@ -1,8 +1,8 @@
 using App.Api.Dtos;
 using App.Api.Entities;
 
-using Library.Application.Services;
-using Library.Domain.Repositories;
+using Lib.Application.Services;
+using Lib.Domain.Repositories;
 
 using Volo.Abp.DependencyInjection;
 

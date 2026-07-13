@@ -1,5 +1,5 @@
-using Library.Domain.Entities;
-using Library.EntityFrameworkCore;
+using Lib.Domain.Entities;
+using Lib.EntityFrameworkCore;
 
 namespace App.Api.Data;
 

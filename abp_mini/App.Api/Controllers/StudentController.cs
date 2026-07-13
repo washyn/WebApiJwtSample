@@ -1,7 +1,7 @@
 using App.Api.Dtos;
 using App.Api.Services;
 
-using Library.Application.Dtos;
+using Lib.Application.Dtos;
 
 using Microsoft.AspNetCore.Mvc;
 
