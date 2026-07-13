@@ -8,7 +8,7 @@ namespace App.Api.Services;
 
 public class StudentAppService : CrudAppService<Book, BookDto, Guid>
 {
-    public StudentAppService(IRepository<Book, Guid> repository) 
+    public StudentAppService(IRepository<Book, Guid> repository)
         : base(repository)
     {
     }

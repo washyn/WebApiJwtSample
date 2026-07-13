@@ -5,11 +5,12 @@ using App.Api.Repositories;
 using App.Api.Services;
 
 using Library;
-using Library.Application.ObjectMapping;
 using Library.Domain.Repositories;
 
 using Microsoft.EntityFrameworkCore;
 
+using Volo.Abp.AutoMapper;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.Modularity;
 
 [DependsOn(typeof(LibraryModule))]
@@ -25,48 +26,52 @@ public class WebApp : AbpModule
 // Register DbContext (In-Memory for demo)
         context.Services.AddDbContext<AppDbContext>(options =>
             options.UseInMemoryDatabase("TodoDemoDb"));
+        context.Services.AddTransient(typeof(IRepository<,>), typeof(AppDbContextRepository<,>));
+        context.Services.AddTransient(typeof(IReadOnlyRepository<,>), typeof(AppDbContextRepository<,>));
+        context.Services.AddTransient(typeof(IBasicRepository<,>), typeof(AppDbContextRepository<,>));
+        context.Services.AddTransient(typeof(IReadOnlyBasicRepository<,>), typeof(AppDbContextRepository<,>));
 
 
-// Register ObjectMapper
-        context.Services.AddSingleton<IObjectMapper, DemoObjectMapper>();
-
-// Register Application Services with property injection
-        context.Services.AddTransient(provider =>
+// Configure AutoMapper
+        Configure<AbpAutoMapperOptions>(options =>
         {
-            var repository = provider.GetRequiredService<IRepository<TodoItem, System.Guid>>();
-            var mapper = provider.GetRequiredService<IObjectMapper>();
-            var service = new TodoAppService(repository);
-            service.ObjectMapper = mapper; // Manual Property Injection
-            return service;
-        });
-
-        context.Services.AddTransient(provider =>
-        {
-            var repository = provider.GetRequiredService<IReadOnlyRepository<Category, System.Guid>>();
-            var mapper = provider.GetRequiredService<IObjectMapper>();
-            var service = new CategoryAppService(repository);
-            service.ObjectMapper = mapper;
-            return service;
+            options.AddMaps<WebApp>();
         });
 
         context.Services.AddTransient<IBookRepository, BookRepository>();
-
         context.Services.AddTransient(provider =>
         {
-            var repository = provider.GetRequiredService<IBookRepository>();
-            var mapper = provider.GetRequiredService<IObjectMapper>();
-            var service = new BookAppService(repository);
-            service.ObjectMapper = mapper;
+            var service = new TodoAppService(provider.GetRequiredService<IRepository<TodoItem, Guid>>())
+            {
+                LazyServiceProvider = provider.GetRequiredService<IAbpLazyServiceProvider>()
+            };
             return service;
         });
-
         context.Services.AddTransient(provider =>
         {
-            var repository = provider.GetRequiredService<IRepository<Book, System.Guid>>();
-            var mapper = provider.GetRequiredService<IObjectMapper>();
-            var service = new StudentAppService(repository);
-            service.ObjectMapper = mapper;
+            var service = new CategoryAppService(provider.GetRequiredService<IReadOnlyRepository<Category, Guid>>())
+            {
+                LazyServiceProvider = provider.GetRequiredService<IAbpLazyServiceProvider>()
+            };
+            return service;
+        });
+        context.Services.AddTransient(provider =>
+        {
+            var service = new BookAppService(provider.GetRequiredService<IBookRepository>())
+            {
+                LazyServiceProvider = provider.GetRequiredService<IAbpLazyServiceProvider>()
+            };
+            return service;
+        });
+        context.Services.AddTransient(provider =>
+        {
+            var service = new StudentAppService(provider.GetRequiredService<IRepository<Book, Guid>>())
+            {
+                LazyServiceProvider = provider.GetRequiredService<IAbpLazyServiceProvider>()
+            };
             return service;
         });
     }
 }
+// TODO: test lazy service provuder for mapper
+// integrar con el library

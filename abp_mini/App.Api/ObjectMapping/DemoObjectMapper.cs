@@ -15,52 +15,38 @@ public class DemoObjectMapper : IObjectMapper
         {
             return (TDestination)(object)new TodoItemDto
             {
-                Id = entity.Id,
-                Title = entity.Title,
-                IsCompleted = entity.IsCompleted
+                Id = entity.Id, Title = entity.Title, IsCompleted = entity.IsCompleted
             };
         }
 
         if (source is Category category && typeof(TDestination) == typeof(CategoryDto))
         {
-            return (TDestination)(object)new CategoryDto
-            {
-                Id = category.Id,
-                Name = category.Name
-            };
+            return (TDestination)(object)new CategoryDto { Id = category.Id, Name = category.Name };
         }
 
         if (source is Book book && typeof(TDestination) == typeof(BookDto))
         {
             return (TDestination)(object)new BookDto
             {
-                Id = book.Id,
-                Title = book.Title,
-                Author = book.Author,
-                PublishDate = book.PublishDate
+                Id = book.Id, Title = book.Title, Author = book.Author, PublishDate = book.PublishDate
             };
         }
 
         if (source is CreateUpdateTodoItemDto createDto && typeof(TDestination) == typeof(TodoItem))
         {
-            return (TDestination)(object)new TodoItem
-            {
-                Title = createDto.Title,
-                IsCompleted = createDto.IsCompleted
-            };
+            return (TDestination)(object)new TodoItem { Title = createDto.Title, IsCompleted = createDto.IsCompleted };
         }
 
         if (source is CreateUpdateBookDto createBookDto && typeof(TDestination) == typeof(Book))
         {
             return (TDestination)(object)new Book
             {
-                Title = createBookDto.Title,
-                Author = createBookDto.Author,
-                PublishDate = createBookDto.PublishDate
+                Title = createBookDto.Title, Author = createBookDto.Author, PublishDate = createBookDto.PublishDate
             };
         }
 
-        throw new NotImplementedException($"Mapping from {typeof(TSource).Name} to {typeof(TDestination).Name} is not supported by DemoObjectMapper.");
+        throw new NotImplementedException(
+            $"Mapping from {typeof(TSource).Name} to {typeof(TDestination).Name} is not supported by DemoObjectMapper.");
     }
 
     public TDestination Map<TSource, TDestination>(TSource source, TDestination destination)
@@ -82,6 +68,7 @@ public class DemoObjectMapper : IObjectMapper
             return destination;
         }
 
-        throw new NotImplementedException($"Mapping from {typeof(TSource).Name} to {typeof(TDestination).Name} is not supported by DemoObjectMapper.");
+        throw new NotImplementedException(
+            $"Mapping from {typeof(TSource).Name} to {typeof(TDestination).Name} is not supported by DemoObjectMapper.");
     }
 }

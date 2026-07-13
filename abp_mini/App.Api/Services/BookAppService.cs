@@ -5,10 +5,12 @@ using App.Api.Repositories;
 using Library.Application.Dtos;
 using Library.Application.Services;
 
+using Volo.Abp.DependencyInjection;
+
 namespace App.Api.Services;
 
 public class BookAppService : CrudAppService<Book, BookDto, Guid, BookFilter, CreateUpdateBookDto,
-    CreateUpdateBookDto>
+    CreateUpdateBookDto> , ITransientDependency
 {
     private readonly IBookRepository _bookRepository;
 

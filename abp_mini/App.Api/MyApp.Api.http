@@ -1,6 +1,133 @@
-@MyApp.Api_HostAddress = http://localhost:5136
+@baseUrl = http://localhost:5136
+@contentType = application/json
+@sampleId = 3fa85f64-5717-4562-b3fc-2c963f66afa6
 
-GET {{MyApp.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+### ==========================================
+### BOOK APIS
+### ==========================================
 
-###
+### Obtener lista de libros (con filtros opcionales)
+GET {{baseUrl}}/api/books?Filter=Clean&SkipCount=0&MaxResultCount=10&Sorting=title
+Accept: {{contentType}}
+
+### Crear un nuevo libro
+POST {{baseUrl}}/api/books
+Content-Type: {{contentType}}
+Accept: {{contentType}}
+
+{
+  "title": "El resplandor",
+  "author": "Stephen King",
+  "publishDate": "2026-07-13T12:00:00Z"
+}
+
+### Obtener un libro por ID
+GET {{baseUrl}}/api/books/{{sampleId}}
+Accept: {{contentType}}
+
+### Actualizar un libro por ID
+PUT {{baseUrl}}/api/books/{{sampleId}}
+Content-Type: {{contentType}}
+Accept: {{contentType}}
+
+{
+  "title": "El resplandor (Edición Especial)",
+  "author": "Stephen King",
+  "publishDate": "2026-07-13T12:00:00Z"
+}
+
+### Eliminar un libro por ID
+DELETE {{baseUrl}}/api/books/{{sampleId}}
+
+### Buscar libros por autor
+GET {{baseUrl}}/api/books/by-author?author=Stephen%20King
+Accept: {{contentType}}
+
+
+### ==========================================
+### CATEGORY APIS
+### ==========================================
+
+### Obtener lista de categorías
+GET {{baseUrl}}/api/categories?SkipCount=0&MaxResultCount=10&Sorting=name
+Accept: {{contentType}}
+
+### Obtener una categoría por ID
+GET {{baseUrl}}/api/categories/{{sampleId}}
+Accept: {{contentType}}
+
+
+### ==========================================
+### STUDENT APIS
+### ==========================================
+# Nota: Según tu OpenAPI, los endpoints de Student usan los mismos DTOs 
+# y estructuras de datos que Book.
+
+### Obtener lista de estudiantes
+GET {{baseUrl}}/api/student?SkipCount=0&MaxResultCount=10
+Accept: {{contentType}}
+
+### Crear un estudiante (usa la estructura BookDto)
+POST {{baseUrl}}/api/student
+Content-Type: {{contentType}}
+Accept: {{contentType}}
+
+{
+  "title": "Nombre del Estudiante",
+  "author": "Carrera / Información",
+  "publishDate": "2026-07-13T12:00:00Z"
+}
+
+### Obtener un estudiante por ID
+GET {{baseUrl}}/api/student/{{sampleId}}
+Accept: {{contentType}}
+
+### Actualizar un estudiante por ID
+PUT {{baseUrl}}/api/student/{{sampleId}}
+Content-Type: {{contentType}}
+Accept: {{contentType}}
+
+{
+  "title": "Nombre Actualizado",
+  "author": "Carrera Modificada",
+  "publishDate": "2026-07-13T12:00:00Z"
+}
+
+### Eliminar un estudiante por ID
+DELETE {{baseUrl}}/api/student/{{sampleId}}
+
+
+### ==========================================
+### TODO APIS
+### ==========================================
+
+### Obtener lista de Todos
+GET {{baseUrl}}/api/todos?SkipCount=0&MaxResultCount=10
+Accept: {{contentType}}
+
+### Crear un nuevo Todo
+POST {{baseUrl}}/api/todos
+Content-Type: {{contentType}}
+Accept: {{contentType}}
+
+{
+  "title": "Terminar la documentación de la API",
+  "isCompleted": false
+}
+
+### Obtener un Todo por ID
+GET {{baseUrl}}/api/todos/{{sampleId}}
+Accept: {{contentType}}
+
+### Actualizar un Todo por ID
+PUT {{baseUrl}}/api/todos/{{sampleId}}
+Content-Type: {{contentType}}
+Accept: {{contentType}}
+
+{
+  "title": "Terminar la documentación de la API",
+  "isCompleted": true
+}
+
+### Eliminar un Todo por ID
+DELETE {{baseUrl}}/api/todos/{{sampleId}}

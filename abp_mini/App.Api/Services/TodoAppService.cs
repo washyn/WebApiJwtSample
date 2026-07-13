@@ -7,9 +7,10 @@ using Library.Domain.Repositories;
 
 namespace App.Api.Services;
 
-public class TodoAppService : CrudAppService<TodoItem, TodoItemDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateTodoItemDto, CreateUpdateTodoItemDto>
+public class TodoAppService : CrudAppService<TodoItem, TodoItemDto, Guid, PagedAndSortedResultRequestDto,
+    CreateUpdateTodoItemDto, CreateUpdateTodoItemDto>
 {
-    public TodoAppService(IRepository<TodoItem, Guid> repository) 
+    public TodoAppService(IRepository<TodoItem, Guid> repository)
         : base(repository)
     {
     }
