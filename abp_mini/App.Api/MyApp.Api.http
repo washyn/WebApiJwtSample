@@ -1,19 +1,24 @@
 @baseUrl = http://localhost:5136
-@contentType = application/json
 @sampleId = 3fa85f64-5717-4562-b3fc-2c963f66afa6
 
+###
+# Función reutilizable para validar respuestas exitosas
 ### ==========================================
 ### BOOK APIS
 ### ==========================================
 
-### Obtener lista de libros (con filtros opcionales)
+### Obtener lista de libros
 GET {{baseUrl}}/api/books?Filter=Clean&SkipCount=0&MaxResultCount=10&Sorting=title
-Accept: {{contentType}}
 
-### Crear un nuevo libro
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Crear libro
 POST {{baseUrl}}/api/books
-Content-Type: {{contentType}}
-Accept: {{contentType}}
+Content-Type: application/json
 
 {
   "title": "El resplandor",
@@ -21,113 +26,102 @@ Accept: {{contentType}}
   "publishDate": "2026-07-13T12:00:00Z"
 }
 
-### Obtener un libro por ID
-GET {{baseUrl}}/api/books/{{sampleId}}
-Accept: {{contentType}}
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
 
-### Actualizar un libro por ID
-PUT {{baseUrl}}/api/books/{{sampleId}}
-Content-Type: {{contentType}}
-Accept: {{contentType}}
-
-{
-  "title": "El resplandor (Edición Especial)",
-  "author": "Stephen King",
-  "publishDate": "2026-07-13T12:00:00Z"
-}
-
-### Eliminar un libro por ID
-DELETE {{baseUrl}}/api/books/{{sampleId}}
-
-### Buscar libros por autor
+### Buscar por autor
 GET {{baseUrl}}/api/books/by-author?author=Stephen%20King
-Accept: {{contentType}}
 
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
 
 ### ==========================================
 ### CATEGORY APIS
 ### ==========================================
 
-### Obtener lista de categorías
+### Listar categorías
 GET {{baseUrl}}/api/categories?SkipCount=0&MaxResultCount=10&Sorting=name
-Accept: {{contentType}}
 
-### Obtener una categoría por ID
-GET {{baseUrl}}/api/categories/{{sampleId}}
-Accept: {{contentType}}
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
 
 
 ### ==========================================
 ### STUDENT APIS
 ### ==========================================
-# Nota: Según tu OpenAPI, los endpoints de Student usan los mismos DTOs 
-# y estructuras de datos que Book.
 
-### Obtener lista de estudiantes
+### Listar estudiantes
 GET {{baseUrl}}/api/student?SkipCount=0&MaxResultCount=10
-Accept: {{contentType}}
 
-### Crear un estudiante (usa la estructura BookDto)
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Crear estudiante
 POST {{baseUrl}}/api/student
-Content-Type: {{contentType}}
-Accept: {{contentType}}
+Content-Type: application/json
 
 {
   "title": "Nombre del Estudiante",
-  "author": "Carrera / Información",
+  "author": "Carrera",
   "publishDate": "2026-07-13T12:00:00Z"
 }
 
-### Obtener un estudiante por ID
-GET {{baseUrl}}/api/student/{{sampleId}}
-Accept: {{contentType}}
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
 
-### Actualizar un estudiante por ID
-PUT {{baseUrl}}/api/student/{{sampleId}}
-Content-Type: {{contentType}}
-Accept: {{contentType}}
-
-{
-  "title": "Nombre Actualizado",
-  "author": "Carrera Modificada",
-  "publishDate": "2026-07-13T12:00:00Z"
-}
-
-### Eliminar un estudiante por ID
-DELETE {{baseUrl}}/api/student/{{sampleId}}
 
 
 ### ==========================================
 ### TODO APIS
 ### ==========================================
 
-### Obtener lista de Todos
+### Listar Todos
 GET {{baseUrl}}/api/todos?SkipCount=0&MaxResultCount=10
-Accept: {{contentType}}
 
-### Crear un nuevo Todo
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Crear Todo
 POST {{baseUrl}}/api/todos
-Content-Type: {{contentType}}
-Accept: {{contentType}}
+Content-Type: application/json
 
 {
   "title": "Terminar la documentación de la API",
   "isCompleted": false
 }
 
-### Obtener un Todo por ID
-GET {{baseUrl}}/api/todos/{{sampleId}}
-Accept: {{contentType}}
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
 
-### Actualizar un Todo por ID
-PUT {{baseUrl}}/api/todos/{{sampleId}}
-Content-Type: {{contentType}}
-Accept: {{contentType}}
+### ==========================================
+### MANIFEST
+### ==========================================
 
-{
-  "title": "Terminar la documentación de la API",
-  "isCompleted": true
-}
+GET {{baseUrl}}/api/manifest/v2
 
-### Eliminar un Todo por ID
-DELETE {{baseUrl}}/api/todos/{{sampleId}}
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}

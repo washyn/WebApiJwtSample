@@ -2,7 +2,7 @@ using App.Api.Data;
 using App.Api.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Host.UseAutofac();
 builder.Services.AddApplication<WebApp>();
 
 var app = builder.Build();

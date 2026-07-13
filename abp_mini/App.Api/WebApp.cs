@@ -9,10 +9,12 @@ using Library.Domain.Repositories;
 
 using Microsoft.EntityFrameworkCore;
 
+using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Modularity;
 
+[DependsOn(typeof(AbpAutofacModule))]
 [DependsOn(typeof(LibraryModule))]
 public class WebApp : AbpModule
 {
@@ -30,13 +32,6 @@ public class WebApp : AbpModule
         context.Services.AddTransient(typeof(IReadOnlyRepository<,>), typeof(AppDbContextRepository<,>));
         context.Services.AddTransient(typeof(IBasicRepository<,>), typeof(AppDbContextRepository<,>));
         context.Services.AddTransient(typeof(IReadOnlyBasicRepository<,>), typeof(AppDbContextRepository<,>));
-
-
-// Configure AutoMapper
-        Configure<AbpAutoMapperOptions>(options =>
-        {
-            options.AddMaps<WebApp>();
-        });
 
         context.Services.AddTransient<IBookRepository, BookRepository>();
         context.Services.AddTransient(provider =>
@@ -70,6 +65,17 @@ public class WebApp : AbpModule
                 LazyServiceProvider = provider.GetRequiredService<IAbpLazyServiceProvider>()
             };
             return service;
+        });
+
+
+        context.Services.AddAutoMapperObjectMapper<WebApp>();
+        Configure<AbpAutoMapperOptions>(options =>
+        {
+            /* Uncomment `validate: true` if you want to enable the Configuration Validation feature.
+             * See AutoMapper's documentation to learn what it is:
+             * https://docs.automapper.org/en/stable/Configuration-validation.html
+             */
+            options.AddMaps<WebApp>( /* validate: true */);
         });
     }
 }

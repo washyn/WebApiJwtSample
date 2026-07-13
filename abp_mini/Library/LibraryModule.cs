@@ -23,5 +23,5 @@ public class LibraryModule : AbpModule
         context.Services.AddTransient(typeof(IObjectMapper<>), typeof(AutoMapperObjectMapper<>));
     }
 }
-// TODO: improve this app service
+// DONE: improve this app service, include same as another lib
 // TODO: for register repositories use abp convencional register, ITransiendDependency and IScopedDependency
