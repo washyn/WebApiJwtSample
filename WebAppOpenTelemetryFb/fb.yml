@@ -9,15 +9,27 @@ pipeline:
   outputs:
     - name: stdout
       match: '*'
-    - name: opentelemetry
-      match: '*'
-      host: localhost
-      port: 4318
-      metrics_uri: /v1/metrics
-      logs_uri: /v1/logs
-      traces_uri: /v1/traces
-      log_response_payload: true
+    # - name: opentelemetry
+    #   match: '*'
+    #   host: localhost
+    #   port: 4318
+    #   metrics_uri: /v1/metrics
+    #   logs_uri: /v1/logs
+    #   traces_uri: /v1/traces
+    #   log_response_payload: true
       
+    - name: file
+      match: '*'
+      format: out_file
+      path: D:/git-proyects/Poc/WebAppOpenTelemetryFb/bin/file.log
+
+    - name: s3
+      match: '*'
+      bucket: logsbucket
+      endpoint: http://localhost:9000
+      total_file_size: 1M
+      use_put_object: on
+      s3_key_format: /%Y%m__%d_%H_$UUID.json
 
       # logs_body_key: $message
       # logs_span_id_message_key: span_id
