@@ -20,6 +20,7 @@ public class Program
             .Enrich.FromLogContext()
             .WriteTo.Async(c => c.File("Logs/log_.log", rollingInterval: RollingInterval.Day,
                 retainedFileCountLimit: 7, shared: true, restrictedToMinimumLevel: LogEventLevel.Information))
+            .WriteTo.Async(c => c.OpenTelemetry("http://127.0.0.1:4315"))
             .WriteTo.Async(c => c.Console());
 
         if (IsMigrateDatabase(args))

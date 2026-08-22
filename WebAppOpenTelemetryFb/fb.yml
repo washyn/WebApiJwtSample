@@ -1,0 +1,50 @@
+pipeline:
+  inputs:
+    - name: opentelemetry
+      listen: 127.0.0.1
+      port: 4315
+      # port: 4317
+      # port: 4318
+
+  outputs:
+    - name: stdout
+      match: '*'
+    - name: opentelemetry
+      match: '*'
+      host: localhost
+      port: 4318
+      metrics_uri: /v1/metrics
+      logs_uri: /v1/logs
+      traces_uri: /v1/traces
+      log_response_payload: true
+      
+
+      # logs_body_key: $message
+      # logs_span_id_message_key: span_id
+      # logs_trace_id_message_key: trace_id
+      # logs_severity_text_message_key: loglevel
+      # logs_severity_number_message_key: lognum
+      # # add user-defined labels
+      # add_label:
+      #   - app fluent-bit
+      #   - color blue
+
+    # - name: opentelemetry
+    #   match: "*"
+    #   host: localhost
+    #   port: 443
+    #   metrics_uri: /v1/metrics
+    #   logs_uri: /v1/logs
+    #   traces_uri: /v1/traces
+    #   log_response_payload: true
+    #   tls: on
+    #   tls.verify: off
+    #   logs_body_key: $message
+    #   logs_span_id_message_key: span_id
+    #   logs_trace_id_message_key: trace_id
+    #   logs_severity_text_message_key: loglevel
+    #   logs_severity_number_message_key: lognum
+    #   # add user-defined labels
+    #   add_label:
+    #     - app fluent-bit
+    #     - color blue
