@@ -31,6 +31,8 @@ pipeline:
       use_put_object: on
       s3_key_format: /%Y%m__%d_%H_$UUID.json
 
+# todo: read json file and send to otlp
+
       # logs_body_key: $message
       # logs_span_id_message_key: span_id
       # logs_trace_id_message_key: trace_id
