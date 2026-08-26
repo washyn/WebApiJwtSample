@@ -62,3 +62,5 @@ pipeline:
     #   add_label:
     #     - app fluent-bit
     #     - color blue
+
+# Cuando se envie a mijnio y se configure se debe establecer crediancles de aws en variables de entorno
