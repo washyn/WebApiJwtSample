@@ -263,3 +263,4 @@ SingleSignOn/
     │       ├── SsoLogin.cshtml(.cs)
     │       └── SsoLogout.cshtml(.cs)
 ```
+add sso with open id dict
