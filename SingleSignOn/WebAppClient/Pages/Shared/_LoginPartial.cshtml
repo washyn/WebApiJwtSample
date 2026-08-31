@@ -1,0 +1,17 @@
+<ul class="navbar-nav">
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" href="#">Hello @User.Identity.Name!</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link btn btn-link text-dark" asp-page="/Account/SsoLogout" asp-route-returnUrl="/">Logout</a>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-page="/Account/SsoLogin" asp-route-returnUrl="/">Login (SSO)</a>
+    </li>
+}
+</ul>

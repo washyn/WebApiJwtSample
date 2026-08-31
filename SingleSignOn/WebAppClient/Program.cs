@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
+
 namespace WebAppClient;
 
 public class Program
@@ -6,16 +9,43 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
+        var sharedKeysPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "SharedKeys");
+        sharedKeysPath = Path.GetFullPath(sharedKeysPath);
+        if (!Directory.Exists(sharedKeysPath))
+        {
+            Directory.CreateDirectory(sharedKeysPath);
+        }
+
+        builder.Services.AddDataProtection()
+            .PersistKeysToFileSystem(new DirectoryInfo(sharedKeysPath))
+            .SetApplicationName("SingleSignOnSharedApp");
+
+        builder.Services.AddAuthentication("Identity.Application")
+            .AddCookie("Identity.Application", options =>
+            {
+                options.Cookie.Name = ".SingleSignOn.SharedCookie";
+                options.Cookie.SameSite = SameSiteMode.Lax;
+                options.LoginPath = "/Account/SsoLogin";
+                options.LogoutPath = "/Account/SsoLogout";
+                options.ReturnUrlParameter = "returnUrl";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.SlidingExpiration = true;
+                options.Events = new CookieAuthenticationEvents
+                {
+                    OnValidatePrincipal = context =>
+                    {
+                        return Task.CompletedTask;
+                    }
+                };
+            });
+
         builder.Services.AddRazorPages();
 
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
             app.UseExceptionHandler("/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
 
@@ -24,6 +54,7 @@ public class Program
 
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapRazorPages();
