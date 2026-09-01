@@ -1,9 +1,24 @@
-﻿@model WebAppServer.Controllers.AuthViewModel
+@model WebAppServer.Controllers.AuthViewModel
 
-<form asp-controller="Account" asp-action="Auth">
+@{
+    var returnUrl = ViewData["ReturnUrl"]?.ToString();
+}
 
-    <input asp-for="User">
-    <input asp-for="Password">
+<h2>Iniciar Sesión - SSO Server</h2>
+
+<form asp-controller="Account" asp-action="Auth" asp-route-returnUrl="@returnUrl">
+    <div>
+        <label>Usuario:</label>
+        <input asp-for="User" />
+        <span asp-validation-for="User"></span>
+    </div>
+    <div>
+        <label>Contraseña:</label>
+        <input asp-for="Password" type="password" />
+        <span asp-validation-for="Password"></span>
+    </div>
     
-    <button type="submit">Send</button>
+    <button type="submit">Entrar</button>
 </form>
+
+<p style="color:gray;">Prueba con cualquier usuario/contraseña (demo)</p>

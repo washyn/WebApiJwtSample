@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -8,15 +8,15 @@ namespace WebAppServer.Controllers;
 
 public class AccountController : Controller
 {
-
     [HttpGet]
-    public IActionResult Auth()
+    public IActionResult Auth(string? returnUrl = null)
     {
+        ViewData["ReturnUrl"] = returnUrl;
         return View();
     }
-    
+
     [HttpPost]
-    public async Task<IActionResult> Auth(AuthViewModel model)
+    public async Task<IActionResult> Auth(AuthViewModel model, string? returnUrl = null)
     {
         if (ModelState.IsValid)
         {
@@ -29,21 +29,34 @@ public class AccountController : Controller
                 new Claim(ClaimTypes.Role, "rol3"),
             };
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity));
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl) == false)
+            {
+                return Redirect(returnUrl);
+            }
+
             return RedirectToAction("Index", "Home");
         }
+
+        ViewData["ReturnUrl"] = returnUrl;
         return View();
     }
-    
-    public IActionResult Logout()
+
+    public async Task<IActionResult> Logout(string? returnUrl = null)
     {
-        HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl) == false)
+        {
+            return Redirect(returnUrl);
+        }
+
         return RedirectToAction("Index", "Home");
     }
 }
 
 public class AuthViewModel
 {
-    public string User { get; set; }
-    public string Password { get; set; }
+    public required string User { get; set; }
+    public required string Password { get; set; }
 }
