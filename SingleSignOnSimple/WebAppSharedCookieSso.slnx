@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="WebAppClient/WebAppClient.csproj" />
+  <Project Path="WebAppServer/WebAppServer.csproj" Id="0dd1a546-2466-4197-a09e-484e794b53c1" />
+</Solution>
