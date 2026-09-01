@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 
-namespace WebAppServer;
+namespace WebAppClient;
 
 public class Program
 {
@@ -10,16 +10,24 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
-        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(options =>
+
+        builder.Services.AddAuthentication("Identity.Application")
+            .AddCookie("Identity.Application", options =>
             {
                 options.Cookie.Name = ".SingleSignOn.SharedCookie";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
                 options.SlidingExpiration = true;
                 options.Cookie.SameSite = SameSiteMode.Lax;
+                // revisar para q es esto
+                options.Events = new CookieAuthenticationEvents
+                {
+                    OnValidatePrincipal = context =>
+                    {
+                        return Task.CompletedTask;
+                    }
+                };
             });
-        builder.Services.AddAuthorization();
-        
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -35,7 +43,6 @@ public class Program
 
         app.UseRouting();
 
-        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllerRoute(

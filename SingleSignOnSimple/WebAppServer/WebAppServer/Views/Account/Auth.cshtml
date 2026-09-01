@@ -1,0 +1,9 @@
+﻿@model WebAppServer.Controllers.AuthViewModel
+
+<form asp-controller="Account" asp-action="Auth">
+
+    <input asp-for="User">
+    <input asp-for="Password">
+    
+    <button type="submit">Send</button>
+</form>
