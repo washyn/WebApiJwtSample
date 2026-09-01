@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <AbpVersion>8.3.*</AbpVersion>
+    <AbpVersion>8.3.4</AbpVersion>
     <FrameworkVersion>net8.0</FrameworkVersion>
     <AspNetFrameworkPackageVersion>8.0.*</AspNetFrameworkPackageVersion>
   </PropertyGroup>
