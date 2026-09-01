@@ -1,0 +1,83 @@
+@page
+@model IndexModel
+@inject IConfiguration Configuration
+@{
+    ViewData["Title"] = "Home page - WebAppClient (SSO Client)";
+    var identityUrl = Configuration["Sso:IdentityBaseUrl"];
+}
+
+<div class="text-center">
+    <h1 class="display-4">WebAppClient - Aplicación Cliente SSO</h1>
+    <p class="lead">Esta aplicación usa <strong>Shared Cookies / Data Protection</strong> para reutilizar la sesión de <code>WebAppIdentity</code>.</p>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Estado de Sesión SSO
+            </div>
+            <div class="card-body">
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <div class="alert alert-success">
+                        <strong>Autenticado!</strong> Sesión compartida detectada.
+                    </div>
+                    <p><strong>Usuario:</strong> @User.Identity.Name</p>
+                    <p><strong>Método Auth:</strong> @User.Identity.AuthenticationType</p>
+                }
+                else
+                {
+                    <div class="alert alert-warning">
+                        <strong>No autenticado.</strong> Inicia sesión en el servidor de identidad.
+                    </div>
+                    <a asp-page="/Account/SsoLogin" asp-route-returnUrl="/" class="btn btn-primary">Iniciar Sesión con SSO</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Enlaces de Prueba
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <a class="btn btn-outline-primary w-100" asp-page="/Privacy">
+                            Privacy - Página Protegida [Authorize]
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a class="btn btn-outline-secondary w-100" href="@identityUrl">
+                            Ir a WebAppIdentity (Servidor SSO)
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a class="btn btn-outline-info w-100" href="@identityUrl/Identity/Account/Register">
+                            Registrar nuevo usuario (en Identity)
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <div class="card">
+        <div class="card-header">
+            ¿Cómo funciona?
+        </div>
+        <div class="card-body">
+            <ol>
+                <li>Haz clic en <strong>"Iniciar Sesión con SSO"</strong> (serás redirigido a WebAppIdentity).</li>
+                <li>Regístrate o inicia sesión en WebAppIdentity.</li>
+                <li>Después del login exitoso, volverás automáticamente a WebAppClient.</li>
+                <li>Observa que el menú superior ahora muestra tu nombre y el botón Logout.</li>
+                <li>Accede a <strong>Privacy</strong> (página protegida) para ver los claims del usuario.</li>
+                <li>Si cierras sesión en una app, se cerrará en ambas gracias a la cookie compartida.</li>
+            </ol>
+        </div>
+    </div>
+</div>
