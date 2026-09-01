@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SharedViews/SharedViews.csproj" />
+  <Project Path="WebApp/WebApp.csproj" />
+</Solution>
