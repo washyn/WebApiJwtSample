@@ -5,6 +5,7 @@ using Acme.BookStore.Web.Data;
 using Volo.Abp;
 using Volo.Abp.Uow;
 using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.AspNetCore.Mvc.Libs;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
@@ -50,6 +51,10 @@ public class WebModule : AbpModule
         ConfigureVirtualFiles(hostingEnvironment);
         ConfigureLocalization();
         ConfigureEfCore(context);
+Configure<AbpMvcLibsOptions>(options =>
+{
+    options.CheckLibs = false;
+});
     }
 
 
