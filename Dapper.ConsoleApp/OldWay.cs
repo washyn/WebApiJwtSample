@@ -29,13 +29,12 @@ public class OldWay
                         NormalizedEmail = reader.GetString(reader.GetOrdinal("NormalizedEmail")),
                         EmailConfirmed = reader.GetBoolean(reader.GetOrdinal("EmailConfirmed")),
                         PasswordHash = reader.GetString(reader.GetOrdinal("PasswordHash")),
-                        
                         SecurityStamp = reader.GetString(reader.GetOrdinal("SecurityStamp")),
                         ConcurrencyStamp = reader.GetString(reader.GetOrdinal("ConcurrencyStamp")),
-                        //PhoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber")),
+                        PhoneNumber = reader.IsDBNull(reader.GetOrdinal("PhoneNumber")) ? null : reader.GetString(reader.GetOrdinal("PhoneNumber")),
                         PhoneNumberConfirmed = reader.GetBoolean(reader.GetOrdinal("PhoneNumberConfirmed")),
                         TwoFactorEnabled = reader.GetBoolean(reader.GetOrdinal("TwoFactorEnabled")),
-                        //LockoutEnd = reader.GetDateTimeOffset(reader.GetOrdinal("LockoutEnd")),
+                        LockoutEnd = reader.IsDBNull(reader.GetOrdinal("LockoutEnd")) ? null : reader.GetDateTimeOffset(reader.GetOrdinal("LockoutEnd")),
                         LockoutEnabled = reader.GetBoolean(reader.GetOrdinal("LockoutEnabled")),
                         AccessFailedCount = reader.GetInt32(reader.GetOrdinal("AccessFailedCount")),
                     };
