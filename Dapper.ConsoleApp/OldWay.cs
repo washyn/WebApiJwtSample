@@ -54,38 +54,3 @@ public class Consts
     public const string connString =
         "Server=(localdb)\\mssqllocaldb;Database=aspnet-WebApplicationIdentity-e133cca7-4195-4375-b2ec-5746b997e21c;Trusted_Connection=True;MultipleActiveResultSets=true";
 }
-
-// use [aspnet-WebApplicationIdentity-e133cca7-4195-4375-b2ec-5746b997e21c]
-// go
-
-// create table dbo.AspNetUsers
-// (
-//     Id                   nvarchar(450) collate SQL_Latin1_General_CP1_CI_AS not null
-//         constraint PK_AspNetUsers
-//             primary key,
-//     UserName             nvarchar(256) collate SQL_Latin1_General_CP1_CI_AS,
-//     NormalizedUserName   nvarchar(256) collate SQL_Latin1_General_CP1_CI_AS,
-//     Email                nvarchar(256) collate SQL_Latin1_General_CP1_CI_AS,
-//     NormalizedEmail      nvarchar(256) collate SQL_Latin1_General_CP1_CI_AS,
-//     EmailConfirmed       bit                                                not null,
-//     PasswordHash         nvarchar(max) collate SQL_Latin1_General_CP1_CI_AS,
-//     SecurityStamp        nvarchar(max) collate SQL_Latin1_General_CP1_CI_AS,
-//     ConcurrencyStamp     nvarchar(max) collate SQL_Latin1_General_CP1_CI_AS,
-//     PhoneNumber          nvarchar(max) collate SQL_Latin1_General_CP1_CI_AS,
-//     PhoneNumberConfirmed bit                                                not null,
-//     TwoFactorEnabled     bit                                                not null,
-//     LockoutEnd           datetimeoffset,
-//     LockoutEnabled       bit                                                not null,
-//     AccessFailedCount    int                                                not null
-// )
-// go
-
-// create index EmailIndex
-//     on dbo.AspNetUsers (NormalizedEmail)
-// go
-
-// create unique index UserNameIndex
-//     on dbo.AspNetUsers (NormalizedUserName)
-//     where [NormalizedUserName] IS NOT NULL
-// go
-

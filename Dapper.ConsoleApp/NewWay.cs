@@ -24,24 +24,6 @@ public class NewWay : ITransientDependency
     }
 }
 
-
-// AspNetUsers
-// Id varchar
-// UserName varchar
-// NormalizedUserName varchar
-// Email varchar
-// NormalizedEmail varchar
-// EmailConfirmed bit
-// PasswordHash varchar
-// SecurityStamp varchar
-// ConcurrencyStamp varchar
-// PhoneNumber varchar
-// PhoneNumberConfirmed bit
-// TwoFactorEnabled bit
-// LockoutEnd datetimeoffset
-// LockoutEnabled bit
-// AccessFailedCount int
-
 public class AspNetUser
 {
     public string Id { get; set; }
@@ -78,3 +60,21 @@ public class AspNetUser
 // LockoutEnd           datetimeoffset,
 // LockoutEnabled       bit                                                not null,
 // AccessFailedCount    int                                                not null
+
+
+// AspNetUsers
+// Id varchar
+// UserName varchar
+// NormalizedUserName varchar
+// Email varchar
+// NormalizedEmail varchar
+// EmailConfirmed bit
+// PasswordHash varchar
+// SecurityStamp varchar
+// ConcurrencyStamp varchar
+// PhoneNumber varchar
+// PhoneNumberConfirmed bit
+// TwoFactorEnabled bit
+// LockoutEnd datetimeoffset
+// LockoutEnabled bit
+// AccessFailedCount int
