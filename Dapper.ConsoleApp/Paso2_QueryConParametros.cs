@@ -10,15 +10,6 @@ namespace Dapper.ConsoleApp;
 
 public class Paso2_QueryConParametros
 {
-    public List<AspNetUser> GetUsersByEmailConfirmed(bool emailConfirmed)
-    {
-        using (IDbConnection db = new SqlConnection(Consts.connString))
-        {
-            var sql = "SELECT * FROM AspNetUsers WHERE EmailConfirmed = @EmailConfirmed";
-            return db.Query<AspNetUser>(sql, new { EmailConfirmed = emailConfirmed }).ToList();
-        }
-    }
-
     public AspNetUser GetUserById(string userId)
     {
         using (IDbConnection db = new SqlConnection(Consts.connString))
@@ -51,37 +42,6 @@ public class Paso2_QueryConParametros
             };
 
             return db.Query<AspNetUser>(sql, parameters).ToList();
-        }
-    }
-
-    public List<AspNetRole> GetRolesByNameStart(string prefix)
-    {
-        using (IDbConnection db = new SqlConnection(Consts.connString))
-        {
-            return db.Query<AspNetRole>(
-                "SELECT * FROM AspNetRoles WHERE NormalizedName LIKE @Prefix",
-                new { Prefix = prefix.ToUpperInvariant() + "%" }
-            ).ToList();
-        }
-    }
-
-    public int GetClaimsCountForUser(string userId)
-    {
-        using (IDbConnection db = new SqlConnection(Consts.connString))
-        {
-            return db.ExecuteScalar<int>(
-                "SELECT COUNT(*) FROM AspNetUserClaims WHERE UserId = @UserId",
-                new { UserId = userId }
-            );
-        }
-    }
-
-    public List<AspNetUser> GetUsersByEmail_Unsafe(string email)
-    {
-        using (IDbConnection db = new SqlConnection(Consts.connString))
-        {
-            var sqlUnsafe = "SELECT * FROM AspNetUsers WHERE Email = '" + email + "'";
-            return db.Query<AspNetUser>(sqlUnsafe).ToList();
         }
     }
 }

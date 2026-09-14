@@ -58,42 +58,4 @@ public class Paso1_OldVsNewWay
             return db.Query<AspNetUser>("SELECT * FROM AspNetUsers").ToList();
         }
     }
-
-    public AspNetUser GetUserById_OldWay(string userId)
-    {
-        AspNetUser user = null;
-        using (var connection = new SqlConnection(Consts.connString))
-        {
-            connection.Open();
-            using (var command = new SqlCommand("SELECT * FROM AspNetUsers WHERE Id = @Id", connection))
-            {
-                command.Parameters.AddWithValue("@Id", userId);
-                using (var reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        user = new AspNetUser
-                        {
-                            Id = reader.GetString(reader.GetOrdinal("Id")),
-                            UserName = reader.IsDBNull(reader.GetOrdinal("UserName")) ? null : reader.GetString(reader.GetOrdinal("UserName")),
-                            Email = reader.IsDBNull(reader.GetOrdinal("Email")) ? null : reader.GetString(reader.GetOrdinal("Email")),
-                            EmailConfirmed = reader.GetBoolean(reader.GetOrdinal("EmailConfirmed"))
-                        };
-                    }
-                }
-            }
-        }
-        return user;
-    }
-
-    public AspNetUser GetUserById_NewWay(string userId)
-    {
-        using (IDbConnection db = new SqlConnection(Consts.connString))
-        {
-            return db.QueryFirstOrDefault<AspNetUser>(
-                "SELECT * FROM AspNetUsers WHERE Id = @Id",
-                new { Id = userId }
-            );
-        }
-    }
 }
