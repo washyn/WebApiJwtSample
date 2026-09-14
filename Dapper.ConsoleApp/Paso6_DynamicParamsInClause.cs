@@ -8,26 +8,9 @@ using Microsoft.Data.SqlClient;
 
 namespace Dapper.ConsoleApp;
 
-// =============================================
-// PASO 6: DynamicParameters + IN Clauses
-// =============================================
-// DynamicParameters: Cuando tienes FILTROS OPCIONALES (no sabes si vendrán)
-//   - No necesitas concatenar SQL de forma insegura
-//   - Añades parámetros condicionalmente
-//   - Protegido contra SQL Injection
-//
-// IN Clauses: Dapper expande automáticamente IEnumerable<T>
-//   - Solo pasa new { Ids = listaIds }
-//   - Genera parámetros individuales (@Ids1, @Ids2, ...)
-// =============================================
-
 public class Paso6_DynamicParamsInClause
 {
     private readonly string _conn = Consts.connString;
-
-    // =====================================
-    // DynamicParameters: Búsqueda con filtros opcionales
-    // =====================================
 
     public List<AspNetUser> BuscarUsuarios(
         string userName = null,
@@ -41,7 +24,6 @@ public class Paso6_DynamicParamsInClause
             var parameters = new DynamicParameters();
             var sql = "SELECT * FROM AspNetUsers WHERE 1=1";
 
-            // Solo añadimos la condición si el parámetro tiene valor
             if (!string.IsNullOrWhiteSpace(userName))
             {
                 sql += " AND NormalizedUserName LIKE @UserName";
@@ -78,20 +60,13 @@ public class Paso6_DynamicParamsInClause
         }
     }
 
-    // =====================================
-    // DynamicParameters: Parámetros OUTPUT
-    // =====================================
-
     public int InsertarLoginExterno(AspNetUserLogin login)
     {
         using (IDbConnection db = new SqlConnection(_conn))
         {
             var parameters = new DynamicParameters();
-
-            // Agregamos las propiedades del objeto como parámetros
             parameters.AddDynamicParams(login);
 
-            // Añadimos un parámetro de SALIDA
             parameters.Add(
                 "@FueInsertado",
                 dbType: DbType.Int32,
@@ -118,14 +93,9 @@ public class Paso6_DynamicParamsInClause
 
             db.Execute(sql, parameters);
 
-            // Leemos el valor del parámetro OUTPUT
             return parameters.Get<int>("@FueInsertado");
         }
     }
-
-    // =====================================
-    // DynamicParameters: Obtener parámetro RETURN de Stored Procedure
-    // =====================================
 
     public int Sp_ContarUsuariosPorRol(string roleId)
     {
@@ -135,13 +105,6 @@ public class Paso6_DynamicParamsInClause
             parameters.Add("@RoleId", roleId);
             parameters.Add("@Total", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-            // Nota: El SP debe existir en tu BD. Ej:
-            // CREATE PROC sp_ContarUsuariosPorRol
-            //   @RoleId nvarchar(450),
-            //   @Total int OUTPUT
-            // AS
-            //   SELECT @Total = COUNT(*) FROM AspNetUserRoles WHERE RoleId = @RoleId
-            //
             db.Execute(
                 "sp_ContarUsuariosPorRol",
                 parameters,
@@ -152,16 +115,10 @@ public class Paso6_DynamicParamsInClause
         }
     }
 
-    // =====================================
-    // IN Clause: Búsqueda por lista de IDs
-    // =====================================
-
     public List<AspNetUser> ObtenerUsuariosPorIds(List<string> userIds)
     {
         using (IDbConnection db = new SqlConnection(_conn))
         {
-            // 🔮 Dapper EXPANDE automáticamente el IEnumerable
-            // en parámetros individuales: @userIds1, @userIds2, ...
             var sql = "SELECT * FROM AspNetUsers WHERE Id IN @UserIds ORDER BY UserName";
             return db.Query<AspNetUser>(sql, new { UserIds = userIds }).ToList();
         }
@@ -189,10 +146,6 @@ public class Paso6_DynamicParamsInClause
         }
     }
 
-    // =====================================
-    // IN Clause + DELETE
-    // =====================================
-
     public int EliminarVariosClaims(List<int> claimIds)
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -217,10 +170,6 @@ public class Paso6_DynamicParamsInClause
         }
     }
 
-    // =====================================
-    // IN Clause + UPDATE
-    // =====================================
-
     public int ConfirmarEmailDeUsuarios(List<string> userIds)
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -234,10 +183,6 @@ public class Paso6_DynamicParamsInClause
             return db.Execute(sql, new { UserIds = userIds });
         }
     }
-
-    // =====================================
-    // DynamicParameters + IN Clause combinados
-    // =====================================
 
     public List<AspNetUser> BusquedaCombinada(
         List<string> roleIds = null,

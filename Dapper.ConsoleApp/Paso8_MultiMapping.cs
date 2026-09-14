@@ -8,32 +8,10 @@ using Microsoft.Data.SqlClient;
 
 namespace Dapper.ConsoleApp;
 
-// =============================================
-// PASO 8: Multi-Mapping (Materializar Relaciones)
-// =============================================
-// Multi-mapping = leer 1 sola fila (resultado de un JOIN)
-// y mapearla a 2 o más objetos/entidades distintas.
-//
-// Parámetro clave: splitOn
-//   - Indica a Dapper QUÉ COLUMNA marca el INICIO de la SIGUIENTE entidad
-//   - Si hay 2 entidades: splitOn: "Id"
-//   - Si hay 3 entidades: splitOn: "Id,Id"
-//   - Si las columnas cambian de nombre: splitOn: "RoleId,ClaimId"
-//
-// Patrones típicos:
-//   1 a muchos con DICT: JOIN + diccionario para deduplicar padres
-//   1 a 1 inline: Materializar 2 objetos por fila
-// =============================================
-
 public class Paso8_MultiMapping
 {
     private readonly string _conn = Consts.connString;
 
-    // =====================================
-    // Ejemplo 1: 1 a N simple (Usuarios con Roles) - DTO plano
-    // =====================================
-    // Devuelve una fila POR cada par Usuario-Rol.
-    // Usuario Administrador con 2 roles = 2 filas.
     public List<AspNetUserWithRole> ObtenerUsuariosConRoles_Simple()
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -51,16 +29,10 @@ public class Paso8_MultiMapping
                 INNER JOIN AspNetRoles      r  ON r.Id = ur.RoleId
                 ORDER BY u.UserName, r.Name";
 
-            // 1 entidad (AspNetUserWithRole) = Query simple
             return db.Query<AspNetUserWithRole>(sql).ToList();
         }
     }
 
-    // =====================================
-    // Ejemplo 2: 1 a N (Usuarios con Roles) - Objetos anidados + Diccionario
-    // =====================================
-    // Cada usuario ÚNICO, con su lista de roles.
-    // 1 solo usuario con 2 roles = 1 elemento en lista (user.Roles = 2)
     public class UsuarioConRoles
     {
         public string UserId { get; set; }
@@ -87,15 +59,12 @@ public class Paso8_MultiMapping
                 LEFT JOIN AspNetRoles      r  ON r.Id = ur.RoleId
                 ORDER BY u.UserName, r.Name";
 
-            // Diccionario para NO duplicar usuarios
             var userMap = new Dictionary<string, UsuarioConRoles>();
 
-            // Multi-mapping 2 entidades: <Padre, Hijo, TipoRetorno>
             var result = db.Query<UsuarioConRoles, AspNetRole, UsuarioConRoles>(
                 sql,
                 (user, role) =>
                 {
-                    // Si ya existe el usuario en el dict, lo recuperamos
                     if (!userMap.TryGetValue(user.UserId, out var currentUser))
                     {
                         currentUser = user;
@@ -103,29 +72,21 @@ public class Paso8_MultiMapping
                         userMap.Add(currentUser.UserId, currentUser);
                     }
 
-                    // Si hay un role (LEFT JOIN podría traer NULL) lo agregamos
                     if (role != null && role.Id != null)
                     {
-                        // Evitar duplicados de roles para el mismo usuario
                         if (!currentUser.Roles.Any(r => r.Id == role.Id))
                             currentUser.Roles.Add(role);
                     }
 
                     return currentUser;
                 },
-                // splitOn: la columna "Id" de la 2da tabla (AspNetRoles.Id)
                 splitOn: "Id"
             );
 
-            // .Distinct() porque el func devuelve el mismo objeto user repetido
-            // por cada fila JOIN; Distinct() por referencia elimina duplicados.
             return result.Distinct().ToList();
         }
     }
 
-    // =====================================
-    // Ejemplo 3: 1 a N (Rol con sus Claims)
-    // =====================================
     public class RolConClaims
     {
         public string RoleId { get; set; }
@@ -176,9 +137,6 @@ public class Paso8_MultiMapping
         }
     }
 
-    // =====================================
-    // Ejemplo 4: 1 a N (Usuario con Sus Claims)
-    // =====================================
     public class UsuarioConClaims
     {
         public string UserId { get; set; }
@@ -229,9 +187,6 @@ public class Paso8_MultiMapping
         }
     }
 
-    // =====================================
-    // Ejemplo 5: 3 niveles (Usuario -> Roles -> RoleClaims)
-    // =====================================
     public class UsuarioFull
     {
         public string UserId { get; set; }
@@ -269,12 +224,10 @@ public class Paso8_MultiMapping
             var usersMap = new Dictionary<string, UsuarioFull>();
             var rolesMap = new Dictionary<string, RolConClaimsLite>();
 
-            // 3 entidades = <User, Role, RoleClaim, User>
             db.Query<UsuarioFull, RolConClaimsLite, AspNetRoleClaim, UsuarioFull>(
                 sql,
                 (user, rol, claim) =>
                 {
-                    // Nivel 1: Usuario
                     if (!usersMap.TryGetValue(user.UserId, out var currentUser))
                     {
                         currentUser = user;
@@ -282,7 +235,6 @@ public class Paso8_MultiMapping
                         usersMap.Add(currentUser.UserId, currentUser);
                     }
 
-                    // Nivel 2: Rol
                     if (rol != null && rol.RoleId != null)
                     {
                         var roleKey = currentUser.UserId + "|" + rol.RoleId;
@@ -294,7 +246,6 @@ public class Paso8_MultiMapping
                             currentUser.Roles.Add(currentRole);
                         }
 
-                        // Nivel 3: Claim del Rol
                         if (claim != null && claim.Id != 0)
                         {
                             currentRole.RoleClaims.Add(claim);
@@ -303,7 +254,6 @@ public class Paso8_MultiMapping
 
                     return currentUser;
                 },
-                // splitOn: columna RoleId (inicia 2da entidad), columna Id (inicia 3ra entidad)
                 splitOn: "RoleId,Id"
             ).AsList();
 
@@ -311,9 +261,6 @@ public class Paso8_MultiMapping
         }
     }
 
-    // =====================================
-    // Ejemplo 6: 1 a 1 inline (Relación estricta 1 a 1)
-    // =====================================
     public class UsuarioClaimSimple
     {
         public AspNetUser User { get; set; }
@@ -332,7 +279,6 @@ public class Paso8_MultiMapping
                 INNER JOIN AspNetUsers u ON u.Id = c.UserId
                 ORDER BY c.Id";
 
-            // 2 entidades: <T1, T2, TResult>
             return db.Query<AspNetUser, AspNetUserClaim, UsuarioClaimSimple>(
                 sql,
                 (user, claim) => new UsuarioClaimSimple
@@ -340,7 +286,7 @@ public class Paso8_MultiMapping
                     User  = user,
                     Claim = claim
                 },
-                splitOn: "Id" // c.Id empieza la 2da entidad
+                splitOn: "Id"
             ).ToList();
         }
     }

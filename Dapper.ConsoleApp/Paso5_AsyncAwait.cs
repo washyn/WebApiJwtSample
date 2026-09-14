@@ -10,40 +10,14 @@ using Microsoft.Data.SqlClient;
 
 namespace Dapper.ConsoleApp;
 
-// =============================================
-// PASO 5: Async / Await
-// =============================================
-// Dapper expone versiones asíncronas de TODOS sus métodos:
-//   QueryAsync            => Query
-//   QueryFirstAsync       => QueryFirst
-//   QueryFirstOrDefaultAsync  => QueryFirstOrDefault
-//   QuerySingleAsync      => QuerySingle
-//   QuerySingleOrDefaultAsync => QuerySingleOrDefault
-//   QueryMultipleAsync    => QueryMultiple
-//   ExecuteAsync          => Execute
-//   ExecuteScalarAsync    => ExecuteScalar
-//   ExecuteReaderAsync    => ExecuteReader
-//
-// ¿Por qué Async?
-// - En apps web: no bloquea el hilo mientras espera la BD
-// - Mejor escalabilidad (más requests concurrentes)
-// - UI apps: no congela la interfaz
-//
-// Regla: usar await con cada método *Async.
-// =============================================
-
 public class Paso5_AsyncAwait
 {
     private readonly string _conn = Consts.connString;
 
-    // =====================================
-    // QueryAsync: Lista de usuarios
-    // =====================================
     public async Task<List<AspNetUser>> GetUsuariosAsync()
     {
         using (IDbConnection db = new SqlConnection(_conn))
         {
-            // await libera el hilo mientras espera a la BD
             var result = await db.QueryAsync<AspNetUser>("SELECT * FROM AspNetUsers");
             return result.ToList();
         }
@@ -59,9 +33,6 @@ public class Paso5_AsyncAwait
         }
     }
 
-    // =====================================
-    // QueryFirstOrDefaultAsync
-    // =====================================
     public async Task<AspNetUser> GetUsuarioPorIdAsync(string userId)
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -85,9 +56,6 @@ public class Paso5_AsyncAwait
         }
     }
 
-    // =====================================
-    // QuerySingleOrDefaultAsync
-    // =====================================
     public async Task<AspNetUserClaim> GetClaimPorIdAsync(int claimId)
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -98,10 +66,6 @@ public class Paso5_AsyncAwait
             );
         }
     }
-
-    // =====================================
-    // ExecuteAsync (INSERT / UPDATE / DELETE)
-    // =====================================
 
     public async Task<int> InsertarRolAsync(AspNetRole role)
     {
@@ -151,7 +115,6 @@ public class Paso5_AsyncAwait
         }
     }
 
-    // Batch async (múltiples claims)
     public async Task<int> InsertarVariosClaimsAsync(List<AspNetUserClaim> claims)
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -163,10 +126,6 @@ public class Paso5_AsyncAwait
             return await db.ExecuteAsync(sql, claims);
         }
     }
-
-    // =====================================
-    // ExecuteScalarAsync
-    // =====================================
 
     public async Task<int> ContarUsuariosAsync()
     {
@@ -194,9 +153,6 @@ public class Paso5_AsyncAwait
         }
     }
 
-    // =====================================
-    // ExecuteScalarAsync con INSERT + SCOPE_IDENTITY
-    // =====================================
     public async Task<int> InsertarClaimYRetornarIdAsync(AspNetUserClaim claim)
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -210,19 +166,14 @@ public class Paso5_AsyncAwait
         }
     }
 
-    // =====================================
-    // Ejemplo: Llamadas múltiples en paralelo (WhenAll)
-    // =====================================
     public async Task<(int Users, int Roles, int Claims)> ContarTodoEnParaleloAsync()
     {
         using (IDbConnection db = new SqlConnection(_conn))
         {
-            // Lanzamos todas las tareas a la vez
             var t1 = db.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM AspNetUsers");
             var t2 = db.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM AspNetRoles");
             var t3 = db.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM AspNetUserClaims");
 
-            // Esperamos que TODAS terminen
             await Task.WhenAll(t1, t2, t3);
 
             return (t1.Result, t2.Result, t3.Result);

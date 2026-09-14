@@ -6,7 +6,6 @@ namespace Dapper.ConsoleApp;
 
 public class OldWay
 {
-    // SqlConnection, SqlCommand
     public List<AspNetUser> GetUsers()
     {
         var sql = "SELECT * FROM AspNetUsers";

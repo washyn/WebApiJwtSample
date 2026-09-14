@@ -9,21 +9,9 @@ using Microsoft.Data.SqlClient;
 
 namespace Dapper.ConsoleApp;
 
-// =============================================
-// PASO 4: Execute + ExecuteScalar
-// =============================================
-// Execute        => para INSERT, UPDATE, DELETE (retorna filas afectadas)
-// ExecuteScalar  => para 1 solo valor (COUNT, MAX, SUM, SCOPE_IDENTITY)
-// QuerySingle<t> => para obtener 1 fila con 1 o varias columnas
-// =============================================
-
 public class Paso4_ExecuteScalar
 {
     private readonly string _conn = Consts.connString;
-
-    // =====================================
-    // Execute: INSERT
-    // =====================================
 
     public int InsertRole(AspNetRole role)
     {
@@ -33,12 +21,10 @@ public class Paso4_ExecuteScalar
                 INSERT INTO AspNetRoles (Id, Name, NormalizedName, ConcurrencyStamp)
                 VALUES (@Id, @Name, @NormalizedName, @ConcurrencyStamp)";
 
-            // Execute retorna la CANTIDAD DE FILAS afectadas
             return db.Execute(sql, role);
         }
     }
 
-    // Insertar un Claim de usuario y OBTENER EL NUEVO ID (IDENTITY)
     public int InsertUserClaimAndGetId(string userId, string claimType, string claimValue)
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -50,18 +36,15 @@ public class Paso4_ExecuteScalar
                 ClaimValue = claimValue
             };
 
-            // AspNetUserClaims.Id es IDENTITY, así que usamos SCOPE_IDENTITY()
             var sql = @"
                 INSERT INTO AspNetUserClaims (UserId, ClaimType, ClaimValue)
                 VALUES (@UserId, @ClaimType, @ClaimValue);
                 SELECT CAST(SCOPE_IDENTITY() as int)";
 
-            // QuerySingle<int> retorna el valor único de la columna
             return db.QuerySingle<int>(sql, claim);
         }
     }
 
-    // Batch: insertar varios claims en un solo Execute
     public int InsertMultipleUserClaims(List<AspNetUserClaim> claims)
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -70,15 +53,9 @@ public class Paso4_ExecuteScalar
                 INSERT INTO AspNetUserClaims (UserId, ClaimType, ClaimValue)
                 VALUES (@UserId, @ClaimType, @ClaimValue)";
 
-            // Al pasar un IEnumerable, Dapper ejecuta el comando una vez
-            // POR CADA elemento. Retorna TOTAL de filas insertadas.
             return db.Execute(sql, claims);
         }
     }
-
-    // =====================================
-    // Execute: UPDATE
-    // =====================================
 
     public int UpdateUserSecurityStamp(string userId, string newSecurityStamp)
     {
@@ -91,11 +68,10 @@ public class Paso4_ExecuteScalar
                 new { Id = userId, SecurityStamp = newSecurityStamp }
             );
 
-            return rowsAffected; // 1 si el usuario existe, 0 si no
+            return rowsAffected;
         }
     }
 
-    // UPDATE con operación matemática
     public int IncrementarIntentosFallidos(string userId)
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -105,7 +81,6 @@ public class Paso4_ExecuteScalar
         }
     }
 
-    // Confirmar email (booleano)
     public int ConfirmarEmail(string userId)
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -115,7 +90,6 @@ public class Paso4_ExecuteScalar
         }
     }
 
-    // Upsert de un Token (UPDATE si existe, INSERT si no)
     public int UpsertUserToken(AspNetUserToken token)
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -139,7 +113,6 @@ public class Paso4_ExecuteScalar
         }
     }
 
-    // Asignar Rol a Usuario (evitando duplicados)
     public int AsignarRolAUsuario(string userId, string roleId)
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -155,10 +128,6 @@ public class Paso4_ExecuteScalar
             return db.Execute(sql, new { UserId = userId, RoleId = roleId });
         }
     }
-
-    // =====================================
-    // Execute: DELETE
-    // =====================================
 
     public int DeleteUserClaim(int claimId)
     {
@@ -178,7 +147,6 @@ public class Paso4_ExecuteScalar
         }
     }
 
-    // Delete múltiple con IN clause (Dapper expande la lista)
     public int EliminarVariosClaims(List<int> claimIds)
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -187,10 +155,6 @@ public class Paso4_ExecuteScalar
             return db.Execute(sql, new { ClaimIds = claimIds });
         }
     }
-
-    // =====================================
-    // ExecuteScalar: Valores agregados (1 valor)
-    // =====================================
 
     public int ContarUsuariosTotales()
     {
@@ -217,7 +181,6 @@ public class Paso4_ExecuteScalar
         }
     }
 
-    // Para tipos nullable (LockoutEnd puede ser NULL)
     public DateTimeOffset? ObtenerMaxLockoutEnd()
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -228,7 +191,6 @@ public class Paso4_ExecuteScalar
         }
     }
 
-    // ISNULL para un valor por defecto
     public int ObtenerMaximoIntentosFallidos()
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -239,7 +201,6 @@ public class Paso4_ExecuteScalar
         }
     }
 
-    // Obtener el nombre de usuario más largo (primer alfabéticamente)
     public string ObtenerPrimerUserName()
     {
         using (IDbConnection db = new SqlConnection(_conn))

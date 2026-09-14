@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +18,6 @@ public class ProjectModule : AbpModule
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var configuration = context.Services.GetConfiguration();
-        // Register IDbConnection as Transient
         context.Services.AddTransient<IDbConnection>((sp) =>
         {
             return new SqlConnection(configuration.GetConnectionString(
@@ -26,4 +25,3 @@ public class ProjectModule : AbpModule
         });
     }
 }
-// NOTE: can be simplifi console app

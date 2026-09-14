@@ -8,28 +8,8 @@ using Microsoft.Data.SqlClient;
 
 namespace Dapper.ConsoleApp;
 
-// =============================================
-// PASO 1: Old Way vs New Way (Reducción ~80% de código)
-// =============================================
-// Este paso muestra la diferencia entre hacer acceso a datos
-// de forma manual (ADO.NET puro) contra usar Dapper.
-//
-// Para AspNetUsers (12 columnas):
-//   Old Way: ~45 líneas (mientras más columnas, más código)
-//   New Way: ~3  líneas
-// =============================================
-
 public class Paso1_OldVsNewWay
 {
-    // =====================================
-    // FORMA ANTIGUA (ADO.NET puro)
-    // =====================================
-    // Problemas:
-    // - Mucho código boilerplate
-    // - Mapeo manual propiedad por propiedad
-    // - Fácil olvidar manejar DBNull
-    // - Usar índices numéricos (GetOrdinal) es frágil ante cambios
-    // - Fácil cometer errores de tipo
     public List<AspNetUser> GetUsers_OldWay()
     {
         var sql = "SELECT * FROM AspNetUsers";
@@ -71,14 +51,6 @@ public class Paso1_OldVsNewWay
         return products;
     }
 
-    // =====================================
-    // FORMA NUEVA (Dapper)
-    // =====================================
-    // Ventajas:
-    // - Dapper se encarga del mapeo columna -> propiedad
-    // - Maneja DBNull -> null automáticamente
-    // - Compara nombres de columna case-insensitive
-    // - Abre/cierra conexión automáticamente
     public List<AspNetUser> GetUsers_NewWay()
     {
         using (IDbConnection db = new SqlConnection(Consts.connString))
@@ -87,7 +59,6 @@ public class Paso1_OldVsNewWay
         }
     }
 
-    // Lo mismo para un solo registro:
     public AspNetUser GetUserById_OldWay(string userId)
     {
         AspNetUser user = null;

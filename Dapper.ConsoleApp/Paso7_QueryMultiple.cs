@@ -9,31 +9,10 @@ using Microsoft.Data.SqlClient;
 
 namespace Dapper.ConsoleApp;
 
-// =============================================
-// PASO 7: QueryMultiple (Ahorro de viajes por red)
-// =============================================
-// Problema clásico (N+1 queries):
-//   var users = SELECT * FROM AspNetUsers;           (1 viaje)
-//   foreach (var u in users) {
-//       u.Roles = SELECT * FROM AspNetUserRoles ... ; (N viajes, 1 por usuario)
-//   }
-//
-//   => 1 + N viajes a la BD = MUY LENTO
-//
-// Solución QueryMultiple:
-//   Ejecutas TODOS los SELECT en UNA MISMA conexión / UNA MISMA LLAMADA
-//   y consumes secuencialmente los resultados con multi.Read<T>()
-//
-//   => 1 solo viaje a la BD = MUCHO MÁS RÁPIDO
-// =============================================
-
 public class Paso7_QueryMultiple
 {
     private readonly string _conn = Consts.connString;
 
-    // =====================================
-    // Ejemplo 1: Obtener Usuarios + Roles + Counts (4 SELECT, 1 viaje)
-    // =====================================
     public (
         List<AspNetUser> Usuarios,
         List<AspNetRole> Roles,
@@ -51,7 +30,6 @@ public class Paso7_QueryMultiple
 
             using (var multi = db.QueryMultiple(sql))
             {
-                // Leemos en EL MISMO ORDEN que los SELECT en SQL
                 var usuarios = multi.Read<AspNetUser>().ToList();
                 var roles    = multi.Read<AspNetRole>().ToList();
                 var totalU   = multi.ReadSingle<int>();
@@ -62,14 +40,6 @@ public class Paso7_QueryMultiple
         }
     }
 
-    // =====================================
-    // Ejemplo 2: Perfil COMPLETO de usuario
-    //   - AspNetUsers (1 fila)
-    //   - Roles asignados (N filas)
-    //   - Claims (N filas)
-    //   - Logins externos (N filas)
-    //   - Tokens (N filas)
-    // =====================================
     public (
         AspNetUser Usuario,
         List<AspNetRole> Roles,
@@ -108,9 +78,6 @@ public class Paso7_QueryMultiple
         }
     }
 
-    // =====================================
-    // Ejemplo 3: Dashboard / Panel de control resumido
-    // =====================================
     public class IdentityDashboard
     {
         public int TotalUsers { get; set; }
@@ -149,9 +116,6 @@ public class Paso7_QueryMultiple
         }
     }
 
-    // =====================================
-    // Ejemplo 4: Rol con todos sus usuarios y claims
-    // =====================================
     public (
         AspNetRole Role,
         List<AspNetUser> UsuariosEnRol,
@@ -182,9 +146,6 @@ public class Paso7_QueryMultiple
         }
     }
 
-    // =====================================
-    // Ejemplo 5: Async - QueryMultipleAsync
-    // =====================================
     public async Task<(
         List<AspNetUser> Usuarios,
         List<AspNetRole> Roles
@@ -206,9 +167,6 @@ public class Paso7_QueryMultiple
         }
     }
 
-    // =====================================
-    // Ejemplo 6: QueryMultiple + JOIN materializado en memoria
-    // =====================================
     public List<AspNetUserWithRole> ObtenerUsuariosRolesQueryMultiple()
     {
         using (IDbConnection db = new SqlConnection(_conn))
@@ -225,7 +183,7 @@ public class Paso7_QueryMultiple
             using (var multi = db.QueryMultiple(sql))
             {
                 var users      = multi.Read<AspNetUser>().ToDictionary(u => u.Id, u => u);
-                var userRoles  = multi.Read().ToList(); // dynamic
+                var userRoles  = multi.Read().ToList();
 
                 var result = new List<AspNetUserWithRole>();
 
