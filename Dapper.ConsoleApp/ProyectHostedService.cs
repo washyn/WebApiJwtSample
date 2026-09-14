@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -31,9 +31,11 @@ public class ProjectHostedService : IHostedService
     {
         _logger.LogInformation("ProjectHostedService StartAsync");
 
-        _logger.LogInformation("========================================");
-        _logger.LogInformation("  CURSO DE DAPPER - 9 PASOS");
-        _logger.LogInformation("========================================");
+        // var oldWay = new OldWay().GetUsers();
+        // _logger.LogInformation("OldWay count: {@Users}", oldWay);
+        // var newWay = _newWay.GetUsers();
+        // _logger.LogInformation("NewWay count: {@Users}", newWay);
+
 
         // PASO 1: Old Way vs New Way
         _logger.LogInformation("--- PASO 1: Old Way vs New Way ---");
@@ -42,7 +44,7 @@ public class ProjectHostedService : IHostedService
         var newUsers = paso1.GetUsers_NewWay();
         _logger.LogInformation("OldWay count: {Old}, NewWay count: {New}", oldUsers.Count, newUsers.Count);
 
-        // PASO 2: Query con Parámetros
+        // // PASO 2: Query con Parámetros
         _logger.LogInformation("--- PASO 2: Query con Parámetros ---");
         var paso2 = new Paso2_QueryConParametros();
         var unUsuario = paso2.GetUserById(oldUsers.FirstOrDefault()?.Id ?? "");
@@ -52,7 +54,7 @@ public class ProjectHostedService : IHostedService
             emailLike: "@");
         _logger.LogInformation("GetUserById: {@Nombre}, Filtrados: {Cant}", unUsuario?.UserName, usersFiltrados.Count);
 
-        // PASO 3: Tipos de Query
+        // // PASO 3: Tipos de Query
         _logger.LogInformation("--- PASO 3: Tipos de Query ---");
         var paso3 = new Paso3_TiposDeQuery();
         var qfd = paso3.QueryFirstOrDefault_UsuarioPorUserName("NO_EXISTE_XXX");
@@ -60,22 +62,22 @@ public class ProjectHostedService : IHostedService
         var qs = paso3.QuerySingle_UsuarioPorId(oldUsers.First().Id);
         _logger.LogInformation("QuerySingle (existe 1): {@U}", qs.UserName);
 
-        // PASO 4: Execute + ExecuteScalar
+        // // PASO 4: Execute + ExecuteScalar
         _logger.LogInformation("--- PASO 4: Execute + ExecuteScalar ---");
         var paso4 = new Paso4_ExecuteScalar();
         var totalUsuarios = paso4.ContarUsuariosTotales();
         _logger.LogInformation("ExecuteScalar - Total usuarios: {T}", totalUsuarios);
-        // Ejemplo Execute comentado (no tocar BD)
-        // var confirmados = paso4.ConfirmarEmail(oldUsers.First().Id);
-        // _logger.LogInformation("Execute - Confirmados: {N}", confirmados);
 
-        // PASO 5: Async / Await
+        // // var confirmados = paso4.ConfirmarEmail(oldUsers.First().Id);
+        // // _logger.LogInformation("Execute - Confirmados: {N}", confirmados);
+
+        // // PASO 5: Async / Await
         _logger.LogInformation("--- PASO 5: Async / Await ---");
         var paso5 = new Paso5_AsyncAwait();
         var usersAsync = await paso5.GetUsuariosAsync();
         _logger.LogInformation("QueryAsync - Users: {U}", usersAsync.Count);
-        var (cntU, cntR, cntC) = await paso5.ContarTodoEnParaleloAsync();
-        _logger.LogInformation("WhenAll paralelo - U={U} R={R} C={C}", cntU, cntR, cntC);
+        // var (cntU, cntR, cntC) = await paso5.ContarTodoEnParaleloAsync();
+        // _logger.LogInformation("WhenAll paralelo - U={U} R={R} C={C}", cntU, cntR, cntC);
 
         // PASO 6: DynamicParameters + IN Clauses
         _logger.LogInformation("--- PASO 6: DynamicParameters + IN Clauses ---");
@@ -103,7 +105,7 @@ public class ProjectHostedService : IHostedService
         var usuariosConRoles = paso8.ObtenerUsuariosConRoles_Diccionario();
         _logger.LogInformation("Padre->Hijos (User->List<Role>): {Users}", usuariosConRoles.Count);
 
-        // PASO 9: Transacciones
+        // // PASO 9: Transacciones
         _logger.LogInformation("--- PASO 9: Transacciones ---");
         var paso9 = new Paso9_Transacciones();
         _logger.LogInformation("Métodos listos: CrearRolConClaims + ReemplazarRolesDeUsuario");
@@ -123,9 +125,6 @@ public class ProjectHostedService : IHostedService
         // var ok = paso9.CrearRolConClaims(rolNuevo, claims);
         // _logger.LogInformation("Rol creado con claims: {R}", ok);
 
-        _logger.LogInformation("========================================");
-        _logger.LogInformation("  FIN DE LA PRESENTACION (35 min aprox)");
-        _logger.LogInformation("========================================");
 
         await Task.CompletedTask;
     }
