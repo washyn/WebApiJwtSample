@@ -59,7 +59,7 @@ public static class DocumentExtensions
                         {
                             a.Item().Text(university.Nombre.ToUpper()).AlignCenter().FontColor(Colors.Grey.Darken1).Bold();
                             a.Item().Text(university.Facultad).AlignCenter().FontColor(Colors.Grey.Darken1);
-                            a.Item().Text(university.Escuela).AlignCenter().FontColor(Colors.Grey.Darken1);
+                            // a.Item().Text(university.Escuela).AlignCenter().FontColor(Colors.Grey.Darken1);
                             a.Item().Text(university.Unidad).AlignCenter().FontColor(Colors.Grey.Darken1).Italic();
                         });
                     row.RelativeItem(3)
@@ -134,9 +134,9 @@ public class WatermarkOptions
 public class PageOptions
 {
     public PageSize PageSize { get; set; } = PageSizes.A4;
-    public float HorizontalMargin { get; set; } = 1;
-    public float VerticalMargin { get; set; } = 0.75f;
-    public Unit MarginUnit { get; set; } = Unit.Centimetre;
+    public float HorizontalMargin { get; set; } = 40;
+    public float VerticalMargin { get; set; } = 20;
+    public Unit MarginUnit { get; set; } = Unit.Point;
     public string BackgroundColor { get; set; } = Colors.White;
     public string DefaultFont { get; set; } = "Calibri";
     public float DefaultFontSize { get; set; } = 11;
