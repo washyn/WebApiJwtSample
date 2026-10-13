@@ -1,26 +1,35 @@
 using Theme;
 
-using Volo.Abp.AspNetCore.Mvc;
+// using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.Modularity;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace WebApp;
 
-builder.Services.AddApplication<WebModule>();
-builder.Services.AddControllersWithViews()
-    .AddApplicationPart(typeof(ThemeModule).Assembly);
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+        builder.Services.AddApplication<WebModule>();
+        // builder.Services.AddControllersWithViews()
+        //     .AddApplicationPart(typeof(ThemeModule).Assembly);
 
-app.UseStaticFiles();
-// app.InitializeApplication();
-app.UseRouting();
-app.MapControllers();
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+        builder.Services.AddControllersWithViews();
 
-app.Run();
+        var app = builder.Build();
 
+        app.UseStaticFiles();
+        // app.InitializeApplication();
+        app.UseRouting();
+        app.MapControllers();
+        app.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
+
+        app.Run();
+    }
+}
 // [DependsOn(typeof(AbpAspNetCoreMvcModule))]
 [DependsOn(typeof(ThemeModule))]
 public class WebModule : AbpModule
