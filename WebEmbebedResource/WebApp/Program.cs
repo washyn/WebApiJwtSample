@@ -14,17 +14,18 @@ builder.Services.AddApplication<WebModule>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
-var virtualFileProvider = app.Services.GetRequiredService<IVirtualFileProvider>();
+// var virtualFileProvider = app.Services.GetRequiredService<IVirtualFileProvider>();
 
 app.UseStaticFiles();
 
 app.InitializeApplication();
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new CompositeFileProvider(
-        app.Environment.WebRootFileProvider,
-        virtualFileProvider)
-});
+
+// app.UseStaticFiles(new StaticFileOptions
+// {
+//     FileProvider = new CompositeFileProvider(
+//         app.Environment.WebRootFileProvider,
+//         virtualFileProvider)
+// });
 
 app.UseRouting();
 app.MapControllers();
@@ -38,8 +39,5 @@ app.Run();
 [DependsOn(typeof(AbpAspNetCoreMvcModule), typeof(ThemeModule))]
 public class WebModule : AbpModule
 {
-    public override void ConfigureServices(ServiceConfigurationContext context)
-    {
-        
-    }
 }
+// TODO: fix for publish wwwroot files y ebembed are equal
