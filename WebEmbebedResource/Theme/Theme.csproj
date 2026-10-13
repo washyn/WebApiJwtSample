@@ -16,10 +16,10 @@
     <!-- <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="8.0.0" /> -->
     <PackageReference Include="Volo.Abp.VirtualFileSystem" Version="8.3.4" />
     <!-- <EmbeddedResource Include="wwwroot\**\*" /> -->
-    
+
   </ItemGroup>
-   <ItemGroup>
-        <None Remove="wwwroot\**\*" />
-        <EmbeddedResource Include="wwwroot\**\*" />
-    </ItemGroup>
+  <ItemGroup>
+    <None Remove="wwwroot\**\*" />
+    <EmbeddedResource Include="wwwroot\**\*" />
+  </ItemGroup>
 </Project>
