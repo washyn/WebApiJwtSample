@@ -1,7 +1,6 @@
-using Theme;
-
-// using Volo.Abp.AspNetCore.Mvc;
-using Volo.Abp.Modularity;
+// using Theme;
+//
+// using Volo.Abp.Modularity;
 
 namespace WebApp;
 
@@ -11,16 +10,13 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddApplication<WebModule>();
-        // builder.Services.AddControllersWithViews()
-        //     .AddApplicationPart(typeof(ThemeModule).Assembly);
+        // builder.Services.AddApplication<WebModule>();
 
         builder.Services.AddControllersWithViews();
 
         var app = builder.Build();
 
         app.UseStaticFiles();
-        // app.InitializeApplication();
         app.UseRouting();
         app.MapControllers();
         app.MapControllerRoute(
@@ -30,8 +26,8 @@ public class Program
         app.Run();
     }
 }
-// [DependsOn(typeof(AbpAspNetCoreMvcModule))]
-[DependsOn(typeof(ThemeModule))]
-public class WebModule : AbpModule
-{
-}
+
+// [DependsOn(typeof(ThemeModule))]
+// public class WebModule : AbpModule
+// {
+// }
