@@ -1,20 +1,17 @@
 using Microsoft.Extensions.FileProviders;
 
+using Theme;
+
+using Volo.Abp.Modularity;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddApplication<WebModule>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
 app.UseStaticFiles();
-
-// Expone los recursos embebidos del proyecto Theme en /Theming.
-var themeFileProvider = new ManifestEmbeddedFileProvider(typeof(Theme.Theme).Assembly, "Theming");
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = themeFileProvider,
-    RequestPath = "/Theming"
-});
 
 app.UseRouting();
 app.MapControllers();
@@ -23,3 +20,13 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+
+[DependsOn(typeof(ThemeModule))]
+public class WebModule : AbpModule
+{
+    public override void ConfigureServices(ServiceConfigurationContext context)
+    {
+        
+    }
+}

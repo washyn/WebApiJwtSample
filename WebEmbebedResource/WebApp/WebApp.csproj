@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\js\index.js" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Theme\Theme.csproj" />
   </ItemGroup>
 
