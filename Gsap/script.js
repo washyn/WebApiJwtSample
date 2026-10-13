@@ -255,7 +255,7 @@
 
     gsap.defaults({
       ease: "power3.out",
-      duration: 0.8,
+      duration: 1.2,
     });
 
     const mm = gsap.matchMedia();
@@ -275,36 +275,36 @@
       heroTl.from(".reveal", {
         y: 14,
         opacity: 0,
-        duration: 0.7,
+        duration: 1.1,
       }, 0.1);
 
       heroTl.from(".reveal-line .line-part", {
         y: 52,
         opacity: 0,
-        duration: 0.95,
+        duration: 1.35,
         ease: "expo.out",
-        stagger: { each: 0.08, from: "start" },
+        stagger: { each: 0.14, from: "start" },
       }, 0.15);
 
       heroTl.from(".reveal-body", {
         y: 24,
         opacity: 0,
-        duration: 0.75,
-      }, 0.45);
+        duration: 1.1,
+      }, 0.6);
 
       heroTl.from(".reveal-actions > *", {
         y: 18,
         opacity: 0,
-        duration: 0.7,
-        stagger: 0.1,
-      }, 0.6);
+        duration: 1.0,
+        stagger: 0.18,
+      }, 0.9);
 
       heroTl.from(".reveal-meta > *", {
         y: 14,
         opacity: 0,
-        duration: 0.6,
-        stagger: 0.06,
-      }, 0.8);
+        duration: 0.9,
+        stagger: 0.12,
+      }, 1.25);
 
       document.querySelectorAll(".meta-num").forEach((el) => {
         const target = parseFloat(el.dataset.count || "0");
@@ -314,9 +314,9 @@
           { textContent: 0 },
           {
             textContent: target,
-            duration: 1.6,
+            duration: 2.6,
             ease: "power2.out",
-            delay: 0.9,
+            delay: 1.4,
             snap: isFloat ? 0.01 : 1,
             modifiers: {
               textContent: (value) => {
@@ -332,7 +332,7 @@
       gsap.to(".scroll-hint", {
         y: 6,
         opacity: 0.6,
-        duration: 1.8,
+        duration: 3,
         ease: "sine.inOut",
         yoyo: true,
         repeat: -1,
@@ -354,8 +354,8 @@
           },
           y: 28,
           opacity: 0,
-          duration: 0.8,
-          stagger: 0.12,
+          duration: 1.15,
+          stagger: 0.2,
           ease: "power3.out",
         });
       };
@@ -371,9 +371,9 @@
           },
           y: 42,
           opacity: 0,
-          duration: 0.85,
-          delay: i * 0.08,
-          ease: "back.out(1.6)",
+          duration: 1.2,
+          delay: i * 0.14,
+          ease: "back.out(1.4)",
         });
       });
 
@@ -399,8 +399,8 @@
           },
           y: 30,
           opacity: 0,
-          duration: 0.85,
-          stagger: 0.12,
+          duration: 1.2,
+          stagger: 0.2,
           ease: "power3.out",
         });
 
@@ -413,10 +413,10 @@
             },
             x: -14,
             opacity: 0,
-            duration: 0.5,
-            stagger: 0.08,
+            duration: 0.8,
+            stagger: 0.14,
             ease: "power2.out",
-            delay: 0.3,
+            delay: 0.45,
           });
         }
 
@@ -430,7 +430,7 @@
             x: 40,
             opacity: 0,
             scale: 0.97,
-            duration: 1,
+            duration: 1.5,
             ease: "expo.out",
           });
         }
@@ -454,8 +454,8 @@
           },
           y: 24,
           opacity: 0,
-          duration: 0.8,
-          delay: i * 0.1,
+          duration: 1.1,
+          delay: i * 0.18,
           ease: "power3.out",
         });
       });
@@ -464,14 +464,14 @@
         btn.addEventListener("mouseenter", () => {
           gsap.to(btn.querySelectorAll("svg"), {
             x: 4,
-            duration: 0.3,
+            duration: 0.55,
             ease: "power2.out",
           });
         });
         btn.addEventListener("mouseleave", () => {
           gsap.to(btn.querySelectorAll("svg"), {
             x: 0,
-            duration: 0.3,
+            duration: 0.55,
             ease: "power2.out",
           });
         });
@@ -485,13 +485,13 @@
             y: -4,
             scale: 1.08,
             rotation: -6,
-            duration: 0.4,
+            duration: 0.65,
             ease: "back.out(2)",
           });
           gsap.to(card, {
             borderColor: "rgba(109, 177, 255, 0.3)",
             backgroundColor: "rgba(20, 28, 48, 0.6)",
-            duration: 0.35,
+            duration: 0.55,
           });
         });
         card.addEventListener("mouseleave", () => {
@@ -499,13 +499,13 @@
             y: 0,
             scale: 1,
             rotation: 0,
-            duration: 0.35,
+            duration: 0.6,
             ease: "power2.out",
           });
           gsap.to(card, {
             borderColor: "rgba(120, 160, 220, 0.12)",
             backgroundColor: "rgba(20, 28, 48, 0)",
-            duration: 0.35,
+            duration: 0.55,
             clearProps: "backgroundColor",
           });
         });
@@ -527,20 +527,20 @@
         gsap.from(navEl, {
           y: -24,
           opacity: 0,
-          duration: 0.8,
+          duration: 1.2,
           ease: "power3.out",
-          delay: 0.2,
+          delay: 0.3,
         });
       }
 
       const heroContent = document.querySelector(".hero-content");
       if (heroContent && window.matchMedia("(min-width: 900px)").matches) {
-        const xTo = gsap.quickTo(heroContent, "x", { duration: 0.9, ease: "power2.out" });
-        const yTo = gsap.quickTo(heroContent, "y", { duration: 0.9, ease: "power2.out" });
+        const xTo = gsap.quickTo(heroContent, "x", { duration: 1.6, ease: "power2.out" });
+        const yTo = gsap.quickTo(heroContent, "y", { duration: 1.6, ease: "power2.out" });
 
         window.addEventListener("mousemove", (e) => {
-          const x = (e.clientX / window.innerWidth - 0.5) * 12;
-          const y = (e.clientY / window.innerHeight - 0.5) * 8;
+          const x = (e.clientX / window.innerWidth - 0.5) * 10;
+          const y = (e.clientY / window.innerHeight - 0.5) * 6;
           xTo(x);
           yTo(y);
         });
