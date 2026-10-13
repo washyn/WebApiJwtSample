@@ -8,13 +8,13 @@ var app = builder.Build();
 
 app.UseStaticFiles();
 
-// Recursos embebidos de la librería del tema.
-// var themeFileProvider = new ManifestEmbeddedFileProvider(typeof(Theme.Theme).Assembly,"Theming");
-// app.UseStaticFiles(new StaticFileOptions
-// {
-//     FileProvider = themeFileProvider,
-//     RequestPath = "/"
-// });
+// Expone los recursos embebidos del proyecto Theme en /Theming.
+var themeFileProvider = new ManifestEmbeddedFileProvider(typeof(Theme.Theme).Assembly, "Theming");
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = themeFileProvider,
+    RequestPath = "/Theming"
+});
 
 app.UseRouting();
 app.MapControllers();
