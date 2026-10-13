@@ -10,7 +10,6 @@ public class ThemeModule : AbpModule
     {
         Configure<AbpVirtualFileSystemOptions>(opt =>
         {
-            // opt.FileSets.AddEmbedded<ThemeModule>("Theme", "/wwwroot");
             opt.FileSets.AddEmbedded<ThemeModule>("Theme");
         });
     }
