@@ -1,3 +1,6 @@
+using HealthChecks.UI.Client;
+
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using WebApiLogCollector.Data;
 
@@ -8,13 +11,14 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+            ?? "Data Source=healths.db";
 
         builder.Services.AddControllers();
         builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(connectionString));
         builder.Services
             .AddHealthChecks()
-            .AddCheck<AppDbContext>("sqlite");
+            .AddCheck<DbHc>("sqlite");
 
         var app = builder.Build();
 
@@ -26,7 +30,10 @@ public class Program
 
         app.UseHttpsRedirection();
         app.UseAuthorization();
-        app.MapHealthChecks("/health");
+        app.MapHealthChecks("/health", new HealthCheckOptions()
+        {
+            Predicate = _ => true, ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
         app.MapControllers();
 
         app.Run();

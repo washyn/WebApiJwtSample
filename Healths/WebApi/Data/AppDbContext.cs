@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-
 using WebApiLogCollector.Models;
 
 namespace WebApiLogCollector.Data;
@@ -10,12 +9,22 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<HealthProbeRecord> HealthProbeRecords => Set<HealthProbeRecord>();
 }
 
-
-// TODO: implement this
-public class DbHc : IHealthCheck
+public class DbHc(AppDbContext dbContext) : IHealthCheck
 {
-    public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = new CancellationToken())
+    public async Task<HealthCheckResult> CheckHealthAsync(
+        HealthCheckContext context,
+        CancellationToken cancellationToken = default)
     {
-        
+        try
+        {
+            var canConnect = await dbContext.Database.CanConnectAsync(cancellationToken);
+            return canConnect
+                ? HealthCheckResult.Healthy("SQLite disponible.")
+                : HealthCheckResult.Unhealthy("SQLite no responde.");
+        }
+        catch (Exception ex)
+        {
+            return HealthCheckResult.Unhealthy("Error consultando SQLite.", ex);
+        }
     }
 }

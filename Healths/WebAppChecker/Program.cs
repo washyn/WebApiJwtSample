@@ -16,8 +16,13 @@ public class Program
             .AddCheck<ExternalServerHealthCheckGoogle>(nameof(ExternalServerHealthCheckGoogle))
             ;
 
+        //TODO: add example of add all config in code
         builder.Services
-            .AddHealthChecksUI()
+            .AddHealthChecksUI(a =>
+            {
+                // a.SetMinimumSecondsBetweenFailureNotifications(30)
+                //     .SetEvaluationTimeInSeconds(2);
+            })
             .AddInMemoryStorage()
             // .AddSqliteStorage($"Data Source=healthchecks.db")
             ;
@@ -36,13 +41,7 @@ public class Program
         
         app.UseRouting();
 
-        app
-            // Standard AspNet Healthcheck
-            // .UseHealthChecks("/health", new HealthCheckOptions
-            // {
-            //     Predicate = _ => true
-            // })
-            .UseHealthChecks("/healthz", new HealthCheckOptions
+        app.UseHealthChecks("/healthz", new HealthCheckOptions
             {
                 Predicate = _ => true,
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
