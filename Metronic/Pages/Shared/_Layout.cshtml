@@ -45,7 +45,11 @@ License: You must have a valid license purchased only from themeforest(the above
     <link rel="shortcut icon" href="assets/demo/default/media/img/logo/favicon.ico"/>
 </head>
 <!-- end::Head -->
-
+@* en akdemic hay 3 secciones q configurar, para partials
+- sidebar
+- top bar user options
+- breadcrumb
+ *@
 <!-- end::Body -->
 <body
     class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
@@ -61,8 +65,9 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- BEGIN: Left Aside -->
         <partial name="Shared/Partials/_LeftAside"/>
         <!-- END: Left Aside -->
-        
-        @RenderBody()
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            @RenderBody()            
+        </div>
     </div>
     <!-- end:: Body -->
     
