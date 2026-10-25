@@ -66,7 +66,10 @@ License: You must have a valid license purchased only from themeforest(the above
         <partial name="Shared/Partials/_LeftAside"/>
         <!-- END: Left Aside -->
         <div class="m-grid__item m-grid__item--fluid m-wrapper">
-            @RenderBody()            
+            <!-- BEGIN: Subheader -->
+            <partial name="Shared/Partials/subheader-poc"/>
+            <!-- END: Subheader -->
+            @RenderBody()
         </div>
     </div>
     <!-- end:: Body -->
