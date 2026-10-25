@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace WebAppServer;
 
@@ -8,7 +9,14 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
+        var sharedKeysPath = Path.Combine(
+            Directory.GetParent(builder.Environment.ContentRootPath)!.FullName,
+            "Shared-Keys");
+
+        builder.Services.AddDataProtection()
+            .PersistKeysToFileSystem(new DirectoryInfo(sharedKeysPath))
+            .SetApplicationName("SingleSignOnSharedApp");
+
         builder.Services.AddControllersWithViews();
         builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
@@ -17,9 +25,11 @@ public class Program
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
                 options.SlidingExpiration = true;
                 options.Cookie.SameSite = SameSiteMode.Lax;
+                options.LoginPath = "/Account/Auth";
+                options.LogoutPath = "/Account/Logout";
             });
         builder.Services.AddAuthorization();
-        
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.

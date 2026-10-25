@@ -1,18 +1,54 @@
-﻿@{
+@{
     ViewData["Title"] = "Home Page";
+    var serverUrl = "https://localhost:7053";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">🎯 SSO Client</h1>
+    <p class="lead">Aplicación cliente que usa autenticación centralizada</p>
+
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <div class="alert alert-success mt-4">
+            <strong>✅ Sesión compartida detectada:</strong> @User.Identity.Name
+        </div>
+        <p>
+            <a class="btn btn-primary" href="@serverUrl">Ir al SSO Server</a>
+            <span class="mx-2">|</span>
+            <a class="btn btn-outline-secondary" asp-action="Privacy" asp-controller="Home">Ver página protegida (Client)</a>
+        </p>
+    }
+    else
+    {
+        <div class="alert alert-warning mt-4">
+            <strong>⚠️ No autenticado</strong> - Serás redirigido al SSO Server.
+        </div>
+        <p>
+            <a class="btn btn-success btn-lg" asp-action="SignIn" asp-controller="Home">Iniciar Sesión (via Server)</a>
+        </p>
+        <p class="text-muted">
+            <small>💡 Prueba entrando primero en el Server, autenticarte y luego venir aquí. La sesión será compartida.</small>
+        </p>
+    }
 </div>
 
-claims client
-<ul>
-    @foreach (var a in User.Claims)
+<hr />
+
+<div class="mt-5">
+    <h4>📋 Claims del usuario (Client)</h4>
+    @if (User.Identity?.IsAuthenticated == true)
     {
-        <li>
-            @a.Type @a.Value
-        </li>
+        <ul class="list-group">
+            @foreach (var a in User.Claims)
+            {
+                <li class="list-group-item">
+                    <strong>@a.Type:</strong> @a.Value
+                </li>
+            }
+        </ul>
     }
-</ul>
+    else
+    {
+        <p class="text-muted">Sin claims disponibles. Inicia sesión desde el SSO Server.</p>
+    }
+</div>

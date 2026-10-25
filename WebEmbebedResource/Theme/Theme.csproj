@@ -1,0 +1,28 @@
+﻿<!-- <Project Sdk="Microsoft.NET.Sdk"> -->
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+  <OutputType>Library</OutputType>
+    <IsPackable>true</IsPackable> 
+
+    <AssemblyName>Theme</AssemblyName>
+    <RootNamespace>Theme</RootNamespace>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+<!--    <PackageReference Include="Volo.Abp.VirtualFileSystem" Version="8.3.4" />-->
+       <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="8.0.0" /> 
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="wwwroot\**\*" />
+    <EmbeddedResource Include="wwwroot\**\*" />
+  </ItemGroup>
+</Project>
+<!-- NOTE: para que funcione como lib se tiene que agregar como web project y outpt type as lib and packable, and abp virtual file -->
+<!-- Test whoidud virutal file module -->
