@@ -33,7 +33,7 @@ namespace ConsoleAbpSetting
     // [DependsOn(typeof(AbpSerializationModule))]
     // [DependsOn(typeof(AbpVirtualFileSystemModule))]
 
-    [DependsOn(typeof(AbpSettingsModule))]
+    [DependsOn(typeof(AbpSettingsModule))] // esto puede funcionar sin el modulo de asp net core
     public class ExtraModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
