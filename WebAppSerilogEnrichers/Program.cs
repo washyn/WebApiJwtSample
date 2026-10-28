@@ -17,6 +17,7 @@ using Serilog.Enrichers.Sensitive;
 using Serilog.Enrichers.Span;
 using Serilog.Enrichers.SqlException.Extensions;
 using Serilog.Events;
+using Serilog.Formatting.Json;
 using Serilog.Sinks.OpenTelemetry;
 using Volo.Abp.Data;
 using Volo.Abp.Security.Claims;
@@ -63,7 +64,7 @@ namespace Washyn.BookStore
                 .Enrich.WithSqlExceptionEnricher() // add
                 .Enrich.WithCustomClaim(AbpClaimTypes.TenantId)
                 .WriteTo.Async(c => c.File(
-                    formatter: new Serilog.Formatting.Json.JsonFormatter(),
+                    formatter: new JsonFormatter(),
                     path: "Logs/logs.log", rollingInterval: RollingInterval.Day,
                     retainedFileCountLimit: 2))
                 .WriteTo.Async(c => c.Console())

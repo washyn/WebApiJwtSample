@@ -89,6 +89,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unaj.Bill.QuestPdf", "Unaj.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilesWiper", "FilesWiper\FilesWiper.csproj", "{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppSerilogEnrichers", "WebAppSerilogEnrichers\WebAppSerilogEnrichers.csproj", "{E60A359B-C698-4F61-878F-4253DCCF73CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -591,6 +593,18 @@ Global
 		{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}.Release|x64.Build.0 = Release|Any CPU
 		{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}.Release|x86.ActiveCfg = Release|Any CPU
 		{90243A87-C8DA-499D-8AA4-D4AF34C52ABF}.Release|x86.Build.0 = Release|Any CPU
+		{E60A359B-C698-4F61-878F-4253DCCF73CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E60A359B-C698-4F61-878F-4253DCCF73CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E60A359B-C698-4F61-878F-4253DCCF73CD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E60A359B-C698-4F61-878F-4253DCCF73CD}.Debug|x64.Build.0 = Debug|Any CPU
+		{E60A359B-C698-4F61-878F-4253DCCF73CD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E60A359B-C698-4F61-878F-4253DCCF73CD}.Debug|x86.Build.0 = Debug|Any CPU
+		{E60A359B-C698-4F61-878F-4253DCCF73CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E60A359B-C698-4F61-878F-4253DCCF73CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E60A359B-C698-4F61-878F-4253DCCF73CD}.Release|x64.ActiveCfg = Release|Any CPU
+		{E60A359B-C698-4F61-878F-4253DCCF73CD}.Release|x64.Build.0 = Release|Any CPU
+		{E60A359B-C698-4F61-878F-4253DCCF73CD}.Release|x86.ActiveCfg = Release|Any CPU
+		{E60A359B-C698-4F61-878F-4253DCCF73CD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
