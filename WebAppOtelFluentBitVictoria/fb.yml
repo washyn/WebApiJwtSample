@@ -2,7 +2,6 @@ service:
   flush: 1
   log_level: info
 
-
 pipeline:
   inputs:
     - name: opentelemetry
@@ -11,38 +10,47 @@ pipeline:
 
   outputs:
     - name: stdout
-      match: '*'
-    ## logs
-    # - name: opentelemetry
-    #   match: '*'
-    #   host: localhost
-    #   port: 9428
-    #   # metrics_uri: /v1/metrics
-    #   logs_uri: /insert/opentelemetry/v1/logs
-    #   # traces_uri: /v1/traces
-    #   log_response_payload: true
-
-    ## trace
-    # - name: opentelemetry
-    #   match: '*'
-    #   host: localhost
-    #   port: 10428
-    #   # metrics_uri: /v1/metrics
-    #   # logs_uri: /insert/opentelemetry/v1/logs
-    #   traces_uri: /insert/opentelemetry/v1/traces
-    #   log_response_payload: true
-
-    ## metrics
+      match: "*"
+    # logs
     - name: opentelemetry
-      match: '*'
+      match: "*"
+      host: localhost
+      port: 9428
+      # metrics_uri: /v1/metrics
+      logs_uri: /insert/opentelemetry/v1/logs
+      # traces_uri: /v1/traces
+      log_response_payload: true
+
+    # trace
+    - name: opentelemetry
+      match: "*"
+      host: localhost
+      port: 10428
+      # metrics_uri: /v1/metrics
+      # logs_uri: /insert/opentelemetry/v1/logs
+      traces_uri: /insert/opentelemetry/v1/traces
+      log_response_payload: true
+
+    # metrics
+    - name: opentelemetry
+      match: "*"
       host: localhost
       port: 8428
       metrics_uri: /opentelemetry/v1/metrics
       # logs_uri: /insert/opentelemetry/v1/logs
       # traces_uri: /insert/opentelemetry/v1/traces
       log_response_payload: true
-
-
 # http://localhost:9428/insert/opentelemetry/v1/logs
-# http://0.0.0.0:10428/insert/opentelemetry/v1/traces
-# http://0.0.0.0:8428/opentelemetry/v1/metrics
+# http://localhost:10428/insert/opentelemetry/v1/traces
+# http://localhost:8428/opentelemetry/v1/metrics
+
+# webappaspire.Microsoft.AspNetCore.Hosting.http.server.request.duration
+
+# webappaspire
+# Microsoft.AspNetCore.Hosting
+# http.server.request.duration
+# add each of url
+
+# http://localhost:9428/select/vmui
+# http://localhost:10428/select/vmui
+# http://localhost:8428/vmui

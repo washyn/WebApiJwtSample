@@ -1,0 +1,7 @@
+victoria-logs-windows-amd64-prod.exe
+victoria-metrics-windows-amd64-prod.exe
+victoria-traces-windows-amd64-prod.exe
+
+victoria-logs-data
+victoria-metrics-data
+victoria-traces-data
