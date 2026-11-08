@@ -1,0 +1,21 @@
+service:
+  flush: 1
+  daemon: off
+  log_level: debug
+
+pipeline:
+  inputs:
+    - name: http
+      listen: 0.0.0.0
+      port: 8888
+      http_server.workers: 6
+      successful_response_code: 200,201,204
+
+  outputs:
+    - name: file
+      match: "*"
+      path: "D:\\fluent-bit"
+      # file: app.log
+      format: plain
+      mkdir: true
+      workers: 5
