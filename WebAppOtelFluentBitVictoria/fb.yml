@@ -2,18 +2,24 @@ service:
   flush: 1
   log_level: info
 
+
 pipeline:
   inputs:
-    - name: http
-      listen: 0.0.0.0
-      port: 8888
-      tag: "ak"
+    - name: opentelemetry
+      listen: 127.0.0.1
+      port: 4317
 
   outputs:
-    - name: file
-      match: "*"
-      # path: "C:/fluentbit/logs"
-      file: app.log
-
     - name: stdout
-      match: "*"
+      match: '*'
+
+    - name: opentelemetry
+      match: '*'
+      host: localhost
+      port: 5318
+
+      metrics_uri: /v1/metrics
+      logs_uri: /v1/logs
+      traces_uri: /v1/traces
+
+      log_response_payload: true
