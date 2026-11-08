@@ -11,6 +11,8 @@ public class Program
 {
     public async static Task<int> Main(string[] args)
     {
+        // TODO: levantar fb input de otel -> victoria otel input
+        // o fb tener 3 inputs
         var loggerConfiguration = new LoggerConfiguration()
 #if DEBUG
                 .MinimumLevel.Debug()
