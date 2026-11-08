@@ -12,14 +12,37 @@ pipeline:
   outputs:
     - name: stdout
       match: '*'
+    ## logs
+    # - name: opentelemetry
+    #   match: '*'
+    #   host: localhost
+    #   port: 9428
+    #   # metrics_uri: /v1/metrics
+    #   logs_uri: /insert/opentelemetry/v1/logs
+    #   # traces_uri: /v1/traces
+    #   log_response_payload: true
 
+    ## trace
+    # - name: opentelemetry
+    #   match: '*'
+    #   host: localhost
+    #   port: 10428
+    #   # metrics_uri: /v1/metrics
+    #   # logs_uri: /insert/opentelemetry/v1/logs
+    #   traces_uri: /insert/opentelemetry/v1/traces
+    #   log_response_payload: true
+
+    ## metrics
     - name: opentelemetry
       match: '*'
       host: localhost
-      port: 5318
-
-      metrics_uri: /v1/metrics
-      logs_uri: /v1/logs
-      traces_uri: /v1/traces
-
+      port: 8428
+      metrics_uri: /opentelemetry/v1/metrics
+      # logs_uri: /insert/opentelemetry/v1/logs
+      # traces_uri: /insert/opentelemetry/v1/traces
       log_response_payload: true
+
+
+# http://localhost:9428/insert/opentelemetry/v1/logs
+# http://0.0.0.0:10428/insert/opentelemetry/v1/traces
+# http://0.0.0.0:8428/opentelemetry/v1/metrics
