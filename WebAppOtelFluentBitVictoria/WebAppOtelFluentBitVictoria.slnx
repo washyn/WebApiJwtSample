@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/WebApp.Aspire/">
+    <Project Path="WebApp.Aspire/WebAppAspire.AppHost.csproj" />
+  </Folder>
+  <Project Path="WebApp.OpenTelemetry/WebApp.OpenTelemetry.csproj" />
+</Solution>

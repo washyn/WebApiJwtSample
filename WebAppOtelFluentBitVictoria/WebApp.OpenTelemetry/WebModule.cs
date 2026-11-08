@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-using Acme.BookStore.Web.Data;
+﻿using Acme.BookStore.Web.Data;
 
 using Microsoft.OpenApi.Models;
 
@@ -8,14 +6,11 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
 using Serilog;
-using Serilog.Context;
 
 using Volo.Abp;
 using Volo.Abp.Uow;
 using Volo.Abp.AspNetCore.Mvc;
-using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
@@ -24,9 +19,7 @@ using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.Sqlite;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
-using Volo.Abp.MultiTenancy;
 using Volo.Abp.Swashbuckle;
-using Volo.Abp.UI.Navigation;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
 
@@ -44,27 +37,15 @@ namespace Acme.BookStore.Web;
 )]
 public class WebModule : AbpModule
 {
-    /* Single point to enable/disable multi-tenancy */
-    public const bool IsMultiTenant = false;
-
 
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var hostingEnvironment = context.Services.GetHostingEnvironment();
         var configuration = context.Services.GetConfiguration();
 
-        if (hostingEnvironment.IsDevelopment())
-        {
-            // context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());
-        }
-
-        ConfigureAuthentication(context);
-        ConfigureMultiTenancy();
         ConfigureUrls(configuration);
-        ConfigureBundles();
         ConfigureAutoMapper(context);
         ConfigureSwagger(context.Services);
-        ConfigureNavigationServices();
         ConfigureAutoApiControllers();
         ConfigureVirtualFiles(hostingEnvironment);
         ConfigureLocalization();
@@ -100,15 +81,6 @@ public class WebModule : AbpModule
         // TODO: add basic crud
         // DONE: test tracing
         // TODO: add open telemetry sqlite
-    }
-
-    private void ConfigureAuthentication(ServiceConfigurationContext context)
-    {
-        // context.Services.ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
-        // context.Services.Configure<AbpClaimsPrincipalFactoryOptions>(options =>
-        // {
-        //     options.IsDynamicClaimsEnabled = true;
-        // });
     }
 
     private void ConfigureUrls(IConfiguration configuration)
@@ -221,13 +193,7 @@ public class WebModule : AbpModule
         app.UseRouting();
         app.UseAuthentication();
 
-        if (IsMultiTenant)
-        {
-            app.UseMultiTenancy();
-        }
-
         app.UseUnitOfWork();
-        // app.UseDynamicClaims();
         app.UseAuthorization();
 
         app.UseSwagger();

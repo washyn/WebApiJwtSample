@@ -1,12 +1,8 @@
-using System.Text;
-
 using Acme.BookStore.Web.Data;
 
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
-using Serilog.Sinks.Elasticsearch;
-using Serilog.Sinks.Grafana.Loki;
 using Serilog.Sinks.OpenTelemetry;
 
 namespace Acme.BookStore.Web;
