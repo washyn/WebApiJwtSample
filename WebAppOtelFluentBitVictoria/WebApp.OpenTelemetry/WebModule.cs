@@ -111,15 +111,6 @@ public class WebModule : AbpModule
         // });
     }
 
-    private void ConfigureMultiTenancy()
-    {
-        Configure<AbpMultiTenancyOptions>(options =>
-        {
-            options.IsEnabled = IsMultiTenant;
-        });
-    }
-
-
     private void ConfigureUrls(IConfiguration configuration)
     {
         Configure<AppUrlOptions>(options =>
@@ -128,19 +119,6 @@ public class WebModule : AbpModule
         });
     }
 
-    private void ConfigureBundles()
-    {
-        Configure<AbpBundlingOptions>(options =>
-        {
-            options.StyleBundles.Configure(
-                BasicThemeBundles.Styles.Global,
-                bundle =>
-                {
-                    bundle.AddFiles("/global-styles.css");
-                }
-            );
-        });
-    }
 
     private void ConfigureLocalization()
     {
@@ -161,13 +139,6 @@ public class WebModule : AbpModule
                 /* Using physical files in development, so we don't need to recompile on changes */
                 options.FileSets.ReplaceEmbeddedByPhysical<WebModule>(hostingEnvironment.ContentRootPath);
             }
-        });
-    }
-
-    private void ConfigureNavigationServices()
-    {
-        Configure<AbpNavigationOptions>(options =>
-        {
         });
     }
 
@@ -268,35 +239,6 @@ public class WebModule : AbpModule
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
         app.UseSerilogRequestLogging();
-        // DONE: can be add as middleware, and test
-        app.UseMiddleware<ClaimsLoggingMiddleware>();
         app.UseConfiguredEndpoints();
     }
 }
-
-public class ClaimsLoggingMiddleware
-{
-    private readonly RequestDelegate _next;
-
-    public ClaimsLoggingMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
-    public async Task Invoke(HttpContext context)
-    {
-        var act = Activity.Current;
-        using (LogContext.PushProperty("CustomTraceId", act?.TraceId.ToString()))
-        {
-            using (LogContext.PushProperty("CustomSpanId", act?.SpanId.ToString()))
-            {
-                await _next(context);
-            }
-        }
-    }
-}
-// la mejor referencia de como usar serilog(logs) con open telemetry (traza y metricas)
-// https://dev.to/isaacojeda/aspnet-core-monitoreo-con-opentelemetry-y-grafana-57m9
-// DONE: completar un ejemplo de enricher con data extra de la request actual
-// DONE: validar que en los logs este el traceid y el spanid
-// DONE: validar que en los logs este el span de pipeline o del enricher
