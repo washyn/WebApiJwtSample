@@ -51,8 +51,11 @@ pipeline:
 # http.server.request.duration
 # add each of url
 
+# logs
 # http://localhost:9428/select/vmui
+# traces
 # http://localhost:10428/select/vmui
+# metrics
 # http://localhost:8428/vmui
 
 
