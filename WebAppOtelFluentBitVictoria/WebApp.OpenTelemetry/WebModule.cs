@@ -73,9 +73,15 @@ public class WebModule : AbpModule
                         // only this is relevant counbters
                         c.AddEventSources(
                             "Microsoft.AspNetCore.Hosting",
-                            "System.Runtime",
+                            // "System.Runtime", // not available
                             "System.Net.Http"
-                            );
+                        );
+
+                        // with this works
+                        // "Microsoft.AspNetCore.Hosting",
+                        // "Microsoft-AspNetCore-Server-Kestrel",
+                        // "System.Net.Http",
+                        // "System.Net.Sockets"
                     });
                 metrics.AddOtlpExporter();
             })
