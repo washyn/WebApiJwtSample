@@ -37,7 +37,6 @@ namespace Acme.BookStore.Web;
 )]
 public class WebModule : AbpModule
 {
-
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var hostingEnvironment = context.Services.GetHostingEnvironment();
@@ -61,13 +60,23 @@ public class WebModule : AbpModule
                     .AddEventCountersInstrumentation(c =>
                     {
                         // https://learn.microsoft.com/en-us/dotnet/core/diagnostics/available-counters
+
+                        // System.Runtime counters
+                        // Microsoft.AspNetCore.Hosting counters
+                        // Microsoft.AspNetCore.Http.Connections counters
+                        // Microsoft-AspNetCore-Server-Kestrel counters
+                        // System.Net.Http counters
+                        // System.Net.NameResolution counters
+                        // System.Net.Security counters
+                        // System.Net.Sockets counters
+
+                        // only this is relevant counbters
                         c.AddEventSources(
                             "Microsoft.AspNetCore.Hosting",
-                            "Microsoft-AspNetCore-Server-Kestrel",
-                            "System.Net.Http",
-                            "System.Net.Sockets");
-                    })
-                    ;
+                            "System.Runtime",
+                            "System.Net.Http"
+                            );
+                    });
                 metrics.AddOtlpExporter();
             })
             .WithTracing(tracing =>
