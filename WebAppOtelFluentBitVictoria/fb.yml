@@ -6,7 +6,7 @@ pipeline:
   inputs:
     - name: opentelemetry
       listen: 127.0.0.1
-      port: 4317
+      port: 3317
 
   outputs:
     - name: stdout
@@ -60,3 +60,4 @@ pipeline:
 
 
 # poc 2 test with custom port
+# works ok with custom ports

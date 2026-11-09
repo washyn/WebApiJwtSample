@@ -25,7 +25,7 @@ public class Program
                 .WriteTo.Async(c => c.File("Logs/logs.log"))
                 .WriteTo.Async(c => c.Console())
                 .WriteTo.Async(c => c.File(new JsonFormatter(), path: "Logs/logs.log")) // success
-                .WriteTo.Async(a => a.OpenTelemetry())
+                .WriteTo.Async(a => a.OpenTelemetry(endpoint:"http://localhost:3317")) // 4317 
                 // .WriteTo.Async(a => a.OpenTelemetry(options =>
                 // {
                 //     // Ruta al endpoint OTLP nativo de Parseable

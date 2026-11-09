@@ -83,7 +83,10 @@ public class WebModule : AbpModule
                         // "System.Net.Http",
                         // "System.Net.Sockets"
                     });
-                metrics.AddOtlpExporter();
+                metrics.AddOtlpExporter(a =>
+                {
+                    a.Endpoint = new Uri("http://localhost:3317");
+                });
             })
             .WithTracing(tracing =>
             {
@@ -91,7 +94,10 @@ public class WebModule : AbpModule
                     .AddAspNetCoreInstrumentation()
                     .AddEntityFrameworkCoreInstrumentation()
                     .AddHttpClientInstrumentation();
-                tracing.AddOtlpExporter();
+                tracing.AddOtlpExporter(b =>
+                {
+                    b.Endpoint = new Uri("http://localhost:3317");
+                });
             });
         // TODO: add basic crud
         // DONE: test tracing
