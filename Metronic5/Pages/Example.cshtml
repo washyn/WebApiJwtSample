@@ -8,6 +8,7 @@
     
     @for (int i = 0; i < 10; i++)
     {
+        var collapseId = $"collapseExample-{i}";
         <div class="m-portlet m-portlet--bordered m-portlet--bordered-semi m-portlet--rounded m-portlet--head-sm mb-3">
             <div class="m-portlet__head">
                 <div class="m-portlet__head-caption">
@@ -22,14 +23,15 @@
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
-            
-                @* TODO: add centered image *@
-                @* <br> *@
-                @* <img src="assets/demo/default/media/img/misc/notification_bg.jpg" alt=""/> *@
+
+                <div class="row justify-content-center mt-3">
+                    <div class="col-12 col-md-10 col-lg-8 text-center">
+                        <img src="assets/demo/default/media/img/misc/notification_bg.jpg" class="img-fluid d-inline-block" alt="" />
+                    </div>
+                </div>
                 <hr>
-                
-                @* disaplay around *@
-                <div class="">
+
+                <div class="d-flex align-items-center justify-content-between">
                     <a href="#" class="btn btn-outline-info btn-sm m-btn m-btn--icon">
                         <span>
                             <i class="fa fa-download"></i>
@@ -38,11 +40,11 @@
                             </span>
                         </span>
                     </a>
-                    <button type="button" class="btn btn-sm btn-link" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <button type="button" class="btn btn-sm btn-link" data-toggle="collapse" data-target="#@collapseId" aria-expanded="false" aria-controls="@collapseId">
                         Ver detalle
-                    </button>     
+                    </button>
                 </div>
-                <div class="collapse" id="collapseExample">
+                <div class="collapse" id="@collapseId">
                     <div class="p-2">
                         Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
                     </div>
