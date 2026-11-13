@@ -1,0 +1,95 @@
+﻿@page
+@model Acme.BookStore.Web.Pages.Example
+
+@{
+    
+}
+<div class="m-content">
+    
+    @for (int i = 0; i < 10; i++)
+    {
+        <div class="m-portlet m-portlet--bordered m-portlet--bordered-semi m-portlet--rounded m-portlet--head-sm mb-3">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Semi Bordered Style
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="m-portlet__body pt-0">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+            
+                @* TODO: add centered image *@
+                @* <br> *@
+                @* <img src="assets/demo/default/media/img/misc/notification_bg.jpg" alt=""/> *@
+                <hr>
+                
+                @* disaplay around *@
+                <div class="">
+                    <a href="#" class="btn btn-outline-info btn-sm m-btn m-btn--icon">
+                        <span>
+                            <i class="fa fa-download"></i>
+                            <span>
+                                Descargar adjunto
+                            </span>
+                        </span>
+                    </a>
+                    <button type="button" class="btn btn-sm btn-link" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Ver detalle
+                    </button>     
+                </div>
+                <div class="collapse" id="collapseExample">
+                    <div class="p-2">
+                        Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <!--begin::Portlet-->
+    <div class="m-portlet m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Basic Portlet
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+            <br>
+            
+
+        </div>
+    </div>
+    <!--end::Portlet-->
+    
+    <div class="m-portlet m-portlet--bordered m-portlet--bordered-semi m-portlet--rounded">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        Semi Bordered Style
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled.
+        </div>
+    </div>
+    
+
+</div>
+
